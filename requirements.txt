@@ -3,8 +3,11 @@ pandas
 scipy
 scikit-learn
 xgboost
-rdkit-pypi
-shap
-matplotlib
-seaborn
+lightgbm
+catboost
+rdkit
 mordred
+matplotlib
+openpyxl
+pyarrow
+tqdm
