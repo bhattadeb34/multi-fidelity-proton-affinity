@@ -48,6 +48,8 @@ SCRIPT_DIR    = Path(__file__).parent
 PROJECT_DIR   = SCRIPT_DIR.parent
 DATA_DIR      = PROJECT_DIR / "data"
 FIG_DIR       = PROJECT_DIR / "figures"
+FIG_EXPLORE   = FIG_DIR / "exploration"
+FIG_PERF      = FIG_DIR / "model_performance"
 KJMOL_TO_KCAL = 1 / 4.184
 
 # ---------------------------------------------------------------------------
@@ -326,12 +328,13 @@ def _setup_parity_ax(ax, x, y, color, xlabel, ylabel, n_label="molecules"):
     return mae
 
 
-def savefig(fig, stem):
-    FIG_DIR.mkdir(parents=True, exist_ok=True)
-    for ext in ("pdf", "png"):
-        p = FIG_DIR / f"{stem}.{ext}"
-        fig.savefig(p)
-    log.info(f"  Saved figures/{stem}.pdf/.png")
+def savefig(fig, stem, subdir=None):
+    out_dir = (FIG_DIR / subdir) if subdir else FIG_DIR
+    out_dir.mkdir(parents=True, exist_ok=True)
+    for ext in ("pdf",):
+        fig.savefig(out_dir / f"{stem}.{ext}")
+    rel = f"{subdir}/{stem}" if subdir else stem
+    log.info(f"  Saved figures/{rel}.pdf/.png")
     plt.close(fig)
 
 
@@ -349,7 +352,7 @@ def plot_parity_dft_vs_exp(data):
                      "Experimental PA (kcal/mol)",
                      "B3LYP/def2-TZVP PA (kcal/mol)")
     fig.tight_layout()
-    savefig(fig, "parity_dft_vs_exp")
+    savefig(fig, "parity_dft_vs_exp", "exploration")
 
 
 # ---------------------------------------------------------------------------
@@ -366,7 +369,7 @@ def plot_parity_pm7_vs_exp(data):
                      "Experimental PA (kcal/mol)",
                      "PM7 PA (kcal/mol)")
     fig.tight_layout()
-    savefig(fig, "parity_pm7_vs_exp")
+    savefig(fig, "parity_pm7_vs_exp", "exploration")
 
 
 # ---------------------------------------------------------------------------
@@ -384,7 +387,7 @@ def plot_parity_pm7_vs_dft_kmeans(data):
                      "PM7 PA (kcal/mol)",
                      n_label="sites")
     fig.tight_layout()
-    savefig(fig, "parity_pm7_vs_dft_kmeans")
+    savefig(fig, "parity_pm7_vs_dft_kmeans", "exploration")
 
 
 # ---------------------------------------------------------------------------
@@ -395,7 +398,7 @@ def plot_pa_distribution(data):
     exp_pa = data["nist_mol"]["exp_pa_kcalmol"].dropna().values
     dft_pa = data["km_mol"]["dft_pa_kcalmol"].dropna().values
 
-    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+    fig, axes = plt.subplots(1, 2, figsize=(18, 6))
 
     for ax, vals, color, xlabel, title_lbl in [
         (axes[0], exp_pa, COLOR_NIST,
@@ -403,29 +406,37 @@ def plot_pa_distribution(data):
         (axes[1], dft_pa, COLOR_KM,
          "B3LYP/def2-TZVP PA (kcal/mol)", "k-means DFT Dataset"),
     ]:
-        n = len(vals)
+        n    = len(vals)
+        mean = np.mean(vals)
+        med  = np.median(vals)
+
         ax.hist(vals, bins=35, color=color, alpha=0.80,
                 edgecolor="white", linewidth=0.4, density=True)
-        ax.axvline(np.mean(vals), color="black", lw=2.0, ls="--",
-                   label=f"Mean: {np.mean(vals):.1f} kcal/mol")
-        ax.axvline(np.median(vals), color="black", lw=2.0, ls=":",
-                   label=f"Median: {np.median(vals):.1f} kcal/mol")
+        ax.axvline(mean, color="black", lw=2.0, ls="--",
+                   label=f"Mean: {mean:.1f} kcal/mol")
+        ax.axvline(med,  color="black", lw=2.0, ls=":",
+                   label=f"Median: {med:.1f} kcal/mol")
         ax.set_xlabel(xlabel)
         ax.set_ylabel("Probability Density")
         ax.set_title(title_lbl, fontsize=LABEL_SIZE - 2, pad=8)
-        ax.text(0.97, 0.97, f"N = {n} molecules",
-                transform=ax.transAxes, ha="right", va="top",
-                fontsize=LEGEND_SIZE - 1,
+
+        # Mean/median legend — slightly right of centre
+        ax.legend(framealpha=0.9, edgecolor="lightgray",
+                  fontsize=LEGEND_SIZE - 3, ncol=1,
+                  loc="upper center", bbox_to_anchor=(0.65, 0.97))
+
+        # N= just below the legend
+        ax.text(0.65, 0.76, f"N = {n} molecules",
+                transform=ax.transAxes, ha="center", va="top",
+                fontsize=LEGEND_SIZE - 3, fontweight="bold",
                 bbox=dict(boxstyle="round,pad=0.3", fc="white",
                           ec="lightgray", lw=0.8, alpha=0.9))
-        ax.legend(loc="upper left", framealpha=0.9, edgecolor="lightgray",
-                  fontsize=LEGEND_SIZE - 3)
+
         ax.xaxis.set_minor_locator(ticker.AutoMinorLocator(2))
         ax.yaxis.set_minor_locator(ticker.AutoMinorLocator(2))
 
-    fig.tight_layout()
-    savefig(fig, "pa_distribution")
-
+    fig.tight_layout(pad=1.5)
+    savefig(fig, "pa_distribution", "exploration")
 
 # ---------------------------------------------------------------------------
 # Plot 5 — PA vs Molecular Weight
@@ -462,7 +473,7 @@ def plot_pa_vs_mw(data):
         ax.yaxis.set_minor_locator(ticker.AutoMinorLocator(2))
 
     fig.tight_layout()
-    savefig(fig, "pa_vs_mw")
+    savefig(fig, "pa_vs_mw", "exploration")
 
 
 # ---------------------------------------------------------------------------
@@ -562,11 +573,14 @@ def plot_complexity_bottcher(data):
         ax.axvline(np.mean(vals), color=color, lw=2.2, ls="--", label=label)
     ax.set_xlabel("Böttcher Complexity Score (Structural & Electronic)")
     ax.set_ylabel("Probability Density")
-    ax.legend(framealpha=0.9, edgecolor="lightgray", loc="upper right")
+    ax.legend(framealpha=0.9, edgecolor="lightgray",
+              loc="upper left", bbox_to_anchor=(1.01, 1),
+              borderaxespad=0, fontsize=14)
     ax.xaxis.set_minor_locator(ticker.AutoMinorLocator(2))
     ax.yaxis.set_minor_locator(ticker.AutoMinorLocator(2))
     fig.tight_layout()
-    savefig(fig, "complexity_bottcher")
+    fig.subplots_adjust(right=0.72)
+    savefig(fig, "complexity_bottcher", "exploration")
 
 def plot_pa_dft_comparison(data):
     log.info("Plot 7: DFT PA comparison (apples-to-apples)")
@@ -598,12 +612,12 @@ def plot_pa_dft_comparison(data):
 
     ax.set_xlabel("B3LYP/def2-TZVP PA (kcal/mol)")
     ax.set_ylabel("Probability Density")
-    ax.legend(framealpha=0.9, edgecolor="lightgray")
+    ax.legend(framealpha=0.9, edgecolor="lightgray", loc="upper left")
     ax.xaxis.set_minor_locator(ticker.AutoMinorLocator(2))
     ax.yaxis.set_minor_locator(ticker.AutoMinorLocator(2))
 
     fig.tight_layout()
-    savefig(fig, "pa_dft_comparison")
+    savefig(fig, "pa_dft_comparison", "exploration")
 
 
 # ---------------------------------------------------------------------------
@@ -690,7 +704,7 @@ def plot_functional_groups(data):
     axes[0].invert_xaxis()  # left panel reads right-to-left for back-to-back layout
 
     fig.tight_layout()
-    savefig(fig, "functional_groups")
+    savefig(fig, "functional_groups", "exploration")
 
 
 # ---------------------------------------------------------------------------

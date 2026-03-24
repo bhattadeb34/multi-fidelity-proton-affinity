@@ -56,6 +56,7 @@ SCRIPT_DIR  = Path(__file__).parent
 PROJECT_DIR = SCRIPT_DIR.parent
 RESULTS_DIR = PROJECT_DIR / "results"
 FIG_DIR     = PROJECT_DIR / "figures"
+FIG_PERF    = FIG_DIR / "model_performance"
 
 KJMOL_TO_KCAL = 1 / 4.184
 
@@ -128,6 +129,8 @@ def get_best_model(dataset_name: str) -> str | None:
     mae_df = load_mae_summary(dataset_name)
     if mae_df is None:
         return None
+    # Exclude VotingEnsemble — it is not a standalone model
+    mae_df = mae_df[mae_df["model"] != "VotingEnsemble"]
     return mae_df.sort_values("mae_delta_mean").iloc[0]["model"]
 
 
@@ -243,10 +246,11 @@ def make_parity_plot(
     ax.yaxis.set_minor_locator(ticker.AutoMinorLocator(2))
 
     fig.tight_layout(pad=1.5)
-    fig.subplots_adjust(left=0.13, bottom=0.25)
+    fig.subplots_adjust(left=0.15, bottom=0.25)
 
-    for ext in ("pdf", "png"):
-        out = FIG_DIR / f"{output_stem}.{ext}"
+    for ext in ("pdf",):
+        out = FIG_PERF / f"{output_stem}.{ext}"
+        FIG_PERF.mkdir(parents=True, exist_ok=True)
         fig.savefig(out)
         log.info(f"    Saved {out.relative_to(PROJECT_DIR)}")
 
@@ -322,7 +326,7 @@ def make_model_comparison(
     ax.set_xticks(x)
     ax.set_xticklabels(sorted_models, rotation=40, ha="right",
                        fontsize=TICK_SIZE - 2)
-    ax.set_ylabel("Test MAE (kcal/mol)  [5-fold CV]", labelpad=12)
+    ax.set_ylabel("Test MAE (kcal/mol)\n[5-fold CV]", labelpad=12)
     ax.set_xlabel("Model")
     ax.yaxis.set_minor_locator(ticker.AutoMinorLocator(2))
 
@@ -334,8 +338,9 @@ def make_model_comparison(
 
     fig.tight_layout()
 
-    for ext in ("pdf", "png"):
-        out = FIG_DIR / f"{output_stem}.{ext}"
+    for ext in ("pdf",):
+        out = FIG_PERF / f"{output_stem}.{ext}"
+        FIG_PERF.mkdir(parents=True, exist_ok=True)
         fig.savefig(out)
         log.info(f"    Saved {out.relative_to(PROJECT_DIR)}")
 
@@ -438,8 +443,9 @@ def make_combined_parity(has_dft: bool):
     fig.tight_layout(pad=1.5)
 
     stem = "parity_combined" if has_dft else "parity_combined_pm7only"
-    for ext in ("pdf", "png"):
-        out = FIG_DIR / f"{stem}.{ext}"
+    for ext in ("pdf",):
+        out = FIG_PERF / f"{stem}.{ext}"
+        FIG_PERF.mkdir(parents=True, exist_ok=True)
         fig.savefig(out)
         log.info(f"  Saved {out.relative_to(PROJECT_DIR)}")
 

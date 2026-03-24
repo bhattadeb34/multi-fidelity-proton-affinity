@@ -55,6 +55,7 @@ DATA_DIR      = PROJECT_DIR / "data"
 TARGET_DIR    = DATA_DIR / "targets"
 RESULTS_DIR   = PROJECT_DIR / "results"
 FIG_DIR       = PROJECT_DIR / "figures"
+FIG_PERF    = FIG_DIR / "model_performance"
 
 KJMOL_TO_KCAL = 1 / 4.184
 
@@ -227,32 +228,42 @@ def run_learning_curve(
         pa_pm7_test  = pa_pm7_all[test_idx]
         pa_true_test = pa_true_all[test_idx]
 
-        X_train_full = X_all[train_idx]
-        y_train_full = y_all[train_idx]
-        n_train_full = len(train_idx)
+        X_train_full    = X_all[train_idx]
+        y_train_full    = y_all[train_idx]
+        pa_pm7_train_full  = pa_pm7_all[train_idx]
+        pa_true_train_full = pa_true_all[train_idx]
+        n_train_full    = len(train_idx)
 
         for frac in fractions:
             if frac >= 1.0:
-                # Use all training data
-                X_tr = X_train_full
-                y_tr = y_train_full
-                n_tr = n_train_full
+                X_tr        = X_train_full
+                y_tr        = y_train_full
+                pa_pm7_tr   = pa_pm7_train_full
+                pa_true_tr  = pa_true_train_full
+                n_tr        = n_train_full
             else:
-                n_tr = max(10, int(frac * n_train_full))
+                n_tr    = max(10, int(frac * n_train_full))
                 sub_idx = np.random.default_rng(seed + int(frac * 1000)).choice(
                     n_train_full, size=n_tr, replace=False)
-                X_tr = X_train_full[sub_idx]
-                y_tr = y_train_full[sub_idx]
+                X_tr       = X_train_full[sub_idx]
+                y_tr       = y_train_full[sub_idx]
+                pa_pm7_tr  = pa_pm7_train_full[sub_idx]
+                pa_true_tr = pa_true_train_full[sub_idx]
 
             model = build_model(model_name, seed)
             with warnings.catch_warnings():
                 warnings.simplefilter("ignore")
                 model.fit(X_tr, y_tr)
-                y_pred = model.predict(X_test)
+                y_pred_test  = model.predict(X_test)
+                y_pred_train = model.predict(X_tr)
 
-            # PA_pred = PA_PM7 + correction_ML
-            pa_pred = pa_pm7_test + y_pred
-            mae = mean_absolute_error(pa_true_test, pa_pred) * KJMOL_TO_KCAL
+            # Test MAE: PA_pred = PA_PM7 + correction_ML
+            pa_pred_test  = pa_pm7_test + y_pred_test
+            mae_test  = mean_absolute_error(pa_true_test,  pa_pred_test)  * KJMOL_TO_KCAL
+
+            # Train MAE
+            pa_pred_train = pa_pm7_tr + y_pred_train
+            mae_train = mean_absolute_error(pa_true_tr, pa_pred_train) * KJMOL_TO_KCAL
 
             rows.append({
                 "fraction":        frac,
@@ -260,10 +271,11 @@ def run_learning_curve(
                 "n_train_full":    n_train_full,
                 "n_total":         n_total,
                 "seed":            seed,
-                "mae_test":        mae,
+                "mae_test":        mae_test,
+                "mae_train":       mae_train,
             })
             log.info(f"    frac={frac:.2f}  n_train={n_tr:4d}  "
-                     f"seed={seed}  MAE={mae:.3f} kcal/mol")
+                     f"seed={seed}  MAE={mae_test:.3f} kcal/mol")
 
     return pd.DataFrame(rows)
 
@@ -282,17 +294,22 @@ def plot_learning_curve(
     ref_label: str | None = None,
 ):
     """
-    Plot learning curve: fraction of training data vs test MAE.
+    Plot learning curve: training set size vs test MAE and train MAE.
     Error bars from repeated seeds.
     """
-    # Aggregate across seeds
+    # Aggregate test MAE across seeds
     summary = (lc_df.groupby("fraction")["mae_test"]
                .agg(mae_mean="mean", mae_std="std")
                .reset_index())
-    # Get representative n_train (median across seeds) for each fraction
+    # Aggregate train MAE across seeds
+    summary_train = (lc_df.groupby("fraction")["mae_train"]
+                     .agg(train_mean="mean", train_std="std")
+                     .reset_index())
+    # Representative n_train per fraction
     n_trains = (lc_df.groupby("fraction")["n_train"]
                 .median().round().astype(int).reset_index())
-    summary = summary.merge(n_trains, on="fraction")
+    summary = summary.merge(n_trains,       on="fraction")
+    summary = summary.merge(summary_train,  on="fraction")
 
     plt.rcParams.update({
         "axes.linewidth":    SPINE_LW,
@@ -307,70 +324,158 @@ def plot_learning_curve(
         "savefig.bbox":      "tight",
     })
 
-    fig, ax = plt.subplots(figsize=(9, 6))
+    fig, ax = plt.subplots(figsize=(10, 6))
 
+    pct = summary["fraction"] * 100
+
+    # Test MAE
     ax.errorbar(
-        summary["fraction"] * 100,   # convert to percentage
-        summary["mae_mean"],
+        pct, summary["mae_mean"],
         yerr=summary["mae_std"],
-        fmt="o-",
-        color=color,
-        linewidth=2.0,
-        markersize=8,
-        capsize=5,
-        capthick=1.8,
-        elinewidth=1.8,
-        markeredgecolor="white",
-        markeredgewidth=0.8,
-        zorder=3,
-        label=f"Test MAE (n={n_total} total)",
+        fmt="o-", color=color,
+        linewidth=2.2, markersize=8,
+        capsize=5, capthick=1.8, elinewidth=1.8,
+        markeredgecolor="white", markeredgewidth=0.8,
+        zorder=3, label=f"Test MAE",
     )
 
-    # Reference line (e.g. Jin & Merz or full-data MAE)
+    # Train MAE — lighter shade of same color
+    train_color = "#888888"
+    ax.errorbar(
+        pct, summary["train_mean"],
+        yerr=summary["train_std"],
+        fmt="s--", color=train_color,
+        linewidth=2.0, markersize=7,
+        capsize=4, capthick=1.5, elinewidth=1.5,
+        markeredgecolor="white", markeredgewidth=0.8,
+        zorder=2, label=f"Train MAE",
+    )
+
+    # Reference line
     if ref_mae is not None:
-        ax.axhline(ref_mae, color="gray", linewidth=1.5, linestyle="--",
+        ax.axhline(ref_mae, color="black", linewidth=1.5, linestyle=":",
                    zorder=1, label=ref_label or f"Reference: {ref_mae:.2f} kcal/mol")
 
-    # Annotate last point
+    # Annotate last test point
     last = summary.iloc[-1]
     ax.annotate(
         f"Full data\n{last['mae_mean']:.2f} kcal/mol",
         xy=(last["fraction"] * 100, last["mae_mean"]),
-        xytext=(-55, 18),
+        xytext=(-60, 18),
         textcoords="offset points",
         fontsize=TICK_SIZE - 3,
-        arrowprops=dict(arrowstyle="->", color="black", lw=1.2),
-        color="black",
+        arrowprops=dict(arrowstyle="->", color=color, lw=1.2),
+        color=color, fontweight="bold",
     )
 
-    # Secondary x-axis showing absolute n_train
+    # Secondary x-axis: absolute n_train
     ax2 = ax.twiny()
     ax2.set_xlim(ax.get_xlim())
-    tick_fracs   = summary["fraction"].values
-    tick_pcts    = tick_fracs * 100
+    tick_pcts    = summary["fraction"].values * 100
     tick_ntrains = summary["n_train"].values
     ax2.set_xticks(tick_pcts)
     ax2.set_xticklabels([str(n) for n in tick_ntrains],
                          rotation=45, ha="left", fontsize=TICK_SIZE - 4)
-    ax2.set_xlabel("Training set size (N)", fontsize=LABEL_SIZE - 4, labelpad=8)
+    ax2.set_xlabel("Number of training molecules", fontsize=LABEL_SIZE - 4,
+                   labelpad=10)
 
-    ax.set_xlabel("Training set size (% of total, N=1155)")
-    ax.set_ylabel("Test set MAE (kcal/mol)")
-    ax.xaxis.set_minor_locator(ticker.AutoMinorLocator(2))
+    ax.set_xlabel("Training set size (%)", fontsize=LABEL_SIZE)
+    ax.set_ylabel("MAE (kcal/mol)", fontsize=LABEL_SIZE)
+    ax.set_title(title, fontsize=TITLE_SIZE, pad=28, fontweight="bold")
+    ax.legend(framealpha=0.9, edgecolor="lightgray", loc="upper right")
     ax.yaxis.set_minor_locator(ticker.AutoMinorLocator(2))
-    ax.grid(axis="y", linewidth=0.5, alpha=0.4, linestyle="--")
-    ax.grid(axis="x", linewidth=0.3, alpha=0.25, linestyle=":")
-    ax.set_axisbelow(True)
-    ax.legend(loc="upper right", framealpha=0.9, edgecolor="lightgray")
+    ax.xaxis.set_minor_locator(ticker.AutoMinorLocator(2))
+    ax.grid(axis="y", linewidth=0.5, alpha=0.35, linestyle="--")
 
     fig.tight_layout()
+    FIG_PERF.mkdir(parents=True, exist_ok=True)
+    out = FIG_PERF / f"{output_stem}.pdf"
+    fig.savefig(out)
+    log.info(f"    Saved {out}")
+    plt.close(fig)
 
-    FIG_DIR.mkdir(parents=True, exist_ok=True)
-    for ext in ("pdf", "png"):
-        out = FIG_DIR / f"{output_stem}.{ext}"
-        fig.savefig(out)
-        log.info(f"  Saved {out}")
+def plot_comparison(lc_pm7: pd.DataFrame, lc_dft: pd.DataFrame,
+                    n_total: int, output_stem: str):
+    """Overlay PM7-only vs PM7+DFT learning curves (test MAE + train MAE)."""
+    def aggregate(df):
+        test  = df.groupby("fraction")["mae_test"].agg(
+            mae_mean="mean", mae_std="std").reset_index()
+        train = df.groupby("fraction")["mae_train"].agg(
+            train_mean="mean", train_std="std").reset_index()
+        n_tr  = df.groupby("fraction")["n_train"].median(
+            ).round().astype(int).reset_index()
+        return test.merge(train, on="fraction").merge(n_tr, on="fraction")
 
+    s_pm7 = aggregate(lc_pm7)
+    s_dft = aggregate(lc_dft)
+
+    plt.rcParams.update({
+        "axes.linewidth":    SPINE_LW,
+        "xtick.major.width": SPINE_LW,
+        "ytick.major.width": SPINE_LW,
+        "xtick.labelsize":   TICK_SIZE,
+        "ytick.labelsize":   TICK_SIZE,
+        "axes.labelsize":    LABEL_SIZE,
+        "legend.fontsize":   18,
+        "figure.dpi":        300,
+        "savefig.dpi":       300,
+        "savefig.bbox":      "tight",
+    })
+
+    fig, ax = plt.subplots(figsize=(10, 6))
+    pct = s_pm7["fraction"] * 100
+
+    COLOR_PM7 = "#D01C8B"
+    COLOR_DFT = "#2166AC"
+
+    # Test MAE — solid lines
+    for s, color, label in [
+        (s_pm7, COLOR_PM7, "PM7 features — Test"),
+        (s_dft, COLOR_DFT, "PM7+DFT features — Test"),
+    ]:
+        ax.errorbar(pct, s["mae_mean"], yerr=s["mae_std"],
+                    fmt="o-", color=color, linewidth=2.2, markersize=8,
+                    capsize=5, capthick=1.8, elinewidth=1.8,
+                    markeredgecolor="white", markeredgewidth=0.8,
+                    zorder=3, label=label)
+
+    # Train MAE — dashed lines
+    for s, color, label in [
+        (s_pm7, COLOR_PM7, "PM7 features — Train"),
+        (s_dft, COLOR_DFT, "PM7+DFT features — Train"),
+    ]:
+        ax.errorbar(pct, s["train_mean"], yerr=s["train_std"],
+                    fmt="s--", color=color, linewidth=1.8, markersize=6,
+                    capsize=4, capthick=1.5, elinewidth=1.5,
+                    markeredgecolor="white", markeredgewidth=0.8,
+                    zorder=2, label=label, alpha=0.7)
+
+    # Secondary x-axis
+    ax2 = ax.twiny()
+    ax2.set_xlim(ax.get_xlim())
+    tick_pcts    = s_pm7["fraction"].values * 100
+    tick_ntrains = s_pm7["n_train"].values
+    ax2.set_xticks(tick_pcts)
+    ax2.set_xticklabels([str(n) for n in tick_ntrains],
+                         rotation=45, ha="left", fontsize=TICK_SIZE - 4)
+    ax2.set_xlabel("Number of training molecules", fontsize=LABEL_SIZE - 4,
+                   labelpad=10)
+
+    ax.set_xlabel("Training set size (%)", fontsize=LABEL_SIZE)
+    ax.set_ylabel("MAE (kcal/mol)", fontsize=LABEL_SIZE)
+    ax.set_title("Learning curve: PM7 vs PM7+DFT features (NIST)",
+                 fontsize=TITLE_SIZE, pad=28, fontweight="bold")
+    ax.legend(framealpha=0.9, edgecolor="lightgray", loc="upper right",
+              fontsize=LEGEND_SIZE - 3, ncol=2)
+    ax.yaxis.set_minor_locator(ticker.AutoMinorLocator(2))
+    ax.xaxis.set_minor_locator(ticker.AutoMinorLocator(2))
+    ax.grid(axis="y", linewidth=0.5, alpha=0.35, linestyle="--")
+
+    fig.tight_layout()
+    FIG_PERF.mkdir(parents=True, exist_ok=True)
+    out = FIG_PERF / f"{output_stem}.pdf"
+    fig.savefig(out)
+    log.info(f"    Saved {out}")
     plt.close(fig)
 
 
@@ -378,190 +483,117 @@ def plot_learning_curve(
 # Main
 # ---------------------------------------------------------------------------
 
-def main():
-    parser = argparse.ArgumentParser(
-        description="Learning curve analysis for NIST 1155 dataset.")
-    parser.add_argument("--no-dft", action="store_true",
-                        help="Skip DFT-augmented learning curve")
-    parser.add_argument("--model", default=None,
-                        help="Override best model (e.g. ExtraTrees)")
-    args = parser.parse_args()
+if __name__ == "__main__":
+    import json
 
-    FIG_DIR.mkdir(parents=True, exist_ok=True)
-    out_dir_pm7 = RESULTS_DIR / "learning_curve_nist_pm7"
-    out_dir_dft = RESULTS_DIR / "learning_curve_nist_dft"
-    out_dir_pm7.mkdir(parents=True, exist_ok=True)
+    FRACTIONS  = [0.08, 0.16, 0.24, 0.32, 0.40, 0.50,
+                  0.60, 0.70, 0.80, 0.90, 1.00]
+    SEEDS      = [42, 123, 456, 789, 1024]
+    TEST_FRAC  = 0.20
 
-    # ------------------------------------------------------------------ PM7
+    # ── Load NIST target data ────────────────────────────────────────────────
+    log.info("  Loading NIST target data ...")
+    tgt = pd.read_parquet(DATA_DIR / "targets" / "nist1155_ml.parquet")
+    log.info(f"    Total molecules: {len(tgt)}")
+
+    PA_PM7_COL  = "pm7_best_pa_kcalmol"
+    PA_TRUE_COL = "exp_pa_kcalmol"
+    if "correction_kcalmol" not in tgt.columns:
+        tgt["correction_kcalmol"] = tgt[PA_TRUE_COL] - tgt[PA_PM7_COL]
+    TARGET_COL = "correction_kcalmol"
+
+    # ── PM7-only learning curve ──────────────────────────────────────────────
     log.info("=" * 55)
     log.info("  Learning curve — PM7-only features")
     log.info("=" * 55)
 
-    log.info("Loading NIST target data ...")
-    df_nist = pd.read_parquet(TARGET_DIR / "nist1155_ml.parquet")
-    n_total = len(df_nist)
-    log.info(f"  Total molecules: {n_total}")
+    pm7_results_dir = RESULTS_DIR
+    pm7_features, pm7_model = get_optimal_features_pm7(pm7_results_dir)
 
-    log.info("Recovering optimal PM7 feature set ...")
-    pm7_features, best_model_pm7 = get_optimal_features_pm7(RESULTS_DIR)
-    if args.model:
-        best_model_pm7 = args.model
+    # Merge PM7 features into target
+    feat_all = pd.read_parquet(DATA_DIR / "features" / "nist1185_features.parquet")
+    feat_mol = feat_all.groupby("neutral_smiles").first().reset_index()
+    smiles_col = "neutral_smiles" if "neutral_smiles" in tgt.columns else "smiles"
+    avail_pm7  = [c for c in pm7_features if c in feat_mol.columns]
+    tgt_pm7    = tgt.merge(feat_mol[["neutral_smiles"] + avail_pm7],
+                            left_on=smiles_col, right_on="neutral_smiles",
+                            how="left", suffixes=("", "_feat"))
 
-    log.info(f"Running PM7 learning curve ({len(FRACTIONS)} fractions × {len(SEEDS)} seeds) ...")
-    lc_pm7 = run_learning_curve(
-        df           = df_nist,
-        feature_cols = pm7_features,
-        target_col   = "delta_pm7_exp",
-        pa_pm7_col   = "pm7_best_pa_kjmol",
-        pa_true_col  = "exp_pa_kjmol",
-        model_name   = best_model_pm7,
+    lc_pm7_df = run_learning_curve(
+        df           = tgt_pm7,
+        feature_cols = avail_pm7,
+        target_col   = TARGET_COL,
+        pa_pm7_col   = PA_PM7_COL,
+        pa_true_col  = PA_TRUE_COL,
+        model_name   = pm7_model,
         fractions    = FRACTIONS,
         seeds        = SEEDS,
         test_frac    = TEST_FRAC,
     )
-    lc_pm7.to_csv(out_dir_pm7 / "learning_curve_data.csv", index=False)
-    log.info(f"  Saved data → {out_dir_pm7}/learning_curve_data.csv")
 
-    # Full-data MAE from saved results (for reference line)
-    mae_pm7_path = RESULTS_DIR / "nist1155" / "mae_summary.csv"
-    ref_mae_pm7  = None
-    if mae_pm7_path.exists():
-        mae_df = pd.read_csv(mae_pm7_path)
-        best_row = mae_df.sort_values("mae_delta_mean").iloc[0]
-        ref_mae_pm7 = best_row["mae_delta_mean"]
+    out_pm7 = RESULTS_DIR / "learning_curve_nist_pm7" / "learning_curve_data.csv"
+    out_pm7.parent.mkdir(parents=True, exist_ok=True)
+    lc_pm7_df.to_csv(out_pm7, index=False)
+    log.info(f"    Saved data → {out_pm7}")
+
+    n_total     = int(lc_pm7_df["n_total"].iloc[0])
+    pm7_full_mae = float(lc_pm7_df[lc_pm7_df["fraction"] >= 1.0]["mae_test"].mean())
 
     plot_learning_curve(
-        lc_df       = lc_pm7,
-        title       = "Learning curve — NIST 1155 (PM7 features)",
+        lc_pm7_df,
+        title       = "Learning curve — PM7 features (NIST)",
         n_total     = n_total,
         output_stem = "learning_curve_nist_pm7",
-        color       = "#2166AC",
-        ref_mae     = ref_mae_pm7,
-        ref_label   = f"Full CV MAE: {ref_mae_pm7:.2f} kcal/mol ({best_model_pm7})" if ref_mae_pm7 else None,
+        color       = "#D01C8B",
     )
 
-    # ------------------------------------------------------------------ DFT
-    if args.no_dft:
-        log.info("Skipping DFT learning curve (--no-dft)")
-        print(f"\n  PM7 learning curve saved to: {FIG_DIR}/learning_curve_nist_pm7.*")
-        return
-
+    # ── PM7+DFT learning curve ───────────────────────────────────────────────
     log.info("=" * 55)
     log.info("  Learning curve — PM7+DFT features")
     log.info("=" * 55)
 
-    # Load DFT-augmented dataset
-    try:
-        from train_models_dft import load_dft_features, augment_with_dft, DFT_EXTRA_FEATURES
-        dft_df   = load_dft_features()
-        df_nist_dft = augment_with_dft(df_nist.copy(), dft_df,
-                                        join_cols=["neutral_smiles"])
-    except Exception as e:
-        log.warning(f"Could not load DFT features: {e}")
-        log.warning("Skipping DFT learning curve")
-        print(f"\n  PM7 learning curve saved to: {FIG_DIR}/learning_curve_nist_pm7.*")
-        return
+    dft_results_dir = RESULTS_DIR / "nist1155_dft"
+    dft_features, dft_model = get_optimal_features_dft(dft_results_dir)
 
-    log.info("Recovering optimal PM7+DFT feature set ...")
-    try:
-        dft_features, best_model_dft = get_optimal_features_dft(RESULTS_DIR)
-    except FileNotFoundError as e:
-        log.warning(str(e))
-        log.warning("Using PM7 feature set + all DFT extra features as fallback")
-        dft_features   = pm7_features + DFT_EXTRA_FEATURES
-        best_model_dft = best_model_pm7
+    avail_dft = [c for c in dft_features if c in feat_mol.columns]
+    tgt_dft   = tgt.merge(feat_mol[["neutral_smiles"] + avail_dft],
+                           left_on=smiles_col, right_on="neutral_smiles",
+                           how="left", suffixes=("", "_feat"))
 
-    if args.model:
-        best_model_dft = args.model
-
-    out_dir_dft.mkdir(parents=True, exist_ok=True)
-    log.info(f"Running DFT learning curve ({len(FRACTIONS)} fractions × {len(SEEDS)} seeds) ...")
-    lc_dft = run_learning_curve(
-        df           = df_nist_dft,
-        feature_cols = dft_features,
-        target_col   = "delta_pm7_exp",
-        pa_pm7_col   = "pm7_best_pa_kjmol",
-        pa_true_col  = "exp_pa_kjmol",
-        model_name   = best_model_dft,
+    lc_dft_df = run_learning_curve(
+        df           = tgt_dft,
+        feature_cols = avail_dft,
+        target_col   = TARGET_COL,
+        pa_pm7_col   = PA_PM7_COL,
+        pa_true_col  = PA_TRUE_COL,
+        model_name   = dft_model,
         fractions    = FRACTIONS,
         seeds        = SEEDS,
         test_frac    = TEST_FRAC,
     )
-    lc_dft.to_csv(out_dir_dft / "learning_curve_data.csv", index=False)
-    log.info(f"  Saved data → {out_dir_dft}/learning_curve_data.csv")
 
-    mae_dft_path = RESULTS_DIR / "nist1155_dft" / "mae_summary.csv"
-    ref_mae_dft  = None
-    if mae_dft_path.exists():
-        mae_df = pd.read_csv(mae_dft_path)
-        best_row = mae_df.sort_values("mae_delta_mean").iloc[0]
-        ref_mae_dft = best_row["mae_delta_mean"]
+    out_dft = RESULTS_DIR / "learning_curve_nist_dft" / "learning_curve_data.csv"
+    out_dft.parent.mkdir(parents=True, exist_ok=True)
+    lc_dft_df.to_csv(out_dft, index=False)
+    log.info(f"    Saved data → {out_dft}")
+
+    dft_full_mae = float(lc_dft_df[lc_dft_df["fraction"] >= 1.0]["mae_test"].mean())
 
     plot_learning_curve(
-        lc_df       = lc_dft,
-        title       = "Learning curve — NIST 1155 (PM7+DFT features)",
+        lc_dft_df,
+        title       = "Learning curve — PM7+DFT features (NIST)",
         n_total     = n_total,
         output_stem = "learning_curve_nist_dft",
-        color       = "#D01C8B",
-        ref_mae     = ref_mae_dft,
-        ref_label   = f"Full CV MAE: {ref_mae_dft:.2f} kcal/mol ({best_model_dft})" if ref_mae_dft else None,
+        color       = "#2166AC",
     )
 
-    # ---- Overlay plot: PM7 vs DFT on same axes ----
-    log.info("Generating overlay comparison plot ...")
+    # ── Overlay comparison ───────────────────────────────────────────────────
+    log.info("  Generating overlay comparison plot ...")
+    plot_comparison(lc_pm7_df, lc_dft_df, n_total,
+                    output_stem="learning_curve_nist_comparison")
 
-    summary_pm7 = (lc_pm7.groupby("fraction")["mae_test"]
-                   .agg(mae_mean="mean", mae_std="std").reset_index())
-    summary_dft = (lc_dft.groupby("fraction")["mae_test"]
-                   .agg(mae_mean="mean", mae_std="std").reset_index())
-
-    plt.rcParams.update({"figure.dpi": 300, "savefig.dpi": 300,
-                          "savefig.bbox": "tight",
-                          "axes.linewidth": SPINE_LW,
-                          "xtick.labelsize": TICK_SIZE,
-                          "ytick.labelsize": TICK_SIZE,
-                          "axes.labelsize":  LABEL_SIZE,
-                          "legend.fontsize": 18})
-
-    fig, ax = plt.subplots(figsize=(9, 6))
-
-    for summary, color, label in [
-        (summary_pm7, "#2166AC", "Without DFT features"),
-        (summary_dft, "#D01C8B", "With DFT features"),
-    ]:
-        ax.errorbar(
-            summary["fraction"] * 100,
-            summary["mae_mean"],
-            yerr=summary["mae_std"],
-            fmt="o-", color=color,
-            linewidth=2.0, markersize=8,
-            capsize=5, capthick=1.8, elinewidth=1.8,
-            markeredgecolor="white", markeredgewidth=0.8,
-            zorder=3, label=label,
-        )
-
-    ax.set_xlabel("Training set size (% of total, N=1155)")
-    ax.set_ylabel("Test set MAE (kcal/mol)")
-    ax.xaxis.set_minor_locator(ticker.AutoMinorLocator(2))
-    ax.yaxis.set_minor_locator(ticker.AutoMinorLocator(2))
-    ax.grid(axis="y", linewidth=0.5, alpha=0.4, linestyle="--")
-    ax.grid(axis="x", linewidth=0.3, alpha=0.25, linestyle=":")
-    ax.set_axisbelow(True)
-    ax.legend(loc="upper right", framealpha=0.9, edgecolor="lightgray")
-    fig.tight_layout()
-
-    for ext in ("pdf", "png"):
-        out = FIG_DIR / f"learning_curve_nist_comparison.{ext}"
-        fig.savefig(out)
-        log.info(f"  Saved {out}")
-    plt.close(fig)
-
-    print(f"\n  All learning curve figures saved to: {FIG_DIR}/")
+    print(f"\n  All learning curve figures saved to: {FIG_PERF}/")
     print(f"  Files:")
     print(f"    learning_curve_nist_pm7.*          — PM7 features only")
     print(f"    learning_curve_nist_dft.*          — PM7+DFT features")
     print(f"    learning_curve_nist_comparison.*   — overlay comparison")
-
-
-if __name__ == "__main__":
-    main()
