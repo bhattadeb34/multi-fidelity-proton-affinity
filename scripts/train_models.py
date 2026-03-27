@@ -33,7 +33,7 @@ Models (16)
 
 Outputs  (../results/{dataset_name}/)
 -------
-  cv_results.json         — MAE mean ± std per model, feature counts per fold
+  cv_results.json         — MAE mean ± std per model, feature counts per fold, selected features
   predictions.csv         — per-fold raw predictions (mol/site id, fold, true, pred,
                             pa_pm7, pa_pred, pa_true for final PA MAE computation)
   mae_summary.csv         — clean table: model, mae_delta_mean, mae_delta_std,
@@ -383,6 +383,9 @@ def run_cv(
     fold_results    = {m: {"mae_delta": [], "mae_pa": [],
                             "n_features": []} for m in []}
     feat_importance = {}
+    
+    # Store selected features for each fold
+    fold_selected_features = []
 
     for fold_idx, (train_idx, test_idx) in enumerate(kf.split(X_all)):
         log.info(f"\n  Fold {fold_idx+1}/{n_folds}  "
@@ -397,6 +400,10 @@ def run_cv(
             X_train_raw, y_train, feature_cols,
             variance_threshold, correlation_threshold,
         )
+        
+        # Track the selected features for this fold
+        fold_selected_features.append(sel_names)
+
         X_test_sel = apply_feature_selection(
             X_test_raw, X_train_raw, feature_cols, sel_names
         )
@@ -481,7 +488,14 @@ def run_cv(
 
     # Aggregate results
     summary_rows = []
-    cv_out = {"dataset": dataset_name, "unit": unit_label, "models": {}}
+    
+    # Store the tracked features into the output dictionary
+    cv_out = {
+        "dataset": dataset_name, 
+        "unit": unit_label, 
+        "selected_features_per_fold": fold_selected_features,
+        "models": {}
+    }
 
     for mname, res in fold_results.items():
         mae_d = [v for v in res["mae_delta"] if not np.isnan(v)]

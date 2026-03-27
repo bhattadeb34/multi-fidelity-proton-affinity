@@ -12,7 +12,7 @@ B3LYP/def2-TZVP DFT quantum descriptors not available from PM7:
   dft_neutral_freq_min_cm     — lowest vibrational frequency (neutral)
   dft_neutral_freq_max_cm     — highest vibrational frequency (neutral)
   dft_neutral_n_low_freq      — modes below 100 cm-1 (neutral)
-  dft_prot_*                  — same 8 features for protonated state
+  dft_prot_* — same 8 features for protonated state
   dft_delta_ZPE_kjmol         — ΔZPE (protonated - neutral)
   dft_delta_HOMO_LUMO_gap_eV  — Δgap from B3LYP (vs PM7 in base features)
   dft_delta_dipole_debye      — Δdipole from B3LYP
@@ -93,9 +93,14 @@ GPR_MAX_SAMPLES = 500
 # DFT extra features
 # ---------------------------------------------------------------------------
 
-DFT_EXTRA_FEATURES = [
+# All DFT features — used for NIST (target = PA_exp - PA_PM7, independent of
+# DFT enthalpies). NOTE: dft_neutral_H_total_Ha and dft_prot_H_total_Ha are
+# excluded from the k-means feature set (see DFT_EXTRA_FEATURES_KMEANS below)
+# because PA_DFT = (H_neutral - H_prot) * conversion + constant, meaning these
+# two features directly encode the k-means target (delta_dft_pm7 = PA_DFT - PA_PM7).
+DFT_EXTRA_FEATURES_NIST = [
     "dft_neutral_ZPE_kjmol",
-    "dft_neutral_H_total_Ha",
+    "dft_neutral_H_total_Ha",    # safe for NIST — PA_exp is independent
     "dft_neutral_n_basis",
     "dft_neutral_n_electrons",
     "dft_neutral_n_imaginary",
@@ -103,7 +108,7 @@ DFT_EXTRA_FEATURES = [
     "dft_neutral_freq_max_cm",
     "dft_neutral_n_low_freq",
     "dft_prot_ZPE_kjmol",
-    "dft_prot_H_total_Ha",
+    "dft_prot_H_total_Ha",       # safe for NIST — PA_exp is independent
     "dft_prot_n_basis",
     "dft_prot_n_electrons",
     "dft_prot_n_imaginary",
@@ -114,6 +119,34 @@ DFT_EXTRA_FEATURES = [
     "dft_delta_HOMO_LUMO_gap_eV",
     "dft_delta_dipole_debye",
 ]
+
+# k-means DFT features — absolute enthalpies excluded to prevent target leakage.
+# PA_DFT = (H_neutral - H_prot) * 2625.5 / 4.184 + const, so H_total_Ha values
+# would let the model trivially reconstruct the target (delta_dft_pm7 = PA_DFT - PA_PM7).
+DFT_EXTRA_FEATURES_KMEANS = [
+    "dft_neutral_ZPE_kjmol",
+    # "dft_neutral_H_total_Ha",  EXCLUDED — encodes PA_DFT for k-means
+    "dft_neutral_n_basis",
+    "dft_neutral_n_electrons",
+    "dft_neutral_n_imaginary",
+    "dft_neutral_freq_min_cm",
+    "dft_neutral_freq_max_cm",
+    "dft_neutral_n_low_freq",
+    "dft_prot_ZPE_kjmol",
+    # "dft_prot_H_total_Ha",     EXCLUDED — encodes PA_DFT for k-means
+    "dft_prot_n_basis",
+    "dft_prot_n_electrons",
+    "dft_prot_n_imaginary",
+    "dft_prot_freq_min_cm",
+    "dft_prot_freq_max_cm",
+    "dft_prot_n_low_freq",
+    "dft_delta_ZPE_kjmol",
+    "dft_delta_HOMO_LUMO_gap_eV",
+    "dft_delta_dipole_debye",
+]
+
+# Backward-compat alias used by augment_with_dft (always loads all columns)
+DFT_EXTRA_FEATURES = DFT_EXTRA_FEATURES_NIST
 
 
 def load_dft_features() -> pd.DataFrame:
@@ -170,15 +203,30 @@ def load_dft_features() -> pd.DataFrame:
 
 
 def augment_with_dft(df: pd.DataFrame, dft_df: pd.DataFrame,
-                     join_cols: list[str]) -> pd.DataFrame:
+                     join_cols: list[str],
+                     feature_list: list[str] | None = None) -> pd.DataFrame:
     """
     Left-join DFT extra features onto df using join_cols.
     For molecules without an exact protonated_smiles match,
     falls back to neutral_smiles-only join using the best (max H_total) DFT site.
+
+    Parameters
+    ----------
+    feature_list : which DFT features to attach. Defaults to DFT_EXTRA_FEATURES_NIST.
+                   Pass DFT_EXTRA_FEATURES_KMEANS for the k-means dataset to avoid
+                   leaking absolute enthalpy features into the target.
     """
+    if feature_list is None:
+        feature_list = DFT_EXTRA_FEATURES_NIST
+    # Always load all columns from dft_df, then filter to requested features
+    avail = [c for c in feature_list if c in dft_df.columns]
+    missing_feats = set(feature_list) - set(avail)
+    if missing_feats:
+        log.warning(f"  DFT features not in dataset: {missing_feats}")
+
     # Exact join on both neutral + protonated SMILES
     df_aug = df.merge(
-        dft_df[join_cols + DFT_EXTRA_FEATURES].drop_duplicates(subset=join_cols),
+        dft_df[join_cols + avail].drop_duplicates(subset=join_cols),
         on=join_cols, how="left",
     )
     n_exact = df_aug["dft_neutral_ZPE_kjmol"].notna().sum()
@@ -187,17 +235,19 @@ def augment_with_dft(df: pd.DataFrame, dft_df: pd.DataFrame,
     # Fallback: neutral-only join for unmatched rows
     unmatched = df_aug["dft_neutral_ZPE_kjmol"].isna()
     if unmatched.sum() > 0 and "neutral_smiles" in join_cols:
+        sort_col = ("dft_neutral_H_total_Ha"
+                     if "dft_neutral_H_total_Ha" in dft_df.columns else avail[0])
         best_per_mol = (
-            dft_df.sort_values("dft_neutral_H_total_Ha", ascending=False)
+            dft_df.sort_values(sort_col, ascending=False)
             .drop_duplicates(subset=["neutral_smiles"])
-            [["neutral_smiles"] + DFT_EXTRA_FEATURES]
-            .rename(columns={c: c + "_fb" for c in DFT_EXTRA_FEATURES})
+            [["neutral_smiles"] + avail]
+            .rename(columns={c: c + "_fb" for c in avail})
         )
         df_aug = df_aug.merge(best_per_mol, on="neutral_smiles", how="left")
-        for col in DFT_EXTRA_FEATURES:
+        for col in avail:
             mask = df_aug[col].isna() & df_aug[col + "_fb"].notna()
             df_aug.loc[mask, col] = df_aug.loc[mask, col + "_fb"]
-            df_aug.drop(columns=[col + "_fb"], inplace=True)
+            df_aug.drop(columns=[col + "_fb"], inplace=True, errors="ignore")
 
         n_fallback = df_aug["dft_neutral_ZPE_kjmol"].notna().sum() - n_exact
         log.info(f"  DFT join (fallback neutral-only): {n_fallback} additional rows")
@@ -407,6 +457,9 @@ def run_cv(df, target_col, pa_pm7_col, pa_true_col, dataset_name,
     fold_results  = {}
     feat_importance = {}
 
+    # Store selected features for each fold
+    fold_selected_features = []
+
     for fold_idx, (train_idx, test_idx) in enumerate(kf.split(X_all)):
         log.info(f"\n  Fold {fold_idx+1}/{n_folds}  "
                  f"(train={len(train_idx)}, test={len(test_idx)})")
@@ -420,6 +473,10 @@ def run_cv(df, target_col, pa_pm7_col, pa_true_col, dataset_name,
         X_train_sel, sel_names = select_features(
             X_train_raw, y_train, feature_cols,
             variance_threshold, correlation_threshold)
+        
+        # Track the selected features for this fold
+        fold_selected_features.append(sel_names)
+
         X_test_sel = apply_feature_selection(
             X_test_raw, X_train_raw, feature_cols, sel_names)
         log.info(f"    Selected {len(sel_names)} features  "
@@ -489,8 +546,15 @@ def run_cv(df, target_col, pa_pm7_col, pa_true_col, dataset_name,
                               for m in list(models)[:4]))
 
     summary_rows = []
-    cv_out = {"dataset": dataset_name, "unit": unit_label,
-              "feature_set": "PM7+DFT", "models": {}}
+    
+    # Store the tracked features into the output dictionary
+    cv_out = {
+        "dataset": dataset_name, 
+        "unit": unit_label,
+        "feature_set": "PM7+DFT", 
+        "selected_features_per_fold": fold_selected_features,
+        "models": {}
+    }
 
     for mname, res in fold_results.items():
         mae_d = [v for v in res["mae_delta"] if not np.isnan(v)]
@@ -573,7 +637,10 @@ def main():
     if args.dataset in ("all", "nist"):
         log.info("Loading NIST 1155 dataset ...")
         df_nist = pd.read_parquet(TARGET_DIR / "nist1155_ml.parquet")
-        df_nist = augment_with_dft(df_nist, dft_df, join_cols=["neutral_smiles"])
+        # NIST: full DFT feature set is safe — target is PA_exp (independent of DFT)
+        df_nist = augment_with_dft(df_nist, dft_df,
+                                    join_cols=["neutral_smiles"],
+                                    feature_list=DFT_EXTRA_FEATURES_NIST)
         run_cv(
             df           = df_nist,
             target_col   = "delta_pm7_exp",
@@ -589,8 +656,10 @@ def main():
     if args.dataset in ("all", "kmeans"):
         log.info("Loading k-means 251 dataset ...")
         df_km = pd.read_parquet(TARGET_DIR / "kmeans251_ml.parquet")
+        # k-means: exclude absolute enthalpies — they encode the DFT PA target
         df_km = augment_with_dft(df_km, dft_df,
-                                  join_cols=["neutral_smiles", "protonated_smiles"])
+                                  join_cols=["neutral_smiles", "protonated_smiles"],
+                                  feature_list=DFT_EXTRA_FEATURES_KMEANS)
         run_cv(
             df           = df_km,
             target_col   = "delta_dft_pm7",
