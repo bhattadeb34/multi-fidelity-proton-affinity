@@ -57,7 +57,40 @@ proton-affinity-paper/
 `data/`, `logs/`, and all `__pycache__/` / `*.log` / `catboost_info/`
 are gitignored. `results/` and `figures/` are kept in-repo (~31 MB
 total) so the paper's numbers and figures are viewable without
-retraining. Large raw data (~7 GB) is hosted externally.
+retraining.
+
+## Data
+
+The raw + processed datasets (~7 GB — NIST / k-means DFT outputs, PM7
+outputs, features, screening inputs and per-iteration outputs) are too
+large for GitHub and are **not** included in this repository. They
+will be released on **Zenodo** at the time of publication; the DOI and
+download link will be added here once available.
+
+To run any code that reads from `data/`, download the Zenodo archive,
+extract it at the repo root, and confirm the resulting layout matches
+the `data/` tree shown in *Repository layout* above:
+
+```
+proton-affinity-paper/
+├── data/                     # <-- extracted Zenodo archive goes here
+│   ├── 1185_molecules/
+│   ├── 251_molecules/
+│   ├── pm7/ | pm7_source_raw/
+│   ├── features/
+│   ├── processed/
+│   ├── targets/
+│   └── screening/
+├── scripts/
+├── ...
+```
+
+The scripts expect `data/` to sit at the repo root; no other path is
+configurable. `results/` and `figures/` (shipped in-repo) are the
+outputs of running the full pipeline against this `data/` tree, so
+reviewers who only want to inspect the paper's numbers or regenerate
+the figures (`python make_figures.py`) do **not** need to download
+the Zenodo archive.
 
 ## Setup
 
