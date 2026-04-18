@@ -41,6 +41,18 @@ All scripts assume:
 Scripts that need ``data/`` will fail with a self-explanatory
 FileNotFoundError if it is missing; this orchestrator reports that
 cleanly instead of crashing.
+
+Relation to the published figures
+---------------------------------
+This orchestrator regenerates *every* plot the code produces, which is
+a superset of what appears in the manuscript and SI. Some intermediate
+or diagnostic plots are not used in the paper. Several published
+figures are composites: individual panels are generated here, then
+joined, re-laid-out, or visually polished in PowerPoint (labels,
+arrows, panel letters, colour tweaks). All schematic / workflow
+diagrams in the paper are drawn in PowerPoint from scratch.  The
+underlying quantitative content always comes from the scripts in this
+repo; only the layout and schematics are hand-edited.
 """
 
 from __future__ import annotations

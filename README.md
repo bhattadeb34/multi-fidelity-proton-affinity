@@ -110,6 +110,17 @@ python make_figures.py                     # everything (~80 s on a laptop)
 Each step reports OK/FAIL with timing; use `-v` to stream a failing
 step's output or `--stop-on-error` to abort on the first failure.
 
+**Note on paper figures vs. generated output.** `make_figures.py`
+regenerates *every* plot produced by the code, which is a superset of
+what appears in the manuscript and SI — some intermediate/diagnostic
+plots are not used in the paper. Several published figures are also
+composites: individual panels are generated here, then joined,
+re-laid-out, or visually polished in PowerPoint (labels, arrows,
+panel letters, colour tweaks), and all schematic / workflow diagrams
+are drawn in PowerPoint from scratch. The underlying quantitative
+content always comes from the scripts in this repo; only the layout
+and schematics are hand-edited.
+
 ## Prospective screening
 
 See `screening/README.md` for the 7-stage pipeline
