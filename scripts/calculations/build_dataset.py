@@ -5,8 +5,8 @@ Parses B3LYP/def2-TZVP DFT data from two sources and builds a unified dataset.
 
 Sources
 -------
-  folder  : ../data/251_molecules/b3lyp_dft/Deb_B3LYP_dataset/mol_XXXXX/
-  json    : ../data/1185_molecules/1185_molecules/b3lyp_dft/results/mol_XXXXX.json
+  folder  : ../data/kmeans251/b3lyp_dft/molecule_folders/mol_XXXXX/
+  json    : ../data/nist1185/b3lyp_dft/results/mol_XXXXX.json
 
 Outputs  (written to ../data/processed/)
 -------
@@ -36,8 +36,8 @@ from datetime import datetime, timezone
 
 SCRIPT_DIR   = Path(__file__).parent
 DATA_DIR     = SCRIPT_DIR.parent.parent / "data"
-FOLDER_ROOT  = DATA_DIR / "251_molecules" / "b3lyp_dft" / "Deb_B3LYP_dataset"
-JSON_ROOT    = DATA_DIR / "1185_molecules" / "1185_molecules" / "b3lyp_dft" / "results"
+FOLDER_ROOT  = DATA_DIR / "kmeans251" / "b3lyp_dft" / "molecule_folders"
+JSON_ROOT    = DATA_DIR / "nist1185" / "b3lyp_dft" / "results"
 OUT_DIR      = DATA_DIR / "processed"
 
 HA_TO_KJMOL  = 2625.5          # Hartree -> kJ/mol

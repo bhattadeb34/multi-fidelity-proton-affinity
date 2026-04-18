@@ -13,9 +13,12 @@ DFT). See the manuscript + SI for methods, datasets, and results.
 ```
 proton-affinity-paper/
 ├── data/                    # All datasets (gitignored; hosted externally)
-│   ├── 1185_molecules/          # NIST B3LYP DFT results
-│   ├── 251_molecules/           # k-means B3LYP DFT results
-│   ├── pm7/ | pm7_source_raw/   # PM7 inputs + raw outputs
+│   ├── nist1185/                # NIST 1185-molecule B3LYP DFT JSONs
+│   │   └── b3lyp_dft/results/       # one JSON per molecule
+│   ├── kmeans251/               # k-means 251-molecule B3LYP DFT outputs
+│   │   ├── b3lyp_dft/molecule_folders/  # one folder per molecule
+│   │   └── pm7/                         # per-molecule PM7 master CSV
+│   ├── pm7/ | pm7_source_raw/   # Aggregated + raw PM7 per-site CSVs (NIST + k-means)
 │   ├── features/                # Featurized parquet/csv per dataset
 │   ├── processed/               # Parsed dataset.json / pm7_dataset.json
 │   ├── targets/                 # ML-ready parquet (NIST + k-means)
@@ -74,8 +77,8 @@ the `data/` tree shown in *Repository layout* above:
 ```
 proton-affinity-paper/
 ├── data/                     # <-- extracted Zenodo archive goes here
-│   ├── 1185_molecules/
-│   ├── 251_molecules/
+│   ├── nist1185/
+│   ├── kmeans251/
 │   ├── pm7/ | pm7_source_raw/
 │   ├── features/
 │   ├── processed/
