@@ -49,6 +49,7 @@ proton-affinity-paper/
 ├── figures/                 # Manuscript + SI PDFs/PNGs (~16 MB, in-repo)
 ├── logs/                    # Training logs (gitignored)
 ├── docs/                    # Reference material shipped with the repo
+├── make_figures.py         # regenerate every figure in the paper (one entry point)
 ├── requirements.txt
 └── README.md                # this file
 ```
@@ -87,16 +88,27 @@ python scripts/calculations/train_models_dft.py --dataset all   # + B3LYP ablati
 
 # 5. Summarize + plot
 python scripts/calculations/analyze_results.py
-python scripts/plotting/plot_results.py
-python scripts/plotting/plot_exploration.py
-python scripts/plotting/plot_chemical_analysis.py
 python scripts/calculations/learning_curve.py
-python scripts/plotting/plot_learning_curves.py
 python scripts/calculations/compute_shap.py
-python scripts/plotting/plot_shap.py
+python make_figures.py              # regenerate every figure in one go
 ```
 
 Figures land in `figures/` as both `.pdf` and `.png`.
+
+### Just the plots (for reviewers)
+
+If `results/` is already present (it ships with the repo), reviewers can
+skip training and regenerate every figure directly:
+
+```bash
+python make_figures.py --list              # show the 12 ordered steps
+python make_figures.py --only main         # main-paper figures only
+python make_figures.py --only screening    # prospective-screening figures
+python make_figures.py                     # everything (~80 s on a laptop)
+```
+
+Each step reports OK/FAIL with timing; use `-v` to stream a failing
+step's output or `--stop-on-error` to abort on the first failure.
 
 ## Prospective screening
 
