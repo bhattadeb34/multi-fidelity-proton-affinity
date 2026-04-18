@@ -1,0 +1,5 @@
+Calculation,Molecules,Jobs,Wall time,Credits,Cost (USD)
+"NIST dataset (pa_nist, 48270241)","1,155",10 parallel,~454 h total,41.93,$123.69
+"k-means dataset (pa_dft_ds, 48361776)",251 / 821 sites,8 parallel,~295 h total,27.24,$80.36
+Pareto 30 candidates (50630236),30,1,17.8 h,1.64,$4.84
+Total paper DFT,,,,70.81,$208.89

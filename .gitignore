@@ -27,14 +27,10 @@ Thumbs.db
 # Data (too large for GitHub ~6.9 GB; host externally)
 data/
 
-# Generated outputs — run scripts to reproduce
-processed/
-scratch/
-results/
-figures/
+# Generated outputs — run scripts to reproduce (keep results/ and figures/
+# in-repo so readers can see the paper numbers without retraining).
 logs/
-
-# CatBoost training artifacts
+# CatBoost scratch (TensorBoard events + per-iter TSVs)
 catboost_info/
 
 # Nohup / process files
@@ -44,4 +40,8 @@ nohup.out
 
 # Secrets
 *.pem
+*.p12
+id_rsa*
+*.key
+api_keys.txt
 ghp_*

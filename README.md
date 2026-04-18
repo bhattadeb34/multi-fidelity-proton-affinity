@@ -1,93 +1,62 @@
 # Proton Affinity Prediction via Multi-Fidelity Delta Learning
 
-**Authors**: Debjyoti Bhattacharya, Wesley F. Reinhart
-**Affiliation**: Materials Science and Engineering, Pennsylvania State University
+**Authors**: Debjyoti Bhattacharya, Yifan Liu, Valentino R. Cooper, Wesley F. Reinhart
+**Affiliations**: Pennsylvania State University; Oak Ridge National Laboratory
 
-## Overview
+Code and data-processing pipeline accompanying the manuscript. The model
+predicts a signed correction to a PM7 semi-empirical proton affinity
+against a higher-fidelity reference (experimental or B3LYP/def2-TZVP
+DFT). See the manuscript + SI for methods, datasets, and results.
 
-A multi-fidelity machine learning framework for proton affinity (PA) prediction using delta learning: the model predicts the signed correction between PM7 semi-empirical calculations and a higher-fidelity reference (experimental or B3LYP/def2-TZVP DFT), enabling accurate PA prediction at PM7 computational cost.
-
-**Datasets**
-- **NIST 1155**: 1155 molecules with experimental PA from NIST/Jin & Merz 2025. Target = PA_exp − PA_PM7.
-- **k-means 251**: 251 structurally diverse molecules with B3LYP/def2-TZVP DFT PA at site level. Target = PA_DFT − PA_PM7.
-
-**Key results**
-- NIST 1155: ExtraTrees MAE = **2.87 ± 0.30 kcal/mol** (65% reduction over raw PM7 MAE of 8.21 kcal/mol)
-- k-means 251: ExtraTrees MAE = **6.85 ± 0.58 kcal/mol** (62% reduction over raw PM7 MAE of 17.96 kcal/mol)
-- DFT feature ablation: adding B3LYP descriptors (ZPE, H_total, freq) yields no improvement on NIST; marginal improvement on k-means — PM7-level features are sufficient
-
----
-
-## Repository Structure
+## Repository layout
 
 ```
 proton-affinity-paper/
+├── data/                    # All datasets (gitignored; hosted externally)
+│   ├── 1185_molecules/          # NIST B3LYP DFT results
+│   ├── 251_molecules/           # k-means B3LYP DFT results
+│   ├── pm7/ | pm7_source_raw/   # PM7 inputs + raw outputs
+│   ├── features/                # Featurized parquet/csv per dataset
+│   ├── processed/               # Parsed dataset.json / pm7_dataset.json
+│   ├── targets/                 # ML-ready parquet (NIST + k-means)
+│   └── screening/               # Prospective-screening datasets
+│       ├── zinc_raw/                # Raw ZINC + Morgan fingerprints
+│       ├── processed/               # FAISS index, PCA metadata
+│       └── iter{1,2,3}/             # Per-iteration candidates/PM7/DFT
 │
-├── data/                              # Raw and processed data (~6.9 GB, not in repo)
-│   ├── 1185_molecules/
-│   │   └── b3lyp_dft/results/         # 1185 B3LYP/def2-TZVP DFT JSONs
-│   ├── 251_molecules/
-│   │   └── b3lyp_dft/                 # k-means 251 DFT calculations (folder-based)
-│   ├── pm7_source_raw/                # Raw PM7 PA CSVs (NIST + k-means)
-│   ├── pm7/                           # Additional PM7 data
-│   ├── Merz-and-hogni-dataset.xlsx    # Jin & Merz 2025 experimental PA
-│   ├── processed/                     # Parsed JSON datasets (dataset.json, pm7_dataset.json)
-│   ├── features/                      # Featurized datasets (.parquet + .csv)
-│   │   ├── nist1185_features.parquet
-│   │   ├── kmeans251_features.parquet
-│   │   ├── dft251_features.parquet
-│   │   └── feature_manifest.json
-│   └── targets/                       # ML-ready targets with features
-│       ├── nist1155_ml.parquet
-│       └── kmeans251_ml.parquet
+├── scripts/                 # ML / analysis / plotting
+│   ├── calculations/            # Dataset build + model training
+│   │   ├── build_dataset.py         # DFT JSONs -> processed/dataset.json
+│   │   ├── build_pm7_dataset.py     # PM7 CSVs  -> processed/pm7_dataset.json
+│   │   ├── build_targets.py         # Features + targets -> data/targets/
+│   │   ├── featurize/               # MACCS/Morgan/RDKit/Mordred/PM7/site
+│   │   ├── train_models.py          # 5-fold CV, 14 models, PM7 features
+│   │   ├── train_models_dft.py      # Same + B3LYP ablation
+│   │   ├── learning_curve.py        # Learning-curve sweeps
+│   │   ├── compute_shap.py          # SHAP over trained ExtraTrees
+│   │   ├── analyze_results.py       # Summarize CV results
+│   │   └── select_kmeans_1024.py    # k-means selection of 1024 ZINC mols
+│   ├── plotting/                # All manuscript + SI figures
+│   └── analysis/                # Site-agreement, feature counts, Tanimoto bias
 │
-├── scripts/                           # All pipeline scripts
-│   ├── build_dataset.py               # Parse DFT folder/JSON → data/processed/dataset.json
-│   ├── build_pm7_dataset.py           # Parse PM7 CSVs → data/processed/pm7_dataset.json
-│   ├── build_targets.py               # Join features + targets → data/targets/
-│   ├── featurize/                     # Feature generation modules
-│   │   ├── build_features.py          # Orchestrator (MACCS, Morgan, RDKit, PM7, Mordred, site)
-│   │   ├── fp_maccs.py                # 167 MACCS keys
-│   │   ├── fp_morgan.py               # 1024 Morgan fingerprints (radius=2)
-│   │   ├── desc_rdkit.py              # 210 RDKit descriptors × 3 states
-│   │   ├── desc_pm7.py                # 13 PM7 quantum descriptors × 3 states
-│   │   ├── desc_mordred.py            # Mordred 2D/3D descriptors
-│   │   └── desc_site.py               # Site-level features
-│   ├── train_models.py                # 5-fold CV, 15 models, PM7 features only
-│   ├── train_models_dft.py            # Same + B3LYP DFT features (ablation study)
-│   ├── analyze_results.py             # Print/summarize CV results
-│   ├── plot_results.py                # Parity plots + model comparison figures
-│   ├── plot_exploration.py            # Data exploration figures
-│   └── learning_curve.py             # Learning curve analysis (NIST dataset)
+├── screening/               # Prospective-screening code (data -> data/screening/)
+│   └── scripts/{execution,plotting}/
 │
-├── results/                           # CV outputs (generated by train_models*.py)
-│   ├── nist1155/                      # PM7-only features
-│   ├── nist1155_dft/                  # PM7 + DFT features
-│   ├── kmeans251/                     # PM7-only features
-│   ├── kmeans251_dft/                 # PM7 + DFT features
-│   ├── learning_curve_nist_pm7/       # Learning curve data (PM7)
-│   └── learning_curve_nist_dft/       # Learning curve data (PM7+DFT)
+├── pm7_scripts/             # Stand-alone PM7 (MOPAC) PA pipeline
+├── dft_scripts/             # Stand-alone B3LYP/def2-TZVP DFT PA pipeline
 │
-├── figures/                           # Publication figures (PDF + PNG)
-│   ├── parity_*.pdf/png               # Parity plots (4 tasks)
-│   ├── parity_combined.pdf/png        # 2×2 combined parity panel
-│   ├── model_comparison_*.pdf/png     # Model comparison bar charts
-│   ├── learning_curve_*.pdf/png       # Learning curves
-│   ├── complexity_bottcher.pdf/png    # Böttcher complexity distributions
-│   ├── functional_groups.pdf/png      # Functional group prevalence
-│   ├── pa_distribution.pdf/png        # PA distributions
-│   ├── pa_vs_mw.pdf/png               # PA vs molecular weight
-│   ├── pa_dft_comparison.pdf/png      # DFT PA: NIST vs k-means
-│   └── parity_pm7_vs_*.pdf/png        # Baseline parity plots
-│
-├── logs/                              # Run logs
-├── manuscript/                        # Paper draft
-├── notebooks/                         # Exploratory notebooks
+├── results/                 # CV / SHAP / learning-curve outputs (~15 MB, in-repo)
+├── figures/                 # Manuscript + SI PDFs/PNGs (~16 MB, in-repo)
+├── logs/                    # Training logs (gitignored)
+├── docs/                    # Reference material shipped with the repo
 ├── requirements.txt
-└── README.md
+└── README.md                # this file
 ```
 
----
+`data/`, `logs/`, and all `__pycache__/` / `*.log` / `catboost_info/`
+are gitignored. `results/` and `figures/` are kept in-repo (~31 MB
+total) so the paper's numbers and figures are viewable without
+retraining. Large raw data (~7 GB) is hosted externally.
 
 ## Setup
 
@@ -95,92 +64,64 @@ proton-affinity-paper/
 pip install -r requirements.txt
 ```
 
-Requires: `rdkit`, `numpy`, `pandas`, `scikit-learn`, `xgboost`, `lightgbm`, `catboost`, `mordred`, `matplotlib`, `scipy`, `openpyxl`.
+Core deps: `rdkit`, `numpy`, `pandas`, `scikit-learn`, `xgboost`,
+`lightgbm`, `catboost`, `mordred`, `matplotlib`, `faiss-cpu`, `scipy`,
+`openpyxl`. `pyscf` + `gpu4pyscf` are needed only for the DFT pipeline.
 
----
-
-## Run Order
-
-### 1. Parse raw data
+## Reproducing the main paper
 
 ```bash
-python scripts/build_dataset.py       # DFT JSONs → data/processed/dataset.json
-python scripts/build_pm7_dataset.py   # PM7 CSVs  → data/processed/pm7_dataset.json
+# 1. Parse raw data
+python scripts/calculations/build_dataset.py
+python scripts/calculations/build_pm7_dataset.py
+
+# 2. Featurize
+python scripts/calculations/featurize/build_features.py --dataset all
+
+# 3. Build ML targets
+python scripts/calculations/build_targets.py
+
+# 4. Train (5-fold CV, 14 models)
+python scripts/calculations/train_models.py     --dataset all   # PM7-only
+python scripts/calculations/train_models_dft.py --dataset all   # + B3LYP ablation
+
+# 5. Summarize + plot
+python scripts/calculations/analyze_results.py
+python scripts/plotting/plot_results.py
+python scripts/plotting/plot_exploration.py
+python scripts/plotting/plot_chemical_analysis.py
+python scripts/calculations/learning_curve.py
+python scripts/plotting/plot_learning_curves.py
+python scripts/calculations/compute_shap.py
+python scripts/plotting/plot_shap.py
 ```
 
-### 2. Build features
+Figures land in `figures/` as both `.pdf` and `.png`.
+
+## Prospective screening
+
+See `screening/README.md` for the 7-stage pipeline
+(`01_build_index.py` -> `07_pareto_select.py` -> DFT -> `11_parse_dft_files.py`).
+
+## Quantum-chemistry pipelines (PM7 / DFT)
+
+Self-contained, so others can compute fresh PA data for arbitrary SMILES
+without touching the ML code:
+
+| Folder         | What it does                                | Requirements                                                |
+|----------------|---------------------------------------------|-------------------------------------------------------------|
+| `pm7_scripts/` | Parallel PM7 PA via MOPAC                   | `mopac`, `rdkit`, `pandas`, `tqdm`                          |
+| `dft_scripts/` | B3LYP/def2-TZVP PA via PySCF (+ gpu4pyscf)  | `pyscf`, `rdkit`, `geometric`; optional `gpu4pyscf` + CUDA  |
+
+Each folder has its own README with install, CSV format, local + SLURM
+usage, and output layout. All cluster-specific settings
+(`--account`, `--partition`, conda env path) are confined to the two
+`submit_*.sh` templates and marked with `<...>` placeholders.
+
+## Sanity checks / auxiliary analyses
 
 ```bash
-python scripts/featurize/build_features.py --dataset all
-# Outputs: data/features/nist1185_features.parquet
-#          data/features/kmeans251_features.parquet
-#          data/features/dft251_features.parquet
+python scripts/analysis/verify_features.py         # feature-count check
+python scripts/analysis/analyze_site_agreement.py  # PM7 site-selection
+python scripts/analysis/tanimoto_bias_analysis.py  # Tanimoto-bias figure
 ```
-
-### 3. Build ML targets
-
-```bash
-python scripts/build_targets.py
-# Outputs: data/targets/nist1155_ml.parquet
-#          data/targets/kmeans251_ml.parquet
-```
-
-### 4. Train models
-
-```bash
-# PM7 features only (primary results)
-python scripts/train_models.py --dataset all
-
-# PM7 + DFT features (ablation study)
-python scripts/train_models_dft.py --dataset all
-```
-
-### 5. Analyze and plot
-
-```bash
-python scripts/analyze_results.py
-python scripts/plot_results.py
-python scripts/plot_exploration.py
-python scripts/learning_curve.py
-```
-
-All figures saved to `figures/` as both `.pdf` and `.png`.
-
----
-
-## Methods
-
-**Delta learning framework**
-
-$$\text{PA}_{\text{pred}} = \text{PA}_{\text{PM7}} + \hat{\Delta}, \quad \Delta = \text{PA}_{\text{target}} - \text{PA}_{\text{PM7}}$$
-
-Using a signed correction means the model learns both the direction and magnitude of the PM7 error. MAE on the correction equals MAE on the final PA.
-
-**Features (7344 total per site)**
-- 167 MACCS keys
-- 1024 Morgan fingerprints (radius=2, count)
-- 630 RDKit descriptors (neutral + protonated + delta states)
-- 39 PM7 quantum descriptors (HOMO/LUMO, dipole, HOF, etc. × 3 states)
-- 5478 Mordred descriptors (2D + 3D × 3 states)
-- 6 site features (element, index, n_sites)
-
-**Feature selection (in-fold, no leakage)**
-1. Variance filter (threshold = 0.01)
-2. Correlation filter (Pearson |r| > 0.95, keep higher target correlation)
-3. LassoCV (inner 5-fold CV)
-4. 1-SE rule (parsimony — fewest features within 1 SE of best)
-
-**Models (15)**
-Ridge, Lasso, ElasticNet, BayesianRidge, SVR, DecisionTree, RandomForest, ExtraTrees, GradientBoosting, AdaBoost, XGBoost, LightGBM, CatBoost, MLP, VotingEnsemble
-
-**Evaluation**: 5-fold CV with stratified splits, MAE reported in kcal/mol.
-
----
-
-## References
-
-- Jin, X.; Merz, K. M. *J. Chem. Theory Comput.* **2025** — experimental PA dataset and direct prediction baseline (MAE = 2.47 kcal/mol)
-- Becke, A. D. *J. Chem. Phys.* **1993**, *98*, 5648 — B3LYP functional
-- Weigend, F.; Ahlrichs, R. *Phys. Chem. Chem. Phys.* **2005**, *7*, 3297 — def2-TZVP basis set
-- Stewart, J. J. P. *J. Mol. Model.* **2013**, *19*, 1–32 — PM7 method
-- NIST WebBook: https://webbook.nist.gov
