@@ -131,9 +131,9 @@ python make_figures.py              # regenerate every figure in one go
 
 Figures land in `figures/` as both `.pdf` and `.png`.
 
-### Just the plots (for reviewers)
+### Just the plots
 
-If `results/` is already present (it ships with the repo), reviewers can
+If `results/` is already present (it ships with the repo), one can
 skip training and regenerate every figure directly:
 
 ```bash
