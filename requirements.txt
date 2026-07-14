@@ -11,3 +11,4 @@ matplotlib
 openpyxl
 pyarrow
 tqdm
+seaborn

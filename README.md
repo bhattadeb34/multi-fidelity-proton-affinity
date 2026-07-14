@@ -38,6 +38,7 @@ proton-affinity-paper/
 │   │   ├── learning_curve.py        # Learning-curve sweeps
 │   │   ├── compute_shap.py          # SHAP over trained ExtraTrees
 │   │   ├── analyze_results.py       # Summarize CV results
+│   │   ├── dataset_molecules_selection.py  # k-means selection of DFT/PM7 molecules from ZINC
 │   │   └── select_kmeans_1024.py    # k-means selection of 1024 ZINC mols
 │   ├── plotting/                # All manuscript + SI figures
 │   └── analysis/                # Site-agreement, feature counts, Tanimoto bias
@@ -156,6 +157,28 @@ panel letters, colour tweaks), and all schematic / workflow diagrams
 are drawn in PowerPoint from scratch. The underlying quantitative
 content always comes from the scripts in this repo; only the layout
 and schematics are hand-edited.
+
+## Dataset molecule selection (k-means)
+
+`scripts/calculations/dataset_molecules_selection.py` reproduces the
+k-means-based DFT/PM7 molecule selection from the filtered ZINC library.
+Input: `data/screening/zinc_raw/filtered_821k.csv` (available in the Zenodo archive).
+
+```bash
+# Reproduce the paper's 256 DFT + PM7 selection
+python scripts/calculations/dataset_molecules_selection.py \
+    --input data/screening/zinc_raw/filtered_821k.csv \
+    --output-dir data/screening/kmeans_selection/ \
+    --n-dft 256 --n-pm7-per-dft 64
+
+# Optional: also generate latent-space plot
+python scripts/calculations/dataset_molecules_selection.py \
+    --input data/screening/zinc_raw/filtered_821k.csv --plot
+```
+
+Running this on `filtered_821k.csv` with `random_state=42` reproduces
+the exact 256 DFT molecules used in the paper (verified against
+`DFT_enhanced_256molecules_20250904_140333.csv`).
 
 ## Prospective screening
 
