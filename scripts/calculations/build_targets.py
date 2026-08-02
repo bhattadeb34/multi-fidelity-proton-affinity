@@ -10,7 +10,7 @@ Target definitions
 NIST 1155-molecule dataset  (nist1185_features.parquet)
   Source: PM7 calculations + experimental PA from NIST (via DFT JSON files)
   Level:  molecule-level — one row per molecule (best PM7 site)
-  Target: delta_pm7_exp = |exp_pa_kjmol - pm7_best_pa_kjmol|
+  Target: delta_pm7_exp = exp_pa_kjmol - pm7_best_pa_kjmol  (signed)
   Also records:
     pm7_best_pa_kjmol   — max PM7 PA across all sites for that molecule
     exp_pa_kjmol        — NIST experimental PA
@@ -19,7 +19,7 @@ NIST 1155-molecule dataset  (nist1185_features.parquet)
 k-means 251-molecule dataset  (kmeans251_features.parquet)
   Source: PM7 calculations + B3LYP/def2-TZVP DFT (from folder records)
   Level:  site-level — one row per (molecule, site)
-  Target: delta_dft_pm7 = |dft_pa_site_kjmol - pm7_pa_site_kjmol|
+  Target: delta_dft_pm7 = dft_pa_kjmol - pm7_pa_kjmol  (signed)
   Also records:
     dft_pa_kjmol        — B3LYP DFT PA for this site
     pm7_pa_kjmol        — PM7 PA for this site
@@ -138,7 +138,7 @@ def build_nist_targets(exp_map: dict[str, float]) -> pd.DataFrame:
     From nist1185_features.parquet:
       1. Join exp_pa onto each row via neutral_smiles
       2. For each molecule, select the best-site row (max pm7_pa_kjmol)
-      3. Compute delta_pm7_exp = |exp_pa - pm7_best_pa|
+      3. Compute delta_pm7_exp = exp_pa - pm7_best_pa (signed)
 
     Returns molecule-level DataFrame (one row per molecule).
     """
@@ -191,7 +191,7 @@ def build_kmeans_targets(dft_site_map: pd.DataFrame) -> pd.DataFrame:
     """
     From kmeans251_features.parquet:
       1. Join DFT site PA via (neutral_smiles, protonated_smiles)
-      2. Compute delta_dft_pm7 = |dft_pa - pm7_pa| per site
+      2. Compute delta_dft_pm7 = dft_pa - pm7_pa per site (signed)
 
     Returns site-level DataFrame.
     """
