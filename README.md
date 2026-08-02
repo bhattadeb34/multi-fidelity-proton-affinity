@@ -68,8 +68,7 @@ retraining.
 The raw + processed datasets (~7 GB — NIST / k-means DFT outputs, PM7
 outputs, features, screening inputs and per-iteration outputs) are too
 large for GitHub and are **not** included in this repository. They
-will be released on **Zenodo** at the time of publication; the DOI and
-download link will be added here once available.
+are archived on **Zenodo**: [10.5281/zenodo.19672952](https://doi.org/10.5281/zenodo.19672952).
 
 To run any code that reads from `data/`, download the Zenodo archive,
 extract it at the repo root, and confirm the resulting layout matches
