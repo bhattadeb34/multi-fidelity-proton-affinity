@@ -103,9 +103,9 @@ for ax, (xc, yc, xl, yl) in zip(axes, projections):
     # Cluster centroids
     ax.scatter(x_cen, y_cen, s=26, marker='+', c=CEN_COLOR,
                alpha=0.85, linewidths=1.0, zorder=3)
-    # DFT representatives
-    ax.scatter(x_dft, y_dft, s=24, c=DFT_COLOR, alpha=0.90,
-               edgecolors=DFT_EDGE, linewidths=0.5, zorder=5)
+    # DFT representatives (open circles so centroids remain visible)
+    ax.scatter(x_dft, y_dft, s=24, facecolors='none', edgecolors=DFT_COLOR,
+               linewidths=1.2, zorder=5)
 
     ax.set_xlim(xr)
     ax.set_ylim(yr)
@@ -145,8 +145,8 @@ legend_elements = [
     Line2D([0], [0], marker='P', color='none', markerfacecolor=CEN_COLOR,
            markeredgecolor=CEN_COLOR, markersize=5,
            label='Cluster centroids (256)'),
-    Line2D([0], [0], marker='o', color='none', markerfacecolor=DFT_COLOR,
-           markeredgecolor=DFT_EDGE, markeredgewidth=0.8, markersize=5,
+    Line2D([0], [0], marker='o', color='none', markerfacecolor='none',
+           markeredgecolor=DFT_COLOR, markeredgewidth=1.2, markersize=5,
            label='Selected representatives (256)'),
 ]
 

@@ -185,6 +185,15 @@ the exact 256 DFT molecules used in the paper (verified against
 See `screening/README.md` for the 7-stage pipeline
 (`01_build_index.py` -> `07_pareto_select.py` -> DFT -> `11_parse_dft_files.py`).
 
+**LLM verification (Stage 6):** The production run used Claude Opus 4.6 via
+Google Vertex AI (`vertex_ai/claude-opus-4-6@default`) at `temperature=0`,
+querying all 2,323 PM7-converged candidates. The full API call log is included
+in the Zenodo archive at `screening/logs/llm_verify_claude.log`; every call
+records the model string and provider, enabling independent verification.
+Filter decisions are archived at `screening/data/iter1/llm_verdicts.parquet`.
+The default model in `06_llm_verify.py` has been updated to match the
+production run — no additional configuration is needed to reproduce.
+
 ## Quantum-chemistry pipelines (PM7 / DFT)
 
 Self-contained, so others can compute fresh PA data for arbitrary SMILES

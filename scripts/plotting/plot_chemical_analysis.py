@@ -18,9 +18,10 @@ import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
 from scipy.stats import gaussian_kde
 from rdkit import Chem
-from rdkit.Chem import Descriptors
+from rdkit.Chem import Descriptors, rdDepictor
 from rdkit.Chem.Draw import rdMolDraw2D
 from rdkit import RDLogger
+rdDepictor.SetPreferCoordGen(True)
 RDLogger.DisableLog("rdApp.*")
 from io import BytesIO
 from PIL import Image, ImageOps
@@ -208,6 +209,7 @@ def mol_to_image(smiles: str, size=(1200, 840)):
         mol = Chem.MolFromSmiles(smiles)
         if mol is None:
             return None
+        rdDepictor.Compute2DCoords(mol)
         drawer = rdMolDraw2D.MolDraw2DCairo(size[0], size[1])
         opts = drawer.drawOptions()
         opts.addStereoAnnotation = False
@@ -238,6 +240,7 @@ def mol_to_image_dark(smiles: str, size=(1200, 840)):
         mol = Chem.MolFromSmiles(smiles)
         if mol is None:
             return None
+        rdDepictor.Compute2DCoords(mol)
 
         tw, th = int(size[0]), int(size[1])
         margin = 0.94

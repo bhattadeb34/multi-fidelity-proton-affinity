@@ -21,18 +21,18 @@ Reads from:
 Writes to:
     data/screening/iter{N}/llm_verdicts.parquet
 
-Usage:
-    # Gemini via API key (original method):
-    python screening/scripts/06_llm_verify.py --iter 1
+Production run (paper): Claude Opus 4.6 via Vertex AI, temperature=0, all 2,323
+candidates queried. Logged in logs/llm_verify_claude.log.
 
-    # Vertex AI with service account (recommended):
+Usage:
+    # Claude Opus 4.6 via Vertex AI (used for paper):
     python screening/scripts/06_llm_verify.py --iter 1 \\
-        --model vertex_ai/gemini-2.0-pro-preview \\
+        --model vertex_ai/claude-opus-4-6@default \\
         --vertex-key /path/to/service-account.json
 
     # Dry run (first 20 molecules only):
     python screening/scripts/06_llm_verify.py --iter 1 --dry-run \\
-        --model vertex_ai/gemini-2.0-pro-preview \\
+        --model vertex_ai/claude-opus-4-6@default \\
         --vertex-key /path/to/service-account.json
 
     # Skip LLM entirely (rule-based only):
@@ -286,6 +286,7 @@ def query_llm(row: dict, model: str,
             {"role": "user",   "content": prompt},
         ],
         max_tokens=512,
+        temperature=0,
     )
 
     # Authentication
@@ -515,9 +516,9 @@ if __name__ == "__main__":
         "--iter", type=int, default=1,
         help="Screening iteration number (default: 1)")
     parser.add_argument(
-        "--model", default="gemini/gemini-2.5-flash",
-        help="LiteLLM model string (default: gemini/gemini-2.5-flash). "
-             "For Vertex AI use e.g. vertex_ai/gemini-2.0-pro-preview")
+        "--model", default="vertex_ai/claude-opus-4-6@default",
+        help="LiteLLM model string (default: vertex_ai/claude-opus-4-6@default). "
+             "Paper production run used this model via Vertex AI at temperature=0.")
     parser.add_argument(
         "--vertex-key", default=None, metavar="PATH",
         help="Path to Vertex AI service account JSON key file. "

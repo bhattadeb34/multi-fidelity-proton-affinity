@@ -293,6 +293,8 @@ def _setup_parity_ax(ax, x, y, color, xlabel, ylabel, n_label="molecules"):
     ax.set_ylabel(ylabel, fontsize=LABEL_SIZE)
     ax.xaxis.set_minor_locator(ticker.AutoMinorLocator(2))
     ax.yaxis.set_minor_locator(ticker.AutoMinorLocator(2))
+    ax.set_axisbelow(True)
+    ax.grid(True, linestyle=":", linewidth=0.5, alpha=0.4, color="gray")
 
     # Stats box shifted outside plot to the right
     stats_text = f"MAE = {mae:.2f} kcal/mol\nR² = {r2:.3f}\nN = {mask.sum()} {n_label}"
@@ -683,6 +685,8 @@ def plot_parity_combined(data):
                        width=P_SPINE, length=3.5)
         ax.tick_params(axis="both", which="minor", width=P_SPINE * 0.7,
                        length=2.0)
+        ax.set_axisbelow(True)
+        ax.grid(True, linestyle=":", linewidth=0.7, alpha=0.55, color="gray")
 
         # Stats legend inside the plot — bold text, dark border
         n_display = override_n if override_n is not None else mask.sum()

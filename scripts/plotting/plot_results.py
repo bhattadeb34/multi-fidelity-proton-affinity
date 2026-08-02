@@ -193,6 +193,8 @@ def make_combined_parity(has_dft: bool):
                        width=SPINE_LW, length=7, pad=10)
         ax.tick_params(axis="both", which="minor", width=SPINE_LW * 0.5,
                        length=4)
+        ax.set_axisbelow(True)
+        ax.grid(True, linestyle=":", linewidth=0.7, alpha=0.55, color="gray")
 
         # Stats box — bold text, dark border, bottom right
         stats_text = (
@@ -360,6 +362,8 @@ def _draw_single_parity(
                    colors="black", labelcolor="black")
     ax.tick_params(axis="both", which="minor", width=0.8, length=2.0,
                    colors="black")
+    ax.set_axisbelow(True)
+    ax.grid(True, linestyle=":", linewidth=0.7, alpha=0.55, color="gray")
 
     stats_text = (
         f"MAE = {mae_m:.2f} ± {mae_s:.2f}\n"
