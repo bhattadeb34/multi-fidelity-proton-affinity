@@ -64,8 +64,8 @@ def load_paired(base_name: str, ref_col: str = "pa_true") -> pd.DataFrame:
     no  = no[no["model"]  == MODEL].copy()
     dft = dft[dft["model"] == MODEL].copy()
     merged = no.merge(
-        dft[["fold", "record_id", "pa_pred"]].rename(columns={"pa_pred": "pa_pred_dft"}),
-        on=["fold", "record_id"], how="inner"
+        dft[["fold", "sample_idx", "pa_pred"]].rename(columns={"pa_pred": "pa_pred_dft"}),
+        on=["fold", "sample_idx"], how="inner"
     )
     merged["ref_kcal"]   = merged[ref_col] * KJMOL_TO_KCAL
     merged["delta_pred"] = (merged["pa_pred_dft"] - merged["pa_pred"]) * KJMOL_TO_KCAL
