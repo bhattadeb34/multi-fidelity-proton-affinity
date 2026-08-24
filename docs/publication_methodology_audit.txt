@@ -1,0 +1,94 @@
+# Publication methodology audit
+
+This audit records the code-level checks applied after correcting the target
+construction and k-means validation workflow. It distinguishes production
+estimates from descriptive or sensitivity analyses so that the repository does
+not overstate what any artifact establishes.
+
+## Production estimates
+
+- NIST uses shuffled five-fold `KFold` because it contains one row per
+  molecule.
+- k-means uses five-fold `GroupKFold(record_id)` so every protonation site for
+  a molecule remains in one outer fold.
+- Imputation and all four feature-selection stages are fitted only on each
+  outer training fold. The outer held-out predictions therefore remain free of
+  direct target or molecule overlap.
+- The production pool deliberately excludes every `delta_*` column. This
+  preserves the submitted feature definition but also excludes legitimate
+  neutral-to-protonated descriptor differences along with label-like deltas.
+  A molecule-grouped sensitivity run allowing descriptor deltas (while still
+  excluding target columns explicitly) selected 74 such features across the
+  five folds and changed k-means RandomForest MAE from 7.4355 to 7.1522
+  kcal/mol. It is archived as a sensitivity result rather than substituted
+  into the production/screening model.
+- The screening model is a final full-data refit on the 51 features occurring
+  in at least three of the five k-means folds. The reported 7.4355 kcal/mol CV
+  MAE is the fold-specific pipeline estimate; it is not labeled as a separate
+  CV measurement of that final fixed-feature refit. A fixed-consensus
+  sensitivity result is archived with the production bundle.
+
+## Corrected inherited issues
+
+- DFT-augmented k-means validation previously split site rows rather than
+  molecules. It now uses the same molecule-grouped outer folds as production.
+- NIST DFT descriptors previously came from the first stored protonation site.
+  They now come from the minimum-protonated-enthalpy site defining maximum
+  molecular DFT PA.
+- k-means DFT descriptors now require an exact neutral/protonated-SMILES join;
+  substitution from another protonation site is prohibited.
+- Absolute neutral and protonated DFT enthalpies remain excluded from the
+  k-means DFT ablation because their difference algebraically encodes its DFT
+  PA target.
+- Learning-curve k-means holdouts and fractional subsamples are molecule
+  grouped, use the production selector, use exact site-resolved DFT joins, and
+  instantiate the model identified by the corresponding CV bundle.
+- SHAP reconstruction now fails if any consensus feature is absent. SHAP is a
+  descriptive explanation of a final full-data refit, not out-of-fold causal
+  evidence.
+- Screening featurization and prediction now fail closed on unsupported,
+  unavailable, missing, or entirely-NaN consensus features.
+- Screening index construction/retrieval now fails closed if SA scoring is
+  unavailable, index rows are misaligned, training molecules cannot be loaded
+  for exclusion, or candidate SMILES are duplicated. The frozen index passes
+  these checks (821,435 aligned metadata/fingerprint/FAISS rows, no missing SA
+  scores).
+- Screening Morgan features use the same radius-2, 1,024-bin hashed count
+  representation as training. Screening Mordred features call the same
+  deterministic ETKDGv3/MMFF implementation as training.
+
+## Interpretation boundaries
+
+- The `uncertainty` field retained for artifact compatibility is the standard
+  deviation across RandomForest trees. Figures and text call it **ensemble
+  dispersion**; it is not a calibrated prediction interval.
+- The inner `LassoCV` uses ordinary five-fold splits within each outer training
+  set. This cannot expose an outer held-out molecule and therefore does not
+  bias the reported outer-fold error. A group-aware inner split would be a
+  defensible alternative hyperparameter-tuning scheme, but adopting it would
+  define a different selector and require a new production/screening run.
+- Limiting the supervised correlation pool to the leading 1,500 training-fold
+  features is disclosed as a computational dimension reduction. Removing the
+  cap changed k-means RandomForest MAE from 7.4355 to 7.5015 kcal/mol and NIST
+  ExtraTrees MAE from 2.8652 to 2.8905 kcal/mol in the fixed-split sensitivity
+  driver while taking roughly three times longer.
+- Ranking many algorithms on the same outer CV gives a comparative model
+  benchmark, not an independent confirmatory error estimate for the winning
+  algorithm.
+- The DFT-feature experiments are expensive-descriptor ablations. They are not
+  presented as low-cost deployed screening models.
+- The LLM stage is a deterministic-temperature chemistry screen, not ground
+  truth. Final lead nomination also applies deterministic stability/motif rules
+  and records the remaining manual chemical judgement.
+
+## Artifact validation
+
+Each regenerated CV directory must contain mutually consistent
+`cv_results.json`, `predictions.csv`, `mae_summary.csv`, and
+`validation_report.json`. The validator recomputes every per-fold MAE from the
+prediction rows, checks model and sample coverage, checks feature counts, and
+verifies that each molecule occurs in exactly one held-out fold. It also records
+whether the exact GroupKFold assignment reconstructs under the installed
+scikit-learn version; exact tie-breaking can vary across library versions and
+is therefore informative rather than the portable leakage criterion. Screening
+and DFT archives carry stage summaries and SHA-256 manifests.

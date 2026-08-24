@@ -1,0 +1,39 @@
+{
+  "result_dir": "results/nist1155_no_pm7_descriptors",
+  "dataset": "nist1155_no_pm7_descriptors",
+  "cv_strategy": "KFold",
+  "group_col": null,
+  "checks": {
+    "n_samples_by_model": {
+      "ExtraTrees": 1155
+    },
+    "selected_feature_counts": [
+      190,
+      214,
+      222,
+      212,
+      170
+    ]
+  },
+  "recomputed": {
+    "ExtraTrees": {
+      "mae_delta_per_fold": [
+        2.9527909908288033,
+        2.8464860985572766,
+        3.147751338225189,
+        2.4793925167407505,
+        3.199552319907624
+      ],
+      "mae_pa_per_fold": [
+        2.952790990828803,
+        2.8464860985572766,
+        3.1477513382251896,
+        2.47939251674075,
+        3.1995523199076277
+      ],
+      "mae_pa_mean": 2.9251946528519293
+    }
+  },
+  "failures": [],
+  "valid": true
+}

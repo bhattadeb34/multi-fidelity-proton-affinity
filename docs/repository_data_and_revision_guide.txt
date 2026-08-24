@@ -1,0 +1,340 @@
+# Repository, data, and corrected-revision guide
+
+This guide explains how to combine the GitHub repository with the externally
+archived data, how to inspect or reproduce the corrected results, and which
+parts of the computational workflow changed relative to the original
+submission. It is intended to be the starting point for an independent audit
+or reproduction attempt.
+
+## 1. Sources of truth
+
+The corrected computational record has two components:
+
+1. **GitHub repository**
+   (`https://github.com/bhattadeb34/multi-fidelity-proton-affinity`): code,
+   validated result bundles, regenerated figures, execution logs, environment
+   metadata, screening artifact tables, and the complete corrected prospective
+   30-candidate DFT archive.
+2. **Corrected dated Zenodo data release**: the large NIST and k-means DFT
+   calculations, PM7 outputs, molecular features, processed datasets,
+   corrected targets, screening inputs, raw LLM records, and prospective DFT
+   calculations that are not stored in Git. The corrected DOI will be inserted
+   before submission.
+
+The default branch is `master`. Release tags and Zenodo records should identify
+the exact commit used for each public archive.
+
+## 2. Assemble the repository and data
+
+Clone the default branch:
+
+```bash
+git clone https://github.com/bhattadeb34/multi-fidelity-proton-affinity.git
+cd multi-fidelity-proton-affinity
+git checkout master
+```
+
+The complete Zenodo release provides sibling `code/`, `data/`, and
+`artifacts/` directories:
+
+```text
+multi-fidelity-proton-affinity-release-YYYYMMDD/
+├── code/
+│   ├── results/
+│   ├── screening/
+│   ├── scripts/
+│   └── ...
+├── data/
+└── artifacts/
+    ├── plot_inputs/
+    ├── features/
+    └── model_checkpoints/
+│   ├── nist1185/
+│   ├── kmeans251/
+│   ├── pm7/
+│   ├── pm7_source_raw/
+│   ├── features/
+│   ├── processed/
+│   ├── targets/
+│   └── screening/
+```
+
+Run commands from `code/`. The scripts support both the sibling Zenodo layout
+and a `data/` directory placed inside a standalone Git clone. A symbolic link
+is also valid for a standalone clone when the data are stored elsewhere:
+
+```bash
+ln -s /absolute/path/to/extracted/data data
+```
+
+Do not commit `data/`; it is intentionally excluded by `.gitignore`.
+
+The `artifacts/` directory is included in the complete release rather than the
+Git repository. It contains compact, reloadable derivatives for quick review.
+Every artifact records its source hash. It can be rebuilt without changing the
+source data:
+
+```bash
+python scripts/reproducibility/build_quick_artifacts.py
+python scripts/reproducibility/export_model_checkpoints.py --dataset all
+python scripts/reproducibility/validate_quick_artifacts.py
+```
+
+### Authoritative target files
+
+The corrected dated release already contains these authoritative files:
+
+```text
+data/targets/nist1155_ml.parquet
+data/targets/kmeans251_ml.parquet
+```
+
+For a byte-identical rerun, they must have the following SHA-256 hashes:
+
+```text
+e64457acb93384e8d67c76b10d9a89282640f7c06d36dae50e78e738225f165e  data/targets/nist1155_ml.parquet
+5d0d3011159cc00aedb1282eeda71655d046e43744d30d8fcbdaee371961151b  data/targets/kmeans251_ml.parquet
+67d9a52d8d32b42e5af0629ea52cd35fa7a88aa03be1713f5f057cdc0f556bab  data/processed/dataset.json
+```
+
+Verify them with:
+
+```bash
+shasum -a 256 \
+  data/targets/nist1155_ml.parquet \
+  data/targets/kmeans251_ml.parquet \
+  data/processed/dataset.json
+```
+
+No manual replacement step is needed. Parquet files written by different
+Arrow versions can have different byte hashes despite equivalent tables. Use
+the archived copies when testing byte-level integrity. Full provenance is in
+`docs/input_data_fingerprints.json`.
+
+## 3. What can be inspected without the Zenodo data
+
+The GitHub repository alone is sufficient to inspect the model and analysis
+outputs:
+
+- production CV results: `results/nist1155/` and `results/kmeans251/`;
+- DFT descriptor ablations and controls: `results/*_dft*/`;
+- learning curves: `results/learning_curve_*/`;
+- SHAP values and provenance: `results/{nist1155,kmeans251}/shap/`;
+- regenerated manuscript and SI plots: `figures/`, including
+  `figures/screening/`;
+- machine-readable validation and checksum manifests beside each bundle;
+- controlled-run logs: `docs/publication_run_logs/`.
+
+The complete screening tables, raw LLM responses, prospective DFT files, and
+database records are kept together in the Zenodo `data/screening/` tree. With
+that data directory in place, figures can be regenerated without repeating
+model fitting, PM7, LLM, or DFT calculations:
+
+```bash
+conda env create -f environment.yml
+conda activate mfpa-py310
+python make_figures.py --only main --stop-on-error -v
+python make_figures.py --only screening --stop-on-error -v
+```
+
+For exact reproduction on Linux x86_64, use
+`conda-lock-py310-linux-64.txt` followed by the hash-locked
+`requirements-lock-py310-linux-x86_64.txt`, as described in
+`docs/EXACT_REPRODUCIBILITY.txt`.
+
+## 4. Full model reproduction
+
+After assembling `data/` and installing the environment, run from the
+repository root:
+
+```bash
+# Rebuild parsed and ML-ready inputs when starting from raw data.
+python scripts/calculations/build_dataset.py
+python scripts/calculations/build_pm7_dataset.py
+python scripts/calculations/featurize/build_features.py --dataset all
+python scripts/calculations/build_targets.py \
+  --output-dir reproduction/targets
+
+# Production and DFT-ablation cross-validation.
+python scripts/calculations/train_models.py --dataset all
+python scripts/calculations/train_models_dft.py --dataset all
+python scripts/calculations/train_models_dft_control.py --control dft-only
+
+# Downstream analyses.
+python scripts/calculations/learning_curve.py --datasets all
+python scripts/calculations/compute_shap.py --dataset all
+python scripts/analysis/aggregation_analysis.py --results-dir results/kmeans251
+python scripts/analysis/tanimoto_bias_analysis.py
+python scripts/analysis/compute_cost_analysis.py
+python make_figures.py
+```
+
+Use `build_targets.py --dry-run` to test target assembly without writing files.
+Existing target outputs are protected unless `--force` is supplied. The exact
+execution order and acceptance criteria are recorded in
+`docs/publication_rerun_checklist.txt`.
+
+Validate regenerated CV bundles with:
+
+```bash
+python scripts/analysis/validate_result_bundle.py results/nist1155 --write-report
+python scripts/analysis/validate_result_bundle.py \
+  results/kmeans251 --group-col record_id --write-report
+python scripts/calculations/audit_preprocessing_equivalence.py
+```
+
+## 5. Corrected authoritative results
+
+All MAEs are in kcal/mol.
+
+| Analysis | Corrected result |
+|---|---:|
+| NIST production, ExtraTrees | 2.8731 +/- 0.2643 |
+| k-means production, molecule-grouped RandomForest | 7.4355 +/- 1.0013 |
+| NIST + DFT descriptors, ExtraTrees | 2.8599 +/- 0.2324 |
+| k-means + DFT descriptors, molecule-grouped CatBoost | 5.6142 +/- 0.4518 |
+| NIST DFT-only correction, ExtraTrees | 3.1738 +/- 0.2371 |
+| Prospective 30-candidate ML versus DFT | 3.9932 |
+| Prospective raw PM7 versus DFT | 13.5071 |
+
+The corrected k-means raw PM7 site-level MAE is 10.2567, and the PM7 plus
+training-fold bias baseline is 8.2348 +/- 1.0170. The production model thus
+reduces error by 27.5% relative to raw PM7 and about 9.7% relative to the
+bias-corrected baseline.
+
+The corrected screening funnel is:
+
+```text
+821,435 library molecules
+  -> 2,456 retrieved
+  -> 2,368 PM7 successes (5,948 sites) + 88 recorded failures
+  -> 1,760 molecules in the predicted PA window
+  -> 615 LLM-eligible molecules in the window
+  -> 30 Pareto candidates
+  -> 30 completed DFT calculations
+  -> 29 in the DFT target window
+  -> 26 lead-eligible candidates
+  -> 5 priority leads
+```
+
+## 6. What changed relative to the original submission
+
+### Target construction and validation
+
+- The k-means site rows now use their correct site-specific DFT targets rather
+  than broadcasting a molecule-level value across all protonation sites.
+- All protonation sites from the same molecule remain together in each outer
+  k-means fold through `GroupKFold(record_id)`. This is the production
+  estimate; the row-wise split is retained only as a labeled audit control.
+- Imputation, variance filtering, correlation filtering, and Lasso selection
+  are fitted only on the outer training fold.
+- DFT-augmented k-means descriptors now require exact neutral/protonated
+  SMILES matches. Cross-site fallback is prohibited.
+- NIST DFT descriptors are taken from the protonation site that defines the
+  maximum molecular DFT PA, not the first stored site.
+- Absolute DFT enthalpies that algebraically encode the DFT target are
+  excluded from the k-means DFT ablation.
+
+These corrections changed the principal k-means claim from an ExtraTrees MAE
+of 6.85 against an incorrect 17.96 raw-PM7 baseline to a molecule-grouped
+RandomForest MAE of 7.4355 against the corrected 10.2567 raw-PM7 baseline.
+Consequently, the quoted reduction changes from 61.8% to 27.5% relative to raw
+PM7.
+
+### Feature selection and interpretation
+
+- The production selector uses the minimum inner-CV error and is applied
+  consistently inside outer folds. The historical comments describing a
+  one-standard-error rule did not match the implemented calculation and were
+  corrected.
+- The reported production feature pool contains 5,295 features because all
+  `delta_*` columns remain excluded. A separately labeled sensitivity analysis
+  retaining legitimate descriptor-delta features gives k-means RandomForest
+  MAE 7.1522; it is not substituted for the production model.
+- The 1,500-feature supervised correlation pool is documented as a
+  computational reduction and accompanied by an uncapped sensitivity result.
+- SHAP uses the current deployed tree models and exact consensus features:
+  150 with NIST ExtraTrees and 51 with k-means RandomForest. SHAP is presented
+  as descriptive full-data interpretation, not out-of-fold causal evidence.
+- RandomForest tree-to-tree standard deviation is called **ensemble
+  dispersion**, not calibrated predictive uncertainty.
+
+### Learning curves and DFT ablations
+
+- Every k-means learning-curve holdout and fractional training subset is
+  molecule grouped. All recorded cells have zero molecule overlap.
+- Learning curves instantiate the model identified by the corresponding CV
+  bundle and use the production feature selector.
+- DFT-feature experiments are explicitly labeled expensive-descriptor
+  ablations rather than deployed low-cost screening models.
+
+### Prospective screening
+
+- Screening Morgan fingerprints now match training: radius 2, 1,024 hashed
+  count bins, with identical column semantics.
+- Screening Mordred descriptors use the same deterministic ETKDGv3/MMFF 3D
+  workflow as training.
+- Index construction, candidate retrieval, PM7 merging, featurization, and
+  prediction fail closed on row misalignment, duplicates, missing SA scores,
+  missing training exclusions, unsupported features, or all-NaN required
+  columns.
+- Site predictions are aggregated to a molecule using the maximum predicted
+  PA, matching the physical maximum-PA definition.
+- Configured LLM `accept` and `flag` verdicts both remain eligible for Pareto
+  selection. The production run used Claude Opus 4.6 at temperature zero.
+  Only failed or schema-invalid responses were retried, using the same model,
+  scientific prompt, and settings.
+- The corrected candidate pool, Pareto selection, all 30 DFT calculations,
+  stability review, deterministic eligibility rules, and top-five ranking are
+  frozen with checksums.
+
+### Computational cost and figures
+
+- Cost claims now come from recorded SLURM and inference benchmarks. The
+  supported hardware-crossed speedup is approximately 500x on the NIST timing
+  basis and 1,500x on the k-means timing basis, rather than 10,000x.
+- Recorded k-means DFT time is 0.34-2.50 GPU-hours per molecule, with a mean
+  of 1.18 hours, rather than 30-60 hours per molecule.
+- Model, ablation, learning-curve, SHAP, chemical-analysis, screening, and SI
+  figures were regenerated from the corrected artifacts. Submission-era
+  screening plots and duplicate learning-curve CSVs were removed.
+
+## 7. What did not require recomputation
+
+- The underlying raw NIST and k-means electronic-structure calculations in
+  the Zenodo archive remain the source data; the correction concerns target
+  assembly, validation, downstream analysis, and screening consistency.
+- The final NIST production estimate is effectively unchanged in scientific
+  terms.
+- The 51-feature k-means screening consensus remained unchanged after the
+  final NIST-only numerical reproducibility correction, so the completed PM7,
+  LLM, Pareto, and prospective DFT stages did not require another rerun.
+
+## 8. Artifact and documentation map
+
+| Location | Purpose |
+|---|---|
+| `docs/publication_results_summary.txt` | Concise authoritative numerical results |
+| `docs/publication_methodology_audit.txt` | Leakage audit and interpretation boundaries |
+| `docs/publication_rerun_checklist.txt` | Commands, rerun order, and acceptance criteria |
+| `docs/input_data_fingerprints.json` | Exact controlled-rerun input hashes |
+| `docs/clean_env_versions.json` | Controlled software environment |
+| `docs/publication_run_logs/` | Execution logs and manifest |
+| `results/*/validation_report.json` | Per-bundle reconciliation checks |
+| `figures/SHA256SUMS` | Main figure manifest |
+| `figures/screening/SHA256SUMS` | Corrected screening figure manifest |
+| `data/screening/iter1/` | Frozen screening tables and LLM provenance |
+| `data/screening/dft_validation/iter1_20260813/` | Complete current 30-candidate DFT archive and lead selection |
+| `data/screening/database_validation/top5_20260816/` | PubChem/ZINC retrieval code, normalized tables, raw responses, structure records, and checksums for the provisional five leads |
+
+## 9. Recommended distribution package
+
+For a complete independent reproduction package, distribute:
+
+1. the GitHub `master` branch or a ZIP generated from the release commit;
+2. the corrected dated Zenodo data release;
+3. this guide.
+
+This separation keeps the large reusable scientific inputs in the data
+archive while keeping corrected code, derived results, prospective DFT
+validation, and provenance under version control.

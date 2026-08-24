@@ -1,0 +1,140 @@
+{
+  "nist1155": {
+    "dataset": "nist1155",
+    "definition": "Absolute Pearson correlations among fold-selected features, evaluated on that fold's training rows after training-median imputation.",
+    "folds": [
+      {
+        "fold": 1,
+        "n_features": 198,
+        "n_pairs": 19503,
+        "median_abs_r": 0.040681529724680136,
+        "p95_abs_r": 0.27237412464230853,
+        "max_abs_r": 0.9413425053302216,
+        "fraction_abs_r_gt_0_5": 0.009690816797415782,
+        "fraction_abs_r_gt_0_8": 0.001025483258985797,
+        "fraction_abs_r_gt_0_95": 0.0
+      },
+      {
+        "fold": 2,
+        "n_features": 223,
+        "n_pairs": 24753,
+        "median_abs_r": 0.0451573462669533,
+        "p95_abs_r": 0.2748404559295294,
+        "max_abs_r": 0.9498990651293494,
+        "fraction_abs_r_gt_0_5": 0.009574597018543208,
+        "fraction_abs_r_gt_0_8": 0.0006867854401486689,
+        "fraction_abs_r_gt_0_95": 0.0
+      },
+      {
+        "fold": 3,
+        "n_features": 247,
+        "n_pairs": 30381,
+        "median_abs_r": 0.04337197802842002,
+        "p95_abs_r": 0.27287702610821046,
+        "max_abs_r": 0.9476594013826092,
+        "fraction_abs_r_gt_0_5": 0.00957835489286067,
+        "fraction_abs_r_gt_0_8": 0.000822882722754353,
+        "fraction_abs_r_gt_0_95": 0.0
+      },
+      {
+        "fold": 4,
+        "n_features": 177,
+        "n_pairs": 15576,
+        "median_abs_r": 0.037007063125898895,
+        "p95_abs_r": 0.2515921129401636,
+        "max_abs_r": 0.9469966502677444,
+        "fraction_abs_r_gt_0_5": 0.008410374935798664,
+        "fraction_abs_r_gt_0_8": 0.0008988186954288649,
+        "fraction_abs_r_gt_0_95": 0.0
+      },
+      {
+        "fold": 5,
+        "n_features": 179,
+        "n_pairs": 15931,
+        "median_abs_r": 0.03707239010673941,
+        "p95_abs_r": 0.24331415739444956,
+        "max_abs_r": 0.9384414041434268,
+        "fraction_abs_r_gt_0_5": 0.007155859644717846,
+        "fraction_abs_r_gt_0_8": 0.0008787897809302618,
+        "fraction_abs_r_gt_0_95": 0.0
+      }
+    ],
+    "aggregate": {
+      "median_abs_r": 0.04065806145053835,
+      "p95_abs_r": 0.2629995754029323,
+      "max_abs_r": 0.9448678052506704,
+      "fraction_abs_r_gt_0_5": 0.008882000657867234,
+      "fraction_abs_r_gt_0_8": 0.0008625519796495891,
+      "fraction_abs_r_gt_0_95": 0.0
+    }
+  },
+  "kmeans251": {
+    "dataset": "kmeans251",
+    "definition": "Absolute Pearson correlations among fold-selected features, evaluated on that fold's training rows after training-median imputation.",
+    "folds": [
+      {
+        "fold": 1,
+        "n_features": 77,
+        "n_pairs": 2926,
+        "median_abs_r": 0.035941715329947874,
+        "p95_abs_r": 0.19797042466128786,
+        "max_abs_r": 0.9227669054664109,
+        "fraction_abs_r_gt_0_5": 0.006151742993848257,
+        "fraction_abs_r_gt_0_8": 0.000683526999316473,
+        "fraction_abs_r_gt_0_95": 0.0
+      },
+      {
+        "fold": 2,
+        "n_features": 86,
+        "n_pairs": 3655,
+        "median_abs_r": 0.03883070384395642,
+        "p95_abs_r": 0.1937334442795437,
+        "max_abs_r": 0.8362993387438372,
+        "fraction_abs_r_gt_0_5": 0.004924760601915185,
+        "fraction_abs_r_gt_0_8": 0.001094391244870041,
+        "fraction_abs_r_gt_0_95": 0.0
+      },
+      {
+        "fold": 3,
+        "n_features": 60,
+        "n_pairs": 1711,
+        "median_abs_r": 0.035366027263720054,
+        "p95_abs_r": 0.1852773914684594,
+        "max_abs_r": 0.8759672243888217,
+        "fraction_abs_r_gt_0_5": 0.006428988895382817,
+        "fraction_abs_r_gt_0_8": 0.0011689070718877848,
+        "fraction_abs_r_gt_0_95": 0.0
+      },
+      {
+        "fold": 4,
+        "n_features": 125,
+        "n_pairs": 7626,
+        "median_abs_r": 0.03499014305978669,
+        "p95_abs_r": 0.17430161088066448,
+        "max_abs_r": 0.9930269244621537,
+        "fraction_abs_r_gt_0_5": 0.0024914765276685025,
+        "fraction_abs_r_gt_0_8": 0.0005245213742460005,
+        "fraction_abs_r_gt_0_95": 0.00013113034356150013
+      },
+      {
+        "fold": 5,
+        "n_features": 79,
+        "n_pairs": 3081,
+        "median_abs_r": 0.03753575441596818,
+        "p95_abs_r": 0.22321879479450082,
+        "max_abs_r": 0.9494351317202488,
+        "fraction_abs_r_gt_0_5": 0.007140538786108407,
+        "fraction_abs_r_gt_0_8": 0.0006491398896462187,
+        "fraction_abs_r_gt_0_95": 0.0
+      }
+    ],
+    "aggregate": {
+      "median_abs_r": 0.036532868782675844,
+      "p95_abs_r": 0.19490033321689126,
+      "max_abs_r": 0.9154991049562945,
+      "fraction_abs_r_gt_0_5": 0.005427501560984633,
+      "fraction_abs_r_gt_0_8": 0.0008240973159933036,
+      "fraction_abs_r_gt_0_95": 2.6226068712300026e-05
+    }
+  }
+}

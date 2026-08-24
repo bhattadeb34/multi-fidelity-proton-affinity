@@ -1,0 +1,63 @@
+nohup: ignoring input
+INFO  Loading NIST 1155 dataset ...
+INFO  
+=======================================================
+INFO    Dataset      : nist1155
+INFO    Samples      : 1155
+INFO    Target       : delta_pm7_exp
+INFO    Features     : 5295
+INFO    Folds        : 5
+INFO  =======================================================
+INFO  
+  Fold 1/5  (train=924, test=231)
+INFO      Feature selection ...
+INFO      Selected 198 features
+INFO    GPR skipped (n_train=924 > 500)
+INFO      Fold 1 done  Ridge=3.64 kcal/mol  Lasso=4.30 kcal/mol  ElasticNet=4.38 kcal/mol  BayesianRidge=3.61 kcal/mol
+INFO  
+  Fold 2/5  (train=924, test=231)
+INFO      Feature selection ...
+INFO      Selected 223 features
+INFO    GPR skipped (n_train=924 > 500)
+INFO      Fold 2 done  Ridge=3.73 kcal/mol  Lasso=4.32 kcal/mol  ElasticNet=4.43 kcal/mol  BayesianRidge=3.61 kcal/mol
+INFO  
+  Fold 3/5  (train=924, test=231)
+INFO      Feature selection ...
+INFO      Selected 247 features
+INFO    GPR skipped (n_train=924 > 500)
+INFO      Fold 3 done  Ridge=3.72 kcal/mol  Lasso=4.32 kcal/mol  ElasticNet=4.41 kcal/mol  BayesianRidge=3.65 kcal/mol
+INFO  
+  Fold 4/5  (train=924, test=231)
+INFO      Feature selection ...
+INFO      Selected 177 features
+INFO    GPR skipped (n_train=924 > 500)
+INFO      Fold 4 done  Ridge=3.56 kcal/mol  Lasso=4.17 kcal/mol  ElasticNet=4.26 kcal/mol  BayesianRidge=3.48 kcal/mol
+INFO  
+  Fold 5/5  (train=924, test=231)
+INFO      Feature selection ...
+INFO      Selected 179 features
+INFO    GPR skipped (n_train=924 > 500)
+INFO      Fold 5 done  Ridge=3.61 kcal/mol  Lasso=4.22 kcal/mol  ElasticNet=4.30 kcal/mol  BayesianRidge=3.55 kcal/mol
+INFO    Outputs → results/nist1155/
+
+  Results for nist1155  (MAE in kcal/mol):
+  Model                 MAE delta       MAE PA   N features
+  ─────────────────────────────────────────────────────────
+  ExtraTrees            2.87±0.26    2.87±0.26          205
+  VotingEnsemble        2.94±0.30    2.94±0.30          205
+  RandomForest          2.99±0.30    2.99±0.30          205
+  CatBoost              3.01±0.27    3.01±0.27          205
+  LightGBM              3.08±0.31    3.08±0.31          205
+  GradientBoosting      3.09±0.30    3.09±0.30          205
+  XGBoost               3.15±0.32    3.15±0.32          205
+  MLP                   3.46±0.26    3.46±0.26          205
+  BayesianRidge         3.55±0.28    3.55±0.28          205
+  Ridge                 3.61±0.27    3.61±0.27          205
+  DecisionTree          4.19±0.35    4.19±0.35          205
+  Lasso                 4.22±0.24    4.22±0.24          205
+  ElasticNet            4.30±0.25    4.30±0.25          205
+  AdaBoost              4.58±0.33    4.58±0.33          205
+  SVR                   4.86±0.41    4.86±0.41          205
+  PM7+bias              5.44±0.39    5.44±0.39          N/A
+
+  All results saved to: results/

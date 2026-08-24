@@ -1,0 +1,100 @@
+nohup: ignoring input
+======================================================================
+DFT COMPUTE COST ANALYSIS
+======================================================================
+
+All DFT jobs ran on NVIDIA A100-PCIE-40GB, 8 CPUs, 48 GB RAM
+Level of theory: B3LYP/def2-TZVP (gpu4pyscf)
+Platform: PSU ICDS Roar Collab
+
+--- Per-chunk wall times (from SLURM output logs) ---
+
+NIST dataset (job 48270241): 10 parallel A100 chunks
+  Chunk 0: 22.6h (119/119 molecules OK)
+  Chunk 1: 34.9h (119/119 molecules OK)
+  Chunk 2: 35.7h (119/119 molecules OK)
+  Chunk 3: 40.8h (119/119 molecules OK)
+  Chunk 4: 43.5h (119/119 molecules OK)
+  Chunk 5: 47.0h (119/119 molecules OK)
+  Chunk 6: 47.5h (119/119 molecules OK)
+  Chunk 7: 49.2h (119/119 molecules OK)
+  Chunk 8: 53.5h (119/119 molecules OK)
+  Chunk 9: 76.1h (114/114 molecules OK)
+  Total compute: 450.8h, 1155 molecules
+  Per molecule: 0.390h = 1405.1s
+
+K-means dataset (job 48361776): 8 parallel A100 chunks
+  Chunk 0: 40.8h (32/32 molecules OK, 0 failed)
+  Chunk 1: 36.2h (32/32 molecules OK, 0 failed)
+  Chunk 2: 37.5h (32/32 molecules OK, 0 failed)
+  Chunk 3: 44.1h (32/32 molecules OK, 0 failed)
+  Chunk 4: 37.3h (31/32 molecules OK, 1 failed)
+  Chunk 5: 34.7h (32/32 molecules OK, 0 failed)
+  Chunk 6: 33.2h (32/32 molecules OK, 0 failed)
+  Chunk 7: 31.3h (28/28 molecules OK, 0 failed)
+  Total compute: 295.1h, 251 OK / 252 total (1 failed)
+  Per molecule: 1.176h = 4232.5s
+
+Corrected prospective candidates (job 54763379): 1 A100 job
+  Wall time: 17.0983h, 30 molecules
+  Per molecule: 0.570h = 2051.8s
+
+--- Per-molecule k-means DFT timing ---
+  Source: wall times extracted from per-molecule JSON results
+  Molecules: 251 OK
+  Total: 295.0h
+  Per molecule: mean=1.175h (4231.8s), median=1.130h
+  Range: 0.34 - 2.50h
+  Sites/mol: mean=3.3, range=1-6
+
+--- Cross-check ---
+  Chunk total: 295.1h
+  Per-mol sum: 295.0h
+  Difference: 0.02%
+
+--- ICDS billing summary (from dft_compute_cost_summary.csv) ---
+  NIST dataset (pa_nist, 48270241)
+    Wall time: ~454 h total, Credits: 41.93, Cost: $123.69
+  k-means dataset (pa_dft_ds, 48361776)
+    Wall time: ~295 h total, Credits: 27.24, Cost: $80.36
+  Original submitted Pareto candidates (50630236)
+    Wall time: 17.8 h, Credits: 1.64, Cost: $4.84
+  Corrected prospective candidates (54763379)
+    Wall time: 17.10 h, Credits: not separately retrieved, Cost: not separately retrieved
+  Original training + corrected prospective DFT
+    Wall time: , Credits: not summed, Cost: not summed
+
+  Credit rates (credits/h):
+    NIST:   0.0930
+    Kmeans: 0.0923
+    Corrected prospective job: billing credits not separately retrieved
+
+--- PM7+ML inference route ---
+  Source: audit2_inference_cost.py (measured on local machine)
+  PM7 leg: 2.83 s/mol (2.6 MOPAC jobs/mol)
+  Feature leg: 0.0020 s/mol
+  Model leg: 0.01967 s/mol
+  Total ML route: 2.855 s/mol (99% is PM7)
+
+======================================================================
+SPEEDUP SUMMARY
+======================================================================
+
+  DFT (NIST):     1405.1 s/mol (0.390 h/mol)
+  DFT (k-means):  4231.8 s/mol (1.175 h/mol)
+  PM7+ML route:   2.855 s/mol
+
+  Speedup (NIST basis):    492x (10^2.69)
+  Speedup (k-means basis): 1482x (10^3.17)
+
+  Manuscript claims '~10,000x' and 'four orders of magnitude'
+  Actual: ~500x and ~2.7 orders of magnitude
+
+  Manuscript claims '30-60 GPU-hours per structure'
+  Actual: 0.34 - 2.50 h/mol (mean 1.18)
+
+  Hardware caveat: PM7 and ML measured on a single MOPAC thread
+  on a local machine. DFT measured on A100 GPUs. The ratio is
+  hardware-crossed. Quote to one significant figure.
+
+Saved machine-readable summary: /noether/s1/dxb5775/publication_rerun_20260814/results/computational_cost/summary.json

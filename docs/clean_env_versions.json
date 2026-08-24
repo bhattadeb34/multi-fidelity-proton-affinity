@@ -1,0 +1,25 @@
+{
+  "captured_on": "2026-08-14",
+  "host": "noether.matse.psu.edu",
+  "platform": "Linux-5.15.0-186-generic-x86_64-with-glibc2.31",
+  "python": "3.10.18",
+  "packages": {
+    "numpy": "1.26.4",
+    "pandas": "2.3.2",
+    "scipy": "1.15.3",
+    "scikit-learn": "1.7.2",
+    "xgboost": "3.0.5",
+    "lightgbm": "4.6.0",
+    "catboost": "1.2.8",
+    "rdkit": "2025.3.6",
+    "mordred": "1.2.0",
+    "matplotlib": "3.10.6",
+    "openpyxl": "3.1.5",
+    "pyarrow": "20.0.0",
+    "tqdm": "4.67.3",
+    "seaborn": "0.13.2",
+    "shap": "0.49.1",
+    "faiss-cpu": "1.13.2",
+    "litellm": "1.82.4"
+  }
+}

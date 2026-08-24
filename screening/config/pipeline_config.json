@@ -1,0 +1,54 @@
+{
+  "consensus_min_folds": 3,
+  "featurization": {
+    "morgan_radius": 2,
+    "morgan_fp_size": 1024
+  },
+  "random_forest": {
+    "n_estimators": 200,
+    "random_state": 42,
+    "n_jobs": -1
+  },
+  "pa_window_kcalmol": {
+    "low": 210.0,
+    "high": 235.0
+  },
+  "rule_filter": {
+    "pa_domain_buffer_kcalmol": 20.0,
+    "uncertainty_max_kcalmol": 20.0,
+    "correction_z_max": 4.0
+  },
+  "llm": {
+    "model": "vertex_ai/claude-opus-4-6@default",
+    "vertex_location": "us-east5",
+    "max_tokens": 512,
+    "temperature": 0,
+    "max_attempts": 3,
+    "delay_seconds": 2.0
+  },
+  "pareto": {
+    "n_select": 30,
+    "eligible_verdicts": ["accept", "flag"],
+    "objective_weights": {
+      "pa_proximity": 0.4,
+      "uncertainty": 0.2,
+      "sa_score": 0.1,
+      "diversity": 0.3
+    },
+    "missing_sa_score": 5.0
+  },
+  "lead_selection": {
+    "n_leads": 5,
+    "eligible_stability_verdicts": ["pass", "pass_with_caveat"],
+    "require_grotthuss_motif": true,
+    "require_dft_pa_window": true
+  },
+  "retrieval": {
+    "tanimoto_min": 0.2,
+    "tanimoto_max": 0.8,
+    "faiss_k": 2000,
+    "max_candidates": 3000,
+    "previous_iteration_seeds": 10,
+    "sa_score_max": 5.0
+  }
+}

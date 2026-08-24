@@ -1,0 +1,38 @@
+nohup: ignoring input
+{
+  "filtered_library_size": 821435,
+  "retrieved_candidates": 2456,
+  "pm7_successful_molecules": 2368,
+  "pm7_failed_molecules": 88,
+  "pm7_successful_sites": 5948,
+  "featurized_molecules": 2368,
+  "featurized_sites": 5948,
+  "predicted_molecules": 2368,
+  "predicted_sites": 5948,
+  "predicted_pa_window_molecules": 1760,
+  "rule_accept": 2362,
+  "rule_flag": 6,
+  "rule_reject": 0,
+  "llm_accept": 279,
+  "llm_flag": 520,
+  "llm_reject": 1569,
+  "llm_eligible_total": 799,
+  "llm_eligible_in_pa_window": 615,
+  "pareto_selected": 30,
+  "dft_completed": 30,
+  "dft_in_pa_window": 29,
+  "stability_eligible": 27,
+  "lead_eligible": 26,
+  "priority_leads": 5,
+  "pa_window_kcalmol": [
+    210.0,
+    235.0
+  ],
+  "prospective_ml_mae_kcalmol": 3.993199238368379,
+  "prospective_ml_bias_kcalmol": -2.1053197785213476,
+  "prospective_pm7_mae_kcalmol": 13.507140196303373,
+  "eligible_verdicts": [
+    "accept",
+    "flag"
+  ]
+}

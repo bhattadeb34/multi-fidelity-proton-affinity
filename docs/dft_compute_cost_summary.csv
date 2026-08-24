@@ -1,0 +1,6 @@
+Calculation,Molecules,Jobs,Wall time,Credits,Cost (USD)
+"NIST dataset (pa_nist, 48270241)","1,155",10 parallel,~454 h total,41.93,$123.69
+"k-means dataset (pa_dft_ds, 48361776)",251 / 821 sites,8 parallel,~295 h total,27.24,$80.36
+Original submitted Pareto candidates (50630236),30,1,17.8 h,1.64,$4.84
+Corrected prospective candidates (54763379),30,1,17.10 h,not separately retrieved,not separately retrieved
+Original training + corrected prospective DFT,,,,not summed,not summed

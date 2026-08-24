@@ -1,0 +1,39 @@
+INFO  
+=======================================================
+INFO    SHAP — NIST
+INFO  =======================================================
+INFO    1155 samples, 5295 feature pool
+INFO    Consensus features: 150
+INFO    Training ExtraTrees (n=200) on 150 features ...
+INFO    Computing SHAP values ...
+INFO    Data saved to /noether/s1/dxb5775/publication_rerun_20260814/results/nist1155/shap/
+INFO    Saved /noether/s1/dxb5775/publication_rerun_20260814/figures/shap/shap_beeswarm_nist.pdf
+INFO    Saved /noether/s1/dxb5775/publication_rerun_20260814/figures/shap/shap_importance_nist.pdf
+INFO    Saved /noether/s1/dxb5775/publication_rerun_20260814/figures/shap/shap_dependence_nist.pdf
+INFO  
+=======================================================
+INFO    SHAP — KMEANS
+INFO  =======================================================
+INFO    821 samples, 5295 feature pool
+INFO    Consensus features: 51
+INFO    Training RandomForest (n=200) on 51 features ...
+INFO    Computing SHAP values ...
+INFO    Data saved to /noether/s1/dxb5775/publication_rerun_20260814/results/kmeans251/shap/
+INFO    Saved /noether/s1/dxb5775/publication_rerun_20260814/figures/shap/shap_beeswarm_kmeans.pdf
+INFO    Saved /noether/s1/dxb5775/publication_rerun_20260814/figures/shap/shap_importance_kmeans.pdf
+INFO    Saved /noether/s1/dxb5775/publication_rerun_20260814/figures/shap/shap_dependence_kmeans.pdf
+INFO    Generating combined beeswarm ...
+INFO    Saved /noether/s1/dxb5775/publication_rerun_20260814/figures/shap/shap_beeswarm_combined.pdf
+INFO    Generating 4-panel paper figure ...
+INFO    Saved /noether/s1/dxb5775/publication_rerun_20260814/figures/shap/shap_paper_figure.pdf
+
+  Done. All SHAP figures in /noether/s1/dxb5775/publication_rerun_20260814/figures/shap/
+    shap_beeswarm_combined.pdf
+    shap_beeswarm_kmeans.pdf
+    shap_beeswarm_nist.pdf
+    shap_dependence_combined.pdf
+    shap_dependence_kmeans.pdf
+    shap_dependence_nist.pdf
+    shap_importance_kmeans.pdf
+    shap_importance_nist.pdf
+    shap_paper_figure.pdf

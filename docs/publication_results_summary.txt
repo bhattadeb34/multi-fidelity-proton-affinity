@@ -1,0 +1,92 @@
+# Validated publication results
+
+This file is the concise numerical record for the controlled August 2026
+rerun. All values are in kcal/mol. The corresponding machine-readable result
+directories contain predictions, fold metrics, selected features, validation
+reports, and SHA-256 manifests.
+
+## Production cross-validation
+
+| Dataset | Split | Best model | MAE (mean +/- fold SD) | Fold feature counts | >=3/5 consensus |
+|---|---|---|---:|---|---:|
+| NIST (1,155 molecules) | shuffled five-fold KFold | ExtraTrees | 2.8731 +/- 0.2643 | 198, 223, 247, 177, 179 | 150 |
+| k-means (251 molecules; 821 sites) | five-fold GroupKFold by molecule | RandomForest | 7.4355 +/- 1.0013 | 77, 86, 60, 125, 79 | 51 |
+
+The NIST rerun changed the prior ExtraTrees estimate from 2.8756 to 2.8731
+kcal/mol because one numerically borderline Mordred feature changed in fold 5.
+The full current-code rerun and all ten preprocessing-equivalence checks now
+match exactly. The k-means model and its 51-feature screening consensus did not
+change, so this NIST-only reproducibility correction does not require another
+screening, LLM, Pareto, PM7, or prospective DFT run.
+
+## Descriptor ablations and controls
+
+| Analysis | Leakage-safe split | Best model | MAE |
+|---|---|---|---:|
+| NIST + DFT descriptors | KFold | ExtraTrees | 2.8599 +/- 0.2324 |
+| k-means + DFT descriptors | GroupKFold by molecule | CatBoost | 5.6142 +/- 0.4518 |
+| NIST DFT-only correction | KFold | ExtraTrees | 3.1738 +/- 0.2371 |
+| k-means row-wise control | KFold by site row | RandomForest | 7.6842 +/- 0.6175 |
+| NIST without 26 PM7 property descriptors | KFold | ExtraTrees | 2.9252 +/- 0.2571 |
+
+The row-wise k-means result is an audit control, not a production estimate,
+because protonation sites belonging to the same molecule can cross folds.
+
+## Learning curves and interpretation
+
+Each learning curve contains 55 cells (five fixed seeds x eleven training
+fractions). The two k-means curves use molecule-disjoint GroupShuffleSplit
+holdouts and group-level subsampling; all 110 k-means cells have zero molecule
+overlap. Full-fraction holdout MAEs are:
+
+| Dataset / feature set | Model | Test MAE across five seeds |
+|---|---|---:|
+| NIST, PM7 + molecular descriptors | ExtraTrees | 2.9287 +/- 0.2153 |
+| NIST, + DFT descriptors | ExtraTrees | 2.9413 +/- 0.2523 |
+| k-means, PM7 + molecular descriptors | RandomForest | 7.7432 +/- 0.3491 |
+| k-means, + DFT descriptors | CatBoost | 5.6228 +/- 0.3560 |
+
+SHAP is descriptive for a final full-data refit. Provenance files verify 150
+NIST consensus features with ExtraTrees and 51 k-means consensus features with
+RandomForest, including hashes of the source CV result files.
+
+## Corrected prospective screening
+
+- Library: 821,435 molecules
+- Retrieved: 2,456 molecules
+- PM7 successful: 2,368 molecules / 5,948 sites; 88 failures recorded
+- Predicted in 210-235 kcal/mol window: 1,760 molecules
+- LLM eligible (`accept` or `flag`) and in window: 615 molecules
+- Pareto selected and DFT completed: 30 / 30
+- DFT in target window: 29 / 30
+- Stability eligible: 27; final lead eligible: 26; priority leads: 5
+- Prospective ML MAE: 3.9932; bias: -2.1053
+- Prospective raw PM7 MAE: 13.5071
+
+The five priority leads have molecular DFT proton affinities of 234.28, 229.77,
+229.06, 228.05, and 226.57 kcal/mol. Lead selection applies the recorded
+stability review and Grotthuss-motif requirement before ranking eligible
+candidates by decreasing molecular DFT proton affinity.
+
+## Computational cost
+
+Recorded A100 wall time totals are 450.8 GPU-hours for the NIST calculations,
+295.1 GPU-hours for the k-means calculations, and 17.10 hours for the corrected
+30-candidate prospective job (SLURM 54763379). The measured PM7 + feature +
+deployed-model route is 2.855 seconds per molecule on the benchmark machine.
+The hardware-crossed speedup is approximately 500x on the NIST timing basis and
+1,500x on the k-means timing basis, not 10,000x. These ratios should be quoted
+to one significant figure with the hardware caveat.
+
+## Validation status
+
+- All production and ablation bundles pass prediction/JSON/CSV consistency
+  validation.
+- All ten production preprocessing folds reproduce their stored ordered
+  feature lists.
+- All 220 learning-curve cells have the expected model and index coverage;
+  k-means group overlap is zero.
+- SHAP feature sets and source hashes match their CV bundles.
+- All screening stage partitions and counts reconcile.
+- Every regenerated result and figure directory has a passing SHA-256
+  manifest, and all 45 PDF figures rendered successfully during visual QA.

@@ -1,0 +1,165 @@
+nohup: ignoring input
+
+#################################################################
+  PROTON AFFINITY DELTA-LEARNING — RESULTS ANALYSIS
+#################################################################
+
+=================================================================
+  NIST1155  —  target: PA_exp − PA_PM7 (signed)
+=================================================================
+
+  Model performance (kcal/mol, mean ± std across 5 folds):
+
+  Model                  MAE (correction)       MAE (PA)   N features
+  -----------------------------------------------------------------
+  ExtraTrees                  2.87 ± 0.26    2.87 ± 0.26          205
+  VotingEnsemble              2.94 ± 0.30    2.94 ± 0.30          205
+  RandomForest                2.99 ± 0.30    2.99 ± 0.30          205
+  CatBoost                    3.01 ± 0.27    3.01 ± 0.27          205
+  LightGBM                    3.08 ± 0.31    3.08 ± 0.31          205
+  GradientBoosting            3.09 ± 0.30    3.09 ± 0.30          205
+  XGBoost                     3.15 ± 0.32    3.15 ± 0.32          205
+  MLP                         3.46 ± 0.26    3.46 ± 0.26          205
+  BayesianRidge               3.55 ± 0.28    3.55 ± 0.28          205
+  Ridge                       3.61 ± 0.27    3.61 ± 0.27          205
+  DecisionTree                4.19 ± 0.35    4.19 ± 0.35          205
+  Lasso                       4.22 ± 0.24    4.22 ± 0.24          205
+  ElasticNet                  4.30 ± 0.25    4.30 ± 0.25          205
+  AdaBoost                    4.58 ± 0.33    4.58 ± 0.33          205
+  SVR                         4.86 ± 0.41    4.86 ± 0.41          205
+  PM7+bias                    5.44 ± 0.39    5.44 ± 0.39            —
+
+  Best model : ExtraTrees
+  Best MAE   : 2.87 ± 0.26 kcal/mol
+
+  -----------------------------------------------------------------
+  Baseline comparison (kcal/mol):
+
+  Raw PM7 MAE (no correction) : 8.21 kcal/mol
+  Best ML MAE (correction)    : 2.87 ± 0.26 kcal/mol
+  Jin & Merz 2025 (direct PA) : 2.47 kcal/mol  [their Voting Regressor, no delta-learning]
+
+  ML correction improvement   : 5.33 kcal/mol (65% reduction in PM7 error)
+
+  -----------------------------------------------------------------
+  Per-fold MAE for best model (ExtraTrees):
+
+    Fold 1: 2.83 kcal/mol  ████████
+    Fold 2: 2.76 kcal/mol  ████████
+    Fold 3: 3.19 kcal/mol  █████████
+    Fold 4: 2.46 kcal/mol  ███████
+    Fold 5: 3.12 kcal/mol  █████████
+    Mean  : 2.87  Std: 0.26
+
+  -----------------------------------------------------------------
+  Feature selection: ~205 features selected per fold (from 5295 total)
+
+  Top 10 features — ExtraTrees:
+    protonated_mordred_BCUTi-1l                   0.0580  ███████████
+    protonated_rdkit_fr_Al_OH                     0.0419  ████████
+    protonated_rdkit_MinPartialCharge             0.0417  ████████
+    protonated_rdkit_MaxAbsPartialCharge          0.0408  ████████
+    protonated_mordred_BCUTs-1l                   0.0337  ██████
+    protonated_mordred_BCUTdv-1l                  0.0253  █████
+    protonated_mordred_NdsssP                     0.0227  ████
+    neutral_mordred_NtN                           0.0202  ████
+    maccs_142                                     0.0184  ███
+    neutral_rdkit_SMR_VSA2                        0.0174  ███
+
+  -----------------------------------------------------------------
+  Prediction diagnostics (all folds, best model):
+
+    Mean signed error : +0.037 kcal/mol  (bias)
+    Std of errors     : 5.015 kcal/mol
+    % within 2 kcal   : 59.5%
+    % within 5 kcal   : 85.5%
+    Worst predictions  :
+      N12CCCCC(CCCC1)CCCC2                      true=-34.7  pred=3.0  err=37.7 kcal
+      O=C=C                                     true=42.6  pred=6.3  err=36.3 kcal
+      O=C=CC                                    true=37.4  pred=1.9  err=35.5 kcal
+      O(C(OC)=C)C                               true=51.2  pred=20.0  err=31.2 kcal
+      OCCCCO                                    true=40.4  pred=9.3  err=31.1 kcal
+
+=================================================================
+  KMEANS251  —  target: PA_DFT − PA_PM7 (signed)
+=================================================================
+
+  Model performance (kcal/mol, mean ± std across 5 folds):
+
+  Model                  MAE (correction)       MAE (PA)   N features
+  -----------------------------------------------------------------
+  RandomForest                7.44 ± 1.00    7.44 ± 1.00           85
+  CatBoost                    7.51 ± 0.93    7.51 ± 0.93           85
+  VotingEnsemble              7.54 ± 1.01    7.54 ± 1.01           85
+  ExtraTrees                  7.57 ± 1.01    7.57 ± 1.01           85
+  GradientBoosting            7.73 ± 0.86    7.73 ± 0.86           85
+  ElasticNet                  7.76 ± 0.75    7.76 ± 0.75           85
+  Lasso                       7.81 ± 0.76    7.81 ± 0.76           85
+  BayesianRidge               7.81 ± 0.83    7.81 ± 0.83           85
+  LightGBM                    7.89 ± 1.09    7.89 ± 1.09           85
+  SVR                         7.93 ± 1.07    7.93 ± 1.07           85
+  XGBoost                     8.15 ± 0.98    8.15 ± 0.98           85
+  PM7+bias                    8.23 ± 1.02    8.23 ± 1.02            —
+  Ridge                       8.24 ± 0.61    8.24 ± 0.61           85
+  AdaBoost                    8.73 ± 1.13    8.73 ± 1.13           85
+  DecisionTree               10.37 ± 0.48   10.37 ± 0.48           85
+  MLP                        10.78 ± 1.14   10.78 ± 1.14           85
+
+  Best model : RandomForest
+  Best MAE   : 7.44 ± 1.00 kcal/mol
+
+  -----------------------------------------------------------------
+  Baseline comparison (kcal/mol):
+
+  Raw PM7 MAE (no correction) : 10.26 kcal/mol
+  Best ML MAE (correction)    : 7.44 ± 1.00 kcal/mol
+
+  -----------------------------------------------------------------
+  Per-fold MAE for best model (RandomForest):
+
+    Fold 1: 6.74 kcal/mol  ████████████████████
+    Fold 2: 6.22 kcal/mol  ██████████████████
+    Fold 3: 9.17 kcal/mol  ███████████████████████████
+    Fold 4: 7.39 kcal/mol  ██████████████████████
+    Fold 5: 7.66 kcal/mol  ██████████████████████
+    Mean  : 7.44  Std: 1.00
+
+  -----------------------------------------------------------------
+  Feature selection: ~85 features selected per fold (from 5295 total)
+
+  Top 10 features — ExtraTrees:
+    protonated_pm7_HOMO_LUMO_gap_eV               0.0876  █████████████████
+    protonated_pm7_LUMO_eV                        0.0673  █████████████
+    protonated_rdkit_BCUT2D_LOGPLOW               0.0282  █████
+    protonated_mordred_ATSC4c                     0.0239  ████
+    protonated_mordred_PEOE_VSA8                  0.0218  ████
+    protonated_mordred_MATS2c                     0.0212  ████
+    protonated_rdkit_fr_hdrzine                   0.0195  ███
+    protonated_rdkit_fr_NH1                       0.0179  ███
+    protonated_mordred_MOMI-Z                     0.0164  ███
+    protonated_pm7_dipole_debye                   0.0154  ███
+
+  -----------------------------------------------------------------
+  Prediction diagnostics (all folds, best model):
+
+    Mean signed error : +0.277 kcal/mol  (bias)
+    Std of errors     : 10.784 kcal/mol
+    % within 2 kcal   : 23.4%
+    % within 5 kcal   : 50.1%
+    Worst predictions  :
+      CC#CCN1CC[C@@H](C)[C@@H](CO)C1            true=-53.1  pred=0.6  err=53.6 kcal
+      CC[C@@H](O)CCCNc1ccccn1                   true=-42.3  pred=6.8  err=49.1 kcal
+      CC#CCN(CC)CCC(=O)O                        true=24.1  pred=-22.0  err=46.1 kcal
+      CCN(CCCO)[C@@H]1C=CCCC1                   true=-48.6  pred=-4.3  err=44.3 kcal
+      C[C@@H](O)CCCN1C[C@H]2COC[C@H]2C1         true=-45.6  pred=-2.3  err=43.3 kcal
+
+=================================================================
+  CROSS-DATASET SUMMARY
+=================================================================
+
+  nist1155        best=ExtraTrees         MAE=2.87±0.26 kcal/mol
+  kmeans251       best=RandomForest       MAE=7.44±1.00 kcal/mol
+
+  Note: MAE delta = MAE PA (signed correction, mathematically consistent)
+  PA_pred = PA_PM7 + correction_ML
+

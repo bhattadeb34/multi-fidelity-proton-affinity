@@ -1,0 +1,44 @@
+{
+  "unit": "kcal/mol",
+  "production": {
+    "nist1155": {
+      "model": "ExtraTrees",
+      "mae_mean": 2.8731273321165776,
+      "mae_std": 0.26431784391714747,
+      "fold_feature_counts": [198, 223, 247, 177, 179],
+      "consensus_features": 150
+    },
+    "kmeans251": {
+      "model": "RandomForest",
+      "cv_strategy": "GroupKFold(record_id)",
+      "mae_mean": 7.435520729401169,
+      "mae_std": 1.0013081170203117,
+      "fold_feature_counts": [77, 86, 60, 125, 79],
+      "consensus_features": 51
+    }
+  },
+  "dft_ablations": {
+    "nist1155_dft": {"model": "ExtraTrees", "mae_mean": 2.8599247726858876, "mae_std": 0.23240394345773488},
+    "kmeans251_dft": {"model": "CatBoost", "mae_mean": 5.614157169666389, "mae_std": 0.4517956872696823},
+    "nist1155_dft_only": {"model": "ExtraTrees", "mae_mean": 3.173773725406207, "mae_std": 0.23705489397618323}
+  },
+  "screening": {
+    "retrieved_candidates": 2456,
+    "pm7_successful_molecules": 2368,
+    "pm7_failed_molecules": 88,
+    "pm7_successful_sites": 5948,
+    "llm_eligible_in_pa_window": 615,
+    "pareto_selected": 30,
+    "dft_completed": 30,
+    "dft_in_pa_window": 29,
+    "priority_leads": 5,
+    "prospective_ml_mae": 3.993199238368379,
+    "prospective_ml_bias": -2.1053197785213476
+  },
+  "validation": {
+    "preprocessing_equivalence": true,
+    "postprocessing_validation": true,
+    "manifest_checks": true,
+    "pdfs_rendered": 45
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "hardware": "NVIDIA A100-PCIE-40GB",
+  "cpus_per_job": 8,
+  "memory_gb_per_job": 48,
+  "level_of_theory": "B3LYP/def2-TZVP with frequency calculations",
+  "software": "gpu4pyscf",
+  "platform": "PSU ICDS Roar Collab"
+}

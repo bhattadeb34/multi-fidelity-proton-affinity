@@ -1,0 +1,24 @@
+nohup: ignoring input
+START 2026-08-14T02:59:46-04:00
+INFO  Loading DFT extra features from dataset.json ...
+INFO  DFT features loaded: 2689 rows, 1406 unique molecules
+INFO  Loading NIST 1155 dataset ...
+INFO    DFT join (exact): 1155/1155 rows matched
+INFO  
+=======================================================
+INFO    Dataset      : nist1155_dft
+INFO    Samples      : 1155
+INFO    Target       : delta_pm7_exp
+INFO    Features     : 5314
+INFO    DFT extras   : 19
+INFO    Folds        : 5
+INFO  =======================================================
+INFO  
+  Fold 1/5  (train=924, test=231)
+INFO      Feature selection ...
+/noether/s1/dxb5775/conda_envs/clean_env/lib/python3.10/site-packages/numpy/lib/nanfunctions.py:1217: RuntimeWarning: All-NaN slice encountered
+  return function_base._ureduce(a, func=_nanmedian, keepdims=keepdims,
+/noether/s1/dxb5775/conda_envs/clean_env/lib/python3.10/site-packages/sklearn/feature_selection/_variance_threshold.py:114: RuntimeWarning: Degrees of freedom <= 0 for slice.
+  self.variances_ = np.nanvar(X, axis=0)
+INFO      Selected 197 features  (DFT: 3)
+INFO    GPR skipped (n_train=924 > 500)

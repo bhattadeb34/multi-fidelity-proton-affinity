@@ -1,0 +1,148 @@
+{
+  "learning_curves": {
+    "learning_curve_nist_pm7": {
+      "cells": 55,
+      "csv_rows": 55,
+      "model": "ExtraTrees",
+      "group_col": null,
+      "n_total_values": [
+        1155
+      ],
+      "seeds": [
+        42,
+        123,
+        456,
+        789,
+        1024
+      ],
+      "fractions": [
+        0.08,
+        0.16,
+        0.24,
+        0.32,
+        0.4,
+        0.5,
+        0.6,
+        0.7,
+        0.8,
+        0.9,
+        1.0
+      ],
+      "group_overlap_cells": 0,
+      "index_failures": 0
+    },
+    "learning_curve_nist_dft": {
+      "cells": 55,
+      "csv_rows": 55,
+      "model": "ExtraTrees",
+      "group_col": null,
+      "n_total_values": [
+        1155
+      ],
+      "seeds": [
+        42,
+        123,
+        456,
+        789,
+        1024
+      ],
+      "fractions": [
+        0.08,
+        0.16,
+        0.24,
+        0.32,
+        0.4,
+        0.5,
+        0.6,
+        0.7,
+        0.8,
+        0.9,
+        1.0
+      ],
+      "group_overlap_cells": 0,
+      "index_failures": 0
+    },
+    "learning_curve_kmeans_pm7": {
+      "cells": 55,
+      "csv_rows": 55,
+      "model": "RandomForest",
+      "group_col": "record_id",
+      "n_total_values": [
+        821
+      ],
+      "seeds": [
+        42,
+        123,
+        456,
+        789,
+        1024
+      ],
+      "fractions": [
+        0.08,
+        0.16,
+        0.24,
+        0.32,
+        0.4,
+        0.5,
+        0.6,
+        0.7,
+        0.8,
+        0.9,
+        1.0
+      ],
+      "group_overlap_cells": 0,
+      "index_failures": 0
+    },
+    "learning_curve_kmeans_dft": {
+      "cells": 55,
+      "csv_rows": 55,
+      "model": "CatBoost",
+      "group_col": "record_id",
+      "n_total_values": [
+        821
+      ],
+      "seeds": [
+        42,
+        123,
+        456,
+        789,
+        1024
+      ],
+      "fractions": [
+        0.08,
+        0.16,
+        0.24,
+        0.32,
+        0.4,
+        0.5,
+        0.6,
+        0.7,
+        0.8,
+        0.9,
+        1.0
+      ],
+      "group_overlap_cells": 0,
+      "index_failures": 0
+    }
+  },
+  "shap": {
+    "nist1155": {
+      "model": "ExtraTrees",
+      "n_features": 150,
+      "consensus_count": 150,
+      "hash_match": true,
+      "feature_set_match": true,
+      "valid": true
+    },
+    "kmeans251": {
+      "model": "RandomForest",
+      "n_features": 51,
+      "consensus_count": 51,
+      "hash_match": true,
+      "feature_set_match": true,
+      "valid": true
+    }
+  },
+  "failures": [],
+  "valid": true
+}

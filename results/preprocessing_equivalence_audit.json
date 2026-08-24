@@ -1,0 +1,82 @@
+{
+  "change_tested": "explicit removal of all-missing/non-finite columns before median imputation and variance filtering",
+  "datasets": [
+    {
+      "dataset": "nist1155",
+      "cv_strategy": "KFold(shuffle=True, random_state=42)",
+      "feature_pool_size": 5295,
+      "folds": [
+        {
+          "fold": 1,
+          "stored_feature_count": 198,
+          "recomputed_feature_count": 198,
+          "ordered_feature_lists_identical": true
+        },
+        {
+          "fold": 2,
+          "stored_feature_count": 223,
+          "recomputed_feature_count": 223,
+          "ordered_feature_lists_identical": true
+        },
+        {
+          "fold": 3,
+          "stored_feature_count": 247,
+          "recomputed_feature_count": 247,
+          "ordered_feature_lists_identical": true
+        },
+        {
+          "fold": 4,
+          "stored_feature_count": 177,
+          "recomputed_feature_count": 177,
+          "ordered_feature_lists_identical": true
+        },
+        {
+          "fold": 5,
+          "stored_feature_count": 179,
+          "recomputed_feature_count": 179,
+          "ordered_feature_lists_identical": true
+        }
+      ],
+      "all_folds_identical": true
+    },
+    {
+      "dataset": "kmeans251",
+      "cv_strategy": "GroupKFold(record_id)",
+      "feature_pool_size": 5295,
+      "folds": [
+        {
+          "fold": 1,
+          "stored_feature_count": 77,
+          "recomputed_feature_count": 77,
+          "ordered_feature_lists_identical": true
+        },
+        {
+          "fold": 2,
+          "stored_feature_count": 86,
+          "recomputed_feature_count": 86,
+          "ordered_feature_lists_identical": true
+        },
+        {
+          "fold": 3,
+          "stored_feature_count": 60,
+          "recomputed_feature_count": 60,
+          "ordered_feature_lists_identical": true
+        },
+        {
+          "fold": 4,
+          "stored_feature_count": 125,
+          "recomputed_feature_count": 125,
+          "ordered_feature_lists_identical": true
+        },
+        {
+          "fold": 5,
+          "stored_feature_count": 79,
+          "recomputed_feature_count": 79,
+          "ordered_feature_lists_identical": true
+        }
+      ],
+      "all_folds_identical": true
+    }
+  ],
+  "valid": true
+}

@@ -1,0 +1,176 @@
+# Exact reproducibility
+
+This project separates artifact integrity from numerical recomputation. Both
+are useful, but they answer different questions.
+
+## Restart from saved stages
+
+The complete release has three sibling directories:
+
+```text
+release/
+├── code/
+├── data/
+└── artifacts/
+```
+
+The `artifacts/` directory is a convenience layer. It does not change the
+scientific files in `data/`. It provides four restart points:
+
+1. `artifacts/plot_inputs/` regenerates the core quantitative plots without
+   descriptor calculation, feature selection, or model fitting.
+2. `artifacts/features/` stores identifiers, targets, and the union of
+   features selected in the archived outer folds. A reviewer can inspect or
+   refit the reported models without recalculating descriptors or rerunning
+   feature selection.
+3. `artifacts/model_checkpoints/` stores the fitted estimator for each
+   reported outer fold together with feature order, training-fold medians,
+   train and test indices, software versions, and prediction checks.
+4. `code/results/` remains the authoritative compact record of archived
+   predictions, metrics, learning curves, SHAP values, and provenance.
+
+Build and validate these restart points with:
+
+```bash
+python scripts/reproducibility/build_quick_artifacts.py
+python scripts/reproducibility/export_model_checkpoints.py --dataset all
+python scripts/reproducibility/validate_quick_artifacts.py
+python scripts/reproducibility/make_figures_quick.py
+```
+
+The model exporter does not rerun feature selection. It reads the selected
+feature names and test membership from the archived result bundle. It refits
+each fold in the locked environment and publishes the checkpoint only after
+the new held-out predictions agree with the archived predictions within the
+recorded tolerance. A model serialized under another scikit-learn version may
+not be portable. The environment lock and checkpoint provenance must therefore
+travel with the model files.
+
+One checkpoint can be applied to a Parquet or CSV feature table with:
+
+```bash
+python scripts/reproducibility/load_checkpoint.py \
+  ../artifacts/model_checkpoints/kmeans251/RandomForest/fold_01 \
+  ../artifacts/features/kmeans251_selected_union.parquet \
+  reproduction/fold_01_predictions.parquet
+```
+
+The loader verifies the model and preprocessing hashes before prediction. It
+then selects features in the saved order and applies the saved training-fold
+medians. This command demonstrates loading a fold model. Validation against
+held-out rows is performed automatically by `validate_quick_artifacts.py`.
+
+## Verify the archived record
+
+The dated complete release contains the code, data, raw calculation records,
+model outputs, screening records, and file manifests used for the paper. Check
+the release-level `SHA256SUMS` file before running any analysis. Matching
+hashes establish that the archived inputs and reported outputs have not
+changed.
+
+The result-bundle validation scripts then check agreement among
+`cv_results.json`, `predictions.csv`, `mae_summary.csv`, fold definitions,
+selected-feature lists, and molecule groups. These checks do not refit a model
+or contact an external service.
+
+## Recompute the numerical workflow
+
+The reference interpreter is Python 3.10.18. Direct dependencies are pinned
+in `requirements.txt`. `environment.yml` is the portable environment
+specification. The validated Linux x86_64 base environment is recorded in
+`conda-lock-py310-linux-64.txt`, and the complete pip package set is pinned by
+version and archive hash in `requirements-lock-py310-linux-x86_64.txt`.
+
+```bash
+conda create --prefix ./mfpa-exact-env \
+  --file conda-lock-py310-linux-64.txt
+conda activate ./mfpa-exact-env
+python -m pip install --require-hashes \
+  -r requirements-lock-py310-linux-x86_64.txt
+```
+
+The archived pip resolver report can be converted back into the lock file with
+`scripts/reproducibility/generate_pip_lock.py`. The script only transforms the
+recorded report. It does not resolve dependencies or use the network.
+
+For CPU runs, record the processor, operating system, compiler, NumPy build,
+BLAS implementation, and thread settings. Use fixed thread counts when an
+exact rerun is required:
+
+```bash
+export PYTHONHASHSEED=0
+export OMP_NUM_THREADS=1
+export OPENBLAS_NUM_THREADS=1
+export MKL_NUM_THREADS=1
+```
+
+Always write regenerated files to a new output directory. For example:
+
+```bash
+python scripts/calculations/build_targets.py --dry-run
+python scripts/calculations/build_targets.py \
+  --output-dir reproduction/targets
+```
+
+The target builder refuses to replace an existing target bundle unless
+`--force` is given explicitly.
+
+## Feature-selection tie behavior
+
+The archived fold assignments and selected-feature lists are the authoritative
+record for the reported models. The k-means selected features reproduced
+exactly in the independent Linux checks. One NIST outer fold exchanged
+`neutral_mordred_MINddssS` and `neutral_mordred_MAXddssS` on a second machine.
+The two columns are exactly identical in that fold. Their maximum absolute
+difference is zero, their pairwise correlation is 1.0, and their absolute
+training-target correlations are equal. The fold retained 179 features and the
+150-feature consensus set did not change.
+
+The substitution is caused by platform-dependent ordering of an exact tie
+before correlated-feature pruning. It is not data leakage and does not change
+the numerical input passed to the model. Exact artifact reproduction should
+use the archived selected-feature lists.
+
+A sensitivity check applied feature-name ordering to all exact ties. It caused
+many equivalent RDKit and Mordred columns to exchange names. It also changed
+the consensus labels from 150 to 163 for NIST and from 51 to 55 for k-means,
+with one k-means fold changing from 60 to 59 selected features. That rule was
+not adopted because it would define a new selector and would require a full
+k-means model and screening rerun. A future selector revision should first
+collapse exactly duplicated columns using a documented representation rule,
+then repeat both model evaluations and all affected screening stages.
+
+The archived learning-curve log contains `All-NaN slice` warnings from the
+separate diagnostic count of features remaining after variance filtering. The
+model selector removed all-missing columns before imputation, and the saved
+preprocessing audit confirms the fold results. The diagnostic calculation now
+uses the same prefilter, which removes the warning without changing model
+inputs or reported values.
+
+## External and expensive stages
+
+PM7, DFT, database queries, and LLM screening are not part of the read-only
+validation command. Their raw inputs, outputs, model identifiers, prompts,
+retry records, calculation folders, and checksums are archived in the complete
+data release. Repeating those stages is a separate experiment and can incur
+compute time or service cost.
+
+## Validate a complete release
+
+After extracting a complete release with sibling `code/`, `data/`, and
+`artifacts/` directories, run:
+
+```bash
+python scripts/reproducibility/build_release_manifest.py ..
+python scripts/analysis/validate_complete_release.py
+python scripts/analysis/validate_complete_release.py --verify-checksums
+```
+
+The validator derives expected counts from configuration and archived
+artifacts. It does not contain a second copy of the manuscript values. The
+checksum mode streams every file listed in the release manifest and can take
+several minutes for the full DFT archive.
+
+The manifest must be the last generated artifact. A changed file makes the
+release manifest stale. Use `--force` only when intentionally rebuilding the
+manifest for a prepared release directory.

@@ -1,0 +1,12 @@
+{
+  "n_candidates": 30,
+  "mean_bias_kcalmol": -2.1053197785213458,
+  "median_max_tanimoto": 0.22474489795918368,
+  "pearson_similarity_vs_bias": -0.012790677890930227,
+  "spearman_similarity_vs_bias": -0.09439004776450616,
+  "fingerprint": "Morgan bit vector, radius=2, nBits=1024",
+  "pa_window_kcalmol": {
+    "low": 210.0,
+    "high": 235.0
+  }
+}

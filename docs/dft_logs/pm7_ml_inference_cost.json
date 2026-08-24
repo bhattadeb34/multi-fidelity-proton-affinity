@@ -1,0 +1,312 @@
+{
+  "experiment": "audit2_inference_cost",
+  "question": "Measured per-molecule cost of the deployed PM7-ML route vs B3LYP.",
+  "hardware_caveat": "PM7 was measured on a local single MOPAC thread; deployed-model prediction was measured in clean_env on noether; B3LYP timings are A100 GPU wall time. The ratio is hardware-crossed and should be quoted to one significant figure.",
+  "pm7_leg": {
+    "n_molecules_benchmarked": 40,
+    "keywords": "PM7 PRECISE GNORM=0.001 SCFCRT=1.D-8",
+    "geometry": "ETKDGv3 + MMFF94, seed 42 (as repo/pm7_scripts)",
+    "jobs_per_molecule_mean": 2.575,
+    "jobs_per_molecule_median": 2.0,
+    "seconds_per_job_mean": 1.1003548188532875,
+    "seconds_per_job_median": 0.5212365830084309,
+    "seconds_per_molecule_mean": 2.833413658547215,
+    "seconds_per_molecule_median": 1.4025743965030415,
+    "seconds_per_molecule_p90": 6.889523053591257,
+    "seconds_per_molecule_max": 19.69618250001804,
+    "per_molecule": [
+      {
+        "smiles": "N(=C(N(C)C)C)CCN(C)C",
+        "n_jobs": 4,
+        "n_heavy": 11,
+        "total_wall_s": 19.69618250001804
+      },
+      {
+        "smiles": "O=C(OC)C",
+        "n_jobs": 3,
+        "n_heavy": 5,
+        "total_wall_s": 0.7933536659984384
+      },
+      {
+        "smiles": "N=1C=2C=CC=CC2C=C3C=CC=CC13",
+        "n_jobs": 2,
+        "n_heavy": 14,
+        "total_wall_s": 1.2532931250170805
+      },
+      {
+        "smiles": "C=1C=CC(=CC1)N2CC2",
+        "n_jobs": 2,
+        "n_heavy": 9,
+        "total_wall_s": 1.0773578340013046
+      },
+      {
+        "smiles": "O=C(OC)C12CC3CC(CC(C3)C1)C2",
+        "n_jobs": 3,
+        "n_heavy": 14,
+        "total_wall_s": 5.462404374993639
+      },
+      {
+        "smiles": "N=1NC=C(C1C)C",
+        "n_jobs": 2,
+        "n_heavy": 7,
+        "total_wall_s": 0.7210959160001948
+      },
+      {
+        "smiles": "S1CC1",
+        "n_jobs": 2,
+        "n_heavy": 3,
+        "total_wall_s": 0.26691475001280196
+      },
+      {
+        "smiles": "O(C1=CC=C(C=C1)C(=C)C(C)(C)C)C",
+        "n_jobs": 2,
+        "n_heavy": 14,
+        "total_wall_s": 5.183540707977954
+      },
+      {
+        "smiles": "O=C(C=1C=NC=CC1)N(CC)CC",
+        "n_jobs": 4,
+        "n_heavy": 13,
+        "total_wall_s": 10.82063349999953
+      },
+      {
+        "smiles": "S1CCCC1",
+        "n_jobs": 2,
+        "n_heavy": 5,
+        "total_wall_s": 0.7653732080070768
+      },
+      {
+        "smiles": "N#CC1=CC=CC(=C1)C(=O)OC",
+        "n_jobs": 4,
+        "n_heavy": 12,
+        "total_wall_s": 4.21140066802036
+      },
+      {
+        "smiles": "S=C(OCC)C",
+        "n_jobs": 3,
+        "n_heavy": 6,
+        "total_wall_s": 3.5617395840235986
+      },
+      {
+        "smiles": "O=C(NCCCC)C(F)(F)F",
+        "n_jobs": 3,
+        "n_heavy": 11,
+        "total_wall_s": 6.828332540986594
+      },
+      {
+        "smiles": "NCCC=1C=CC=CC1",
+        "n_jobs": 2,
+        "n_heavy": 9,
+        "total_wall_s": 1.0417838749999646
+      },
+      {
+        "smiles": "O=C1C(=O)CCCC1",
+        "n_jobs": 2,
+        "n_heavy": 8,
+        "total_wall_s": 0.9649368739919737
+      },
+      {
+        "smiles": "O(CCCCC)CCCCC",
+        "n_jobs": 2,
+        "n_heavy": 11,
+        "total_wall_s": 6.7161122919933405
+      },
+      {
+        "smiles": "FC1=CC=C(N)C=C1",
+        "n_jobs": 2,
+        "n_heavy": 8,
+        "total_wall_s": 0.2927889170241542
+      },
+      {
+        "smiles": "O=C(O)C=1C=CC=CC1N",
+        "n_jobs": 4,
+        "n_heavy": 10,
+        "total_wall_s": 2.1156700830033515
+      },
+      {
+        "smiles": "O=S(=O)(O)C",
+        "n_jobs": 3,
+        "n_heavy": 5,
+        "total_wall_s": 1.991063123976346
+      },
+      {
+        "smiles": "N=1C2=CC=CC=C2N=C3C=CC=CC13",
+        "n_jobs": 2,
+        "n_heavy": 14,
+        "total_wall_s": 1.3708541670057457
+      },
+      {
+        "smiles": "O=C(C1=CC=C(Cl)C=C1)N(C)C",
+        "n_jobs": 3,
+        "n_heavy": 12,
+        "total_wall_s": 7.440237667033216
+      },
+      {
+        "smiles": "O=C(OC)N(C)C",
+        "n_jobs": 4,
+        "n_heavy": 7,
+        "total_wall_s": 2.253225208958611
+      },
+      {
+        "smiles": "N1=C(N)C=CN1C",
+        "n_jobs": 3,
+        "n_heavy": 7,
+        "total_wall_s": 0.8230454169970471
+      },
+      {
+        "smiles": "O(C(=C)C)C",
+        "n_jobs": 2,
+        "n_heavy": 5,
+        "total_wall_s": 0.4199791249993723
+      },
+      {
+        "smiles": "FC(F)(F)C=1C=CC=C(N)C1",
+        "n_jobs": 2,
+        "n_heavy": 11,
+        "total_wall_s": 1.457928207993973
+      },
+      {
+        "smiles": "N1=CNCCC1",
+        "n_jobs": 3,
+        "n_heavy": 6,
+        "total_wall_s": 0.506909416988492
+      },
+      {
+        "smiles": "S(C1=CC=C(C=C1)C(=C)C(C)(C)C)C",
+        "n_jobs": 2,
+        "n_heavy": 14,
+        "total_wall_s": 8.205093708995264
+      },
+      {
+        "smiles": "N1=NNC=C1",
+        "n_jobs": 3,
+        "n_heavy": 5,
+        "total_wall_s": 0.22736841696314514
+      },
+      {
+        "smiles": "NN(C)C",
+        "n_jobs": 3,
+        "n_heavy": 4,
+        "total_wall_s": 0.45579191597062163
+      },
+      {
+        "smiles": "O1CCOCC1",
+        "n_jobs": 2,
+        "n_heavy": 6,
+        "total_wall_s": 0.2532258759601973
+      },
+      {
+        "smiles": "N1(N2CCCC2)CCCC1",
+        "n_jobs": 2,
+        "n_heavy": 10,
+        "total_wall_s": 1.4342946260003373
+      },
+      {
+        "smiles": "CC(=C)C1=CC=C(C=C1)N",
+        "n_jobs": 2,
+        "n_heavy": 10,
+        "total_wall_s": 2.0046516669972334
+      },
+      {
+        "smiles": "N(N(C)CCC)(C)C",
+        "n_jobs": 3,
+        "n_heavy": 8,
+        "total_wall_s": 2.6570760419999715
+      },
+      {
+        "smiles": "N(N(CC)CC)(CC)CC",
+        "n_jobs": 2,
+        "n_heavy": 10,
+        "total_wall_s": 2.951944125990849
+      },
+      {
+        "smiles": "CC(=C)C1=CC(=CC=C1)[N+](=O)[O-]",
+        "n_jobs": 2,
+        "n_heavy": 12,
+        "total_wall_s": 3.0268577499955427
+      },
+      {
+        "smiles": "O=CC(F)(F)F",
+        "n_jobs": 2,
+        "n_heavy": 6,
+        "total_wall_s": 0.2400136670039501
+      },
+      {
+        "smiles": "CN1C=CC(=N1)[N+](=O)[O-]",
+        "n_jobs": 3,
+        "n_heavy": 9,
+        "total_wall_s": 0.8124898349924479
+      },
+      {
+        "smiles": "C=1C=CC(=CC1)NC",
+        "n_jobs": 2,
+        "n_heavy": 8,
+        "total_wall_s": 0.5431058340182062
+      },
+      {
+        "smiles": "O(C=1C=CC=CC1)C",
+        "n_jobs": 2,
+        "n_heavy": 8,
+        "total_wall_s": 0.49368033398059197
+      },
+      {
+        "smiles": "N#CCCOCCC#N",
+        "n_jobs": 3,
+        "n_heavy": 9,
+        "total_wall_s": 1.9947957929980475
+      }
+    ]
+  },
+  "feature_leg": {
+    "what": "RDKit 2D descriptor block, one molecule at a time",
+    "seconds_per_molecule_mean": 0.001990592724905582,
+    "seconds_per_molecule_median": 0.0017620829894440249,
+    "note": "the PM7 descriptor block is not charged here -- it is a by-product of the PM7 leg above"
+  },
+  "model_leg": {
+    "model": "RandomForestRegressor",
+    "n_estimators": 200,
+    "consensus_features": 51,
+    "benchmark_sites": 5948,
+    "benchmark_molecules": 2368,
+    "predict_seconds_total_mean": 0.15221852948889136,
+    "predict_seconds_per_site": 0.000025591548333707358,
+    "predict_seconds_per_molecule": 0.00006428147360172777,
+    "note": "Current deployed k-means consensus model; 10 warmed prediction repetitions in clean_env on noether; training is amortized"
+  },
+  "dft_leg": {
+    "NIST dataset (pa_nist, 48270241)": {
+      "n_molecules": 1155,
+      "n_dft_jobs": 1155,
+      "wall_hours_total": 454.0,
+      "credits": 41.93,
+      "usd": 123.69,
+      "wall_hours_per_molecule": 0.3930735930735931,
+      "wall_seconds_per_molecule": 1415.064935064935,
+      "wall_seconds_per_job": 1415.064935064935,
+      "usd_per_molecule": 0.10709090909090908,
+      "credits_per_molecule": 0.0363030303030303
+    },
+    "k-means dataset (pa_dft_ds, 48361776)": {
+      "n_molecules": 251,
+      "n_dft_jobs": 821,
+      "wall_hours_total": 295.0,
+      "credits": 27.24,
+      "usd": 80.36,
+      "wall_hours_per_molecule": 1.1752988047808766,
+      "wall_seconds_per_molecule": 4231.075697211156,
+      "wall_seconds_per_job": 1293.5444579780756,
+      "usd_per_molecule": 0.3201593625498008,
+      "credits_per_molecule": 0.10852589641434263
+    }
+  },
+  "totals": {
+    "ml_route_seconds_per_molecule": 2.835468532745722,
+    "b3lyp_seconds_per_molecule": 1415.064935064935,
+    "speedup_b3lyp_over_ml_route": 499.0603614046049,
+    "speedup_order_of_magnitude": 2.698153199572764,
+    "b3lyp_usd_per_molecule": 0.10709090909090908,
+    "fraction_of_ml_route_that_is_pm7": 0.999275283670993
+  },
+  "runtime_s": 116.76853466033936
+}

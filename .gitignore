@@ -1,0 +1,53 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+*.egg
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Environment
+.env
+.venv/
+env/
+venv/
+*.env
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Data (too large for GitHub; host externally). The second rule also ignores
+# a repository-root symlink named ``data``.
+/data/
+/data
+
+# Generated outputs — run scripts to reproduce (keep results/ and figures/
+# in-repo so readers can see the paper numbers without retraining).
+logs/
+# CatBoost scratch (TensorBoard events + per-iter TSVs)
+catboost_info/
+
+# Nohup / process files
+nohup.out
+*.pid
+*.log
+!docs/publication_run_logs/
+!docs/publication_run_logs/*.log
+!screening/results/iter1_20260813/logs/
+!screening/results/iter1_20260813/logs/*
+
+# Secrets
+*.pem
+*.p12
+id_rsa*
+*.key
+api_keys.txt
+ghp_*

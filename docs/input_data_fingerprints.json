@@ -1,0 +1,20 @@
+{
+  "source_host": "noether.matse.psu.edu",
+  "source_layout": "repository-root data/ directory from the Zenodo archive",
+  "controlled_rerun_checkout": "isolated clean checkout",
+  "files": {
+    "data/targets/nist1155_ml.parquet": {
+      "bytes": 27666328,
+      "sha256": "e64457acb93384e8d67c76b10d9a89282640f7c06d36dae50e78e738225f165e"
+    },
+    "data/targets/kmeans251_ml.parquet": {
+      "bytes": 19162936,
+      "sha256": "5d0d3011159cc00aedb1282eeda71655d046e43744d30d8fcbdaee371961151b"
+    },
+    "data/processed/dataset.json": {
+      "bytes": 14109848,
+      "sha256": "67d9a52d8d32b42e5af0629ea52cd35fa7a88aa03be1713f5f057cdc0f556bab"
+    }
+  },
+  "note": "Byte hashes identify the exact inputs used by the recorded clean environment. Parquet files rewritten by another Arrow version can have different byte hashes despite equivalent table contents; use these exact files for bit-level rerun comparisons."
+}

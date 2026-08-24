@@ -1,0 +1,9 @@
+dataset,cap,rule,floor,model,mae_mean,mae_sd,n_features_mean,n_features_min,n_features_max
+kmeans251,1500,minimum_error,0,RandomForest,7.435521,1.001308,85.4,60,125
+kmeans251,1500,true_1se,0,RandomForest,8.075174,1.156541,14.2,2,32
+kmeans251,1500,true_1se,20_fallback,RandomForest,7.467123,1.001885,66.8,32,86
+kmeans251,none,minimum_error,0,RandomForest,7.501520,0.903325,73.4,44,110
+nist1155,1500,minimum_error_production,0,ExtraTrees,2.875561,0.266628,204.8,177,247
+nist1155,1500,minimum_error_sensitivity_driver,0,ExtraTrees,2.865235,0.263114,205.2,177,248
+nist1155,1500,true_1se,0,ExtraTrees,2.923442,0.277722,103.4,83,130
+nist1155,none,minimum_error,0,ExtraTrees,2.890521,0.291969,252.6,196,333

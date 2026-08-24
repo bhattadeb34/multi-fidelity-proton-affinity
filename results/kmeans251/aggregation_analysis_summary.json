@@ -1,0 +1,10 @@
+{
+  "model": "RandomForest",
+  "n_molecules": 251,
+  "molecular_reference": "maximum site-specific DFT PA",
+  "mae_max_aggregation_kcalmol": 5.360169419835,
+  "mae_mean_aggregation_kcalmol": 11.36986708491877,
+  "mae_pm7_max_kcalmol": 8.851003443206142,
+  "bias_max_aggregation_kcalmol": -2.5555725272904564,
+  "bias_mean_aggregation_kcalmol": -11.028322154332
+}

@@ -1,0 +1,39 @@
+Loaded 30 candidates
+PA range: 210.8 - 235.2 kcal/mol
+
+Saved: /noether/s1/dxb5775/publication_rerun_20260814/figures/si_all30_candidates.pdf
+Saved: /noether/s1/dxb5775/publication_rerun_20260814/figures/si_all30_candidates.png
+
+Full candidate table:
+Rank     Mol     PA_DFT     Window  SMILES
+--------------------------------------------------------------------------------
+1        ---     235.19         NO  Nc1nc(=S)[nH]c2sccc12
+2      Mol-1     234.28        YES  Cc1ccc(-c2ccn[nH]2)c(=O)[nH]1
+3        ---     232.90        YES  NNc1nnc[nH]1
+4      Mol-2     229.77        YES  Nc1[nH]ncc1-c1ccsc1
+5      Mol-3     229.06        YES  Nc1ccc2ncc(=O)[nH]c2n1
+6      Mol-4     228.05        YES  Nc1nn2c(=O)ccnc2[nH]1
+7        ---     227.66        YES  NNc1ccc2[nH]ncc2c1
+8      Mol-5     226.57        YES  Cc1ccc2n[nH]nc2c1N
+9        ---     226.56        YES  Cn1cc(-c2n[nH]cc2C=O)cn1
+10       ---     226.08        YES  Nc1ccc(-c2nnn[nH]2)cc1
+11       ---     226.02        YES  Oc1ncc(-c2cccs2)[nH]1
+12       ---     225.97        YES  CNc1ncn[nH]1
+13       ---     225.94        YES  c1c[nH]c(-c2ccn[nH]2)c1
+14       ---     225.89        YES  OCc1c[nH]nc1-c1ccco1
+15       ---     225.50        YES  NCc1ccc2nn[nH]c2c1
+16       ---     224.45        YES  Cc1n[nH]c2ccc(O)cc12
+17       ---     224.13        YES  Cc1c(O)ccc2cn[nH]c12
+18       ---     223.91        YES  O=c1nc(-c2cnoc2)cc[nH]1
+19       ---     223.13        YES  CCn1cnc(-c2nn[nH]n2)cc1=O
+20       ---     222.85        YES  NN=C(c1nn[nH]n1)c1nn[nH]n1
+21       ---     222.61        YES  Sc1ccc2n[nH]cc2c1
+22       ---     222.01        YES  NCc1cc(-c2cn[nH]c2)cs1
+23       ---     221.53        YES  Cc1nn(C)c2nc[nH]c(=O)c12
+24       ---     221.30        YES  Cc1nn2ccc(=O)[nH]c2c1C
+25       ---     220.65        YES  Cc1cc(=O)n2c(C)n[nH]c2n1
+26       ---     220.47        YES  Cc1nnc2oc(=O)[nH]nc1-2
+27       ---     220.44        YES  CCc1nccc(=O)[nH]1
+28       ---     219.83        YES  S=c1[nH]cnc2ccccc12
+29       ---     217.43        YES  O=c1[nH]c(O)nc2cncn12
+30       ---     210.78        YES  N#Cc1cnc2[nH]ccn2c1=O

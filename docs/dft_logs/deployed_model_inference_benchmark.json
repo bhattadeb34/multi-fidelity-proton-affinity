@@ -1,0 +1,29 @@
+{
+  "run_date": "2026-08-14",
+  "host": "noether.matse.psu.edu",
+  "environment": "clean_env; package versions in docs/clean_env_versions.json",
+  "model": "RandomForestRegressor",
+  "n_estimators": 200,
+  "consensus_rule": "selected in at least 3 of 5 outer folds",
+  "consensus_features": 51,
+  "screening_sites": 5948,
+  "screening_molecules": 2368,
+  "warmup_repetitions": 1,
+  "timed_repetitions": 10,
+  "predict_seconds_total_mean": 0.15221852948889136,
+  "predict_seconds_per_site": 0.000025591548333707358,
+  "predict_seconds_per_molecule": 0.00006428147360172777,
+  "timings_seconds": [
+    0.15938845498021692,
+    0.16032189899124205,
+    0.1507029349450022,
+    0.15072611800860614,
+    0.15157228300813586,
+    0.14913266792427748,
+    0.1499474240699783,
+    0.15026829892303795,
+    0.14934816502500325,
+    0.1507770490134135
+  ],
+  "scope": "Prediction plus per-tree dispersion; model training is amortized."
+}

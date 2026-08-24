@@ -1,0 +1,46 @@
+{
+  "compute_environment": {
+    "hardware": "NVIDIA A100-PCIE-40GB",
+    "cpus_per_job": 8,
+    "memory_gb_per_job": 48,
+    "level_of_theory": "B3LYP/def2-TZVP with frequency calculations",
+    "software": "gpu4pyscf",
+    "platform": "PSU ICDS Roar Collab"
+  },
+  "nist": {
+    "molecules": 1155,
+    "total_gpu_wall_hours": 450.79999999999995,
+    "seconds_per_molecule": 1405.0909090909088
+  },
+  "kmeans": {
+    "molecules": 251,
+    "sites": 821,
+    "total_gpu_wall_hours": 295.09999999999997,
+    "seconds_per_molecule_mean": 4231.7553784860565,
+    "seconds_per_molecule_median": 4066.3
+  },
+  "corrected_prospective": {
+    "slurm_job": 54763379,
+    "molecules": 30,
+    "elapsed_seconds": 61554,
+    "elapsed_hours": 17.0983
+  },
+  "pm7_ml_route": {
+    "seconds_per_molecule": 2.835468532745722,
+    "pm7_fraction": 0.999275283670993,
+    "benchmark_caveat": "PM7 was measured on a local single MOPAC thread; deployed-model prediction was measured in clean_env on noether; B3LYP timings are A100 GPU wall time. The ratio is hardware-crossed and should be quoted to one significant figure."
+  },
+  "speedup": {
+    "nist_basis": 495.5409989086675,
+    "kmeans_basis": 1492.4360223416911,
+    "caveat": "hardware-crossed comparison; quote to one significant figure"
+  },
+  "source_sha256": {
+    "docs/dft_logs/hpc_chunk_timing.csv": "c76a959761928aa5e376d9fe0e57fc10151ad8d15808646f200406c0cebc3cd9",
+    "docs/dft_logs/kmeans_per_molecule_timing.csv": "257f1db851869ce2b5aacd084f3b54a468ae21c553a919a375a246918cdbb805",
+    "docs/dft_logs/pm7_ml_inference_cost.json": "496dc363441386aa0384d06ffafba1c8ad634c7636c32cf03b6b2f06798c6696",
+    "docs/dft_logs/deployed_model_inference_benchmark.json": "863da69f95ccac9ead6750df6443313c482b1a73e0c942dfd9e8d833d39a021d",
+    "docs/dft_logs/compute_environment.json": "10493c2f7b9beb2b7be13b3b7bf75eb3d6602e3014ac9ba73957c9a2113fb9fd",
+    "docs/dft_compute_cost_summary.csv": "86b213c12efecdb26bac4cf8d124e26f277db512e21647e91e52ad15ad2e1bf7"
+  }
+}

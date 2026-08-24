@@ -1,0 +1,31 @@
+
+Aggregation analysis for RandomForest
+Total site predictions: 821
+Unique molecules: 251
+Folds: 5
+
+Fold      Max-agg MAE   Mean-agg MAE    PM7-max MAE   N mols
+------------------------------------------------------------
+1                4.91          11.14           8.75       51
+2                4.84          10.73           8.99       50
+3                6.55          12.21           8.49       50
+4                5.80          11.22          10.10       50
+5                4.71          11.56           7.93       50
+------------------------------------------------------------
+All              5.36          11.37           8.85      251
+
+Bias (mean signed error, kcal/mol):
+  Max-aggregation:  -2.56
+  Mean-aggregation: -11.03
+
+Breakdown by number of sites per molecule:
+   k   N mols    Max MAE   Mean MAE   Max bias  Mean bias
+-------------------------------------------------------
+   1        1       0.64       0.64       0.64       0.64
+   2       58       4.77       9.01      -1.45      -8.10
+   3       93       5.57      11.81      -3.27     -11.69
+   4       73       5.47      12.21      -2.90     -11.96
+   5       23       5.93      13.43      -1.84     -13.37
+   6        3       4.99      10.48      -0.01     -10.48
+
+Saved to results/kmeans251/aggregation_analysis.csv

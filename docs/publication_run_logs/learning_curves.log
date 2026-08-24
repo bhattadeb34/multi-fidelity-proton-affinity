@@ -1,0 +1,1007 @@
+INFO  Building NIST datasets ...
+INFO    NIST PM7: 1155 molecules, 5295 features
+INFO  DFT features loaded: 2689 rows, 1406 unique molecules
+INFO    DFT join (exact): 1155/1155 rows matched
+INFO    NIST DFT: 1155 molecules, 5314 features
+INFO    Best model: ExtraTrees  (5-fold CV MAE = 2.873 kcal/mol)
+INFO    Best model: ExtraTrees  (5-fold CV MAE = 2.860 kcal/mol)
+INFO  ============================================================
+INFO    NIST — Molecular + PM7 features
+INFO  ============================================================
+INFO    Feature pool: 5295 features
+INFO    [  1/55] seed=42  frac=0.08  n_train=  73  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 49 features  |  test MAE = 5.137  train MAE = 0.000 kcal/mol
+INFO    [  2/55] seed=42  frac=0.16  n_train= 147  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 111 features  |  test MAE = 4.097  train MAE = 0.000 kcal/mol
+INFO    [  3/55] seed=42  frac=0.24  n_train= 221  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 80 features  |  test MAE = 4.490  train MAE = 0.000 kcal/mol
+INFO    [  4/55] seed=42  frac=0.32  n_train= 295  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 101 features  |  test MAE = 4.029  train MAE = 0.000 kcal/mol
+INFO    [  5/55] seed=42  frac=0.40  n_train= 369  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 105 features  |  test MAE = 3.541  train MAE = 0.000 kcal/mol
+INFO    [  6/55] seed=42  frac=0.50  n_train= 462  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 112 features  |  test MAE = 3.761  train MAE = 0.000 kcal/mol
+INFO    [  7/55] seed=42  frac=0.60  n_train= 554  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO    GPR skipped (n_train=554 > 500)
+INFO      → 224 features  |  test MAE = 3.373  train MAE = 0.000 kcal/mol
+INFO    [  8/55] seed=42  frac=0.70  n_train= 646  — feature selection ...
+/noether/s1/dxb5775/conda_envs/clean_env/lib/python3.10/site-packages/numpy/lib/nanfunctions.py:1217: RuntimeWarning: All-NaN slice encountered
+  return function_base._ureduce(a, func=_nanmedian, keepdims=keepdims,
+INFO    GPR skipped (n_train=646 > 500)
+INFO      → 165 features  |  test MAE = 3.426  train MAE = 0.000 kcal/mol
+INFO    [  9/55] seed=42  frac=0.80  n_train= 739  — feature selection ...
+/noether/s1/dxb5775/conda_envs/clean_env/lib/python3.10/site-packages/numpy/lib/nanfunctions.py:1217: RuntimeWarning: All-NaN slice encountered
+  return function_base._ureduce(a, func=_nanmedian, keepdims=keepdims,
+INFO    GPR skipped (n_train=739 > 500)
+INFO      → 186 features  |  test MAE = 3.128  train MAE = 0.000 kcal/mol
+INFO    [ 10/55] seed=42  frac=0.90  n_train= 831  — feature selection ...
+/noether/s1/dxb5775/conda_envs/clean_env/lib/python3.10/site-packages/numpy/lib/nanfunctions.py:1217: RuntimeWarning: All-NaN slice encountered
+  return function_base._ureduce(a, func=_nanmedian, keepdims=keepdims,
+INFO    GPR skipped (n_train=831 > 500)
+INFO      → 223 features  |  test MAE = 2.965  train MAE = 0.000 kcal/mol
+INFO    [ 11/55] seed=42  frac=1.00  n_train= 924  — feature selection ...
+/noether/s1/dxb5775/conda_envs/clean_env/lib/python3.10/site-packages/numpy/lib/nanfunctions.py:1217: RuntimeWarning: All-NaN slice encountered
+  return function_base._ureduce(a, func=_nanmedian, keepdims=keepdims,
+INFO    GPR skipped (n_train=924 > 500)
+INFO      → 163 features  |  test MAE = 2.889  train MAE = 0.000 kcal/mol
+INFO    [ 12/55] seed=123  frac=0.08  n_train=  73  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 69 features  |  test MAE = 4.324  train MAE = 0.000 kcal/mol
+INFO    [ 13/55] seed=123  frac=0.16  n_train= 147  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 79 features  |  test MAE = 3.398  train MAE = 0.000 kcal/mol
+INFO    [ 14/55] seed=123  frac=0.24  n_train= 221  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 68 features  |  test MAE = 3.443  train MAE = 0.000 kcal/mol
+INFO    [ 15/55] seed=123  frac=0.32  n_train= 295  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 90 features  |  test MAE = 3.405  train MAE = 0.000 kcal/mol
+INFO    [ 16/55] seed=123  frac=0.40  n_train= 369  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 67 features  |  test MAE = 3.125  train MAE = 0.000 kcal/mol
+INFO    [ 17/55] seed=123  frac=0.50  n_train= 462  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 138 features  |  test MAE = 3.026  train MAE = 0.000 kcal/mol
+INFO    [ 18/55] seed=123  frac=0.60  n_train= 554  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO    GPR skipped (n_train=554 > 500)
+INFO      → 147 features  |  test MAE = 2.831  train MAE = 0.000 kcal/mol
+INFO    [ 19/55] seed=123  frac=0.70  n_train= 646  — feature selection ...
+/noether/s1/dxb5775/conda_envs/clean_env/lib/python3.10/site-packages/numpy/lib/nanfunctions.py:1217: RuntimeWarning: All-NaN slice encountered
+  return function_base._ureduce(a, func=_nanmedian, keepdims=keepdims,
+INFO    GPR skipped (n_train=646 > 500)
+INFO      → 202 features  |  test MAE = 2.936  train MAE = 0.000 kcal/mol
+INFO    [ 20/55] seed=123  frac=0.80  n_train= 739  — feature selection ...
+/noether/s1/dxb5775/conda_envs/clean_env/lib/python3.10/site-packages/numpy/lib/nanfunctions.py:1217: RuntimeWarning: All-NaN slice encountered
+  return function_base._ureduce(a, func=_nanmedian, keepdims=keepdims,
+INFO    GPR skipped (n_train=739 > 500)
+INFO      → 110 features  |  test MAE = 2.797  train MAE = 0.000 kcal/mol
+INFO    [ 21/55] seed=123  frac=0.90  n_train= 831  — feature selection ...
+/noether/s1/dxb5775/conda_envs/clean_env/lib/python3.10/site-packages/numpy/lib/nanfunctions.py:1217: RuntimeWarning: All-NaN slice encountered
+  return function_base._ureduce(a, func=_nanmedian, keepdims=keepdims,
+INFO    GPR skipped (n_train=831 > 500)
+INFO      → 182 features  |  test MAE = 2.847  train MAE = 0.000 kcal/mol
+INFO    [ 22/55] seed=123  frac=1.00  n_train= 924  — feature selection ...
+/noether/s1/dxb5775/conda_envs/clean_env/lib/python3.10/site-packages/numpy/lib/nanfunctions.py:1217: RuntimeWarning: All-NaN slice encountered
+  return function_base._ureduce(a, func=_nanmedian, keepdims=keepdims,
+INFO    GPR skipped (n_train=924 > 500)
+INFO      → 242 features  |  test MAE = 2.608  train MAE = 0.000 kcal/mol
+INFO    [ 23/55] seed=456  frac=0.08  n_train=  73  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 60 features  |  test MAE = 4.478  train MAE = 0.000 kcal/mol
+INFO    [ 24/55] seed=456  frac=0.16  n_train= 147  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 85 features  |  test MAE = 4.122  train MAE = 0.000 kcal/mol
+INFO    [ 25/55] seed=456  frac=0.24  n_train= 221  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 101 features  |  test MAE = 3.602  train MAE = 0.000 kcal/mol
+INFO    [ 26/55] seed=456  frac=0.32  n_train= 295  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 109 features  |  test MAE = 4.232  train MAE = 0.000 kcal/mol
+INFO    [ 27/55] seed=456  frac=0.40  n_train= 369  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 181 features  |  test MAE = 3.497  train MAE = 0.000 kcal/mol
+INFO    [ 28/55] seed=456  frac=0.50  n_train= 462  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 90 features  |  test MAE = 3.247  train MAE = 0.000 kcal/mol
+INFO    [ 29/55] seed=456  frac=0.60  n_train= 554  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO    GPR skipped (n_train=554 > 500)
+INFO      → 93 features  |  test MAE = 3.529  train MAE = 0.000 kcal/mol
+INFO    [ 30/55] seed=456  frac=0.70  n_train= 646  — feature selection ...
+/noether/s1/dxb5775/conda_envs/clean_env/lib/python3.10/site-packages/numpy/lib/nanfunctions.py:1217: RuntimeWarning: All-NaN slice encountered
+  return function_base._ureduce(a, func=_nanmedian, keepdims=keepdims,
+INFO    GPR skipped (n_train=646 > 500)
+INFO      → 208 features  |  test MAE = 3.332  train MAE = 0.000 kcal/mol
+INFO    [ 31/55] seed=456  frac=0.80  n_train= 739  — feature selection ...
+/noether/s1/dxb5775/conda_envs/clean_env/lib/python3.10/site-packages/numpy/lib/nanfunctions.py:1217: RuntimeWarning: All-NaN slice encountered
+  return function_base._ureduce(a, func=_nanmedian, keepdims=keepdims,
+INFO    GPR skipped (n_train=739 > 500)
+INFO      → 198 features  |  test MAE = 3.062  train MAE = 0.000 kcal/mol
+INFO    [ 32/55] seed=456  frac=0.90  n_train= 831  — feature selection ...
+/noether/s1/dxb5775/conda_envs/clean_env/lib/python3.10/site-packages/numpy/lib/nanfunctions.py:1217: RuntimeWarning: All-NaN slice encountered
+  return function_base._ureduce(a, func=_nanmedian, keepdims=keepdims,
+INFO    GPR skipped (n_train=831 > 500)
+INFO      → 227 features  |  test MAE = 3.091  train MAE = 0.000 kcal/mol
+INFO    [ 33/55] seed=456  frac=1.00  n_train= 924  — feature selection ...
+/noether/s1/dxb5775/conda_envs/clean_env/lib/python3.10/site-packages/numpy/lib/nanfunctions.py:1217: RuntimeWarning: All-NaN slice encountered
+  return function_base._ureduce(a, func=_nanmedian, keepdims=keepdims,
+INFO    GPR skipped (n_train=924 > 500)
+INFO      → 226 features  |  test MAE = 2.900  train MAE = 0.000 kcal/mol
+INFO    [ 34/55] seed=789  frac=0.08  n_train=  73  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 40 features  |  test MAE = 5.363  train MAE = 0.000 kcal/mol
+INFO    [ 35/55] seed=789  frac=0.16  n_train= 147  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 112 features  |  test MAE = 5.116  train MAE = 0.000 kcal/mol
+INFO    [ 36/55] seed=789  frac=0.24  n_train= 221  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 106 features  |  test MAE = 4.357  train MAE = 0.000 kcal/mol
+INFO    [ 37/55] seed=789  frac=0.32  n_train= 295  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 127 features  |  test MAE = 4.003  train MAE = 0.000 kcal/mol
+INFO    [ 38/55] seed=789  frac=0.40  n_train= 369  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 113 features  |  test MAE = 3.608  train MAE = 0.000 kcal/mol
+INFO    [ 39/55] seed=789  frac=0.50  n_train= 462  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 97 features  |  test MAE = 3.655  train MAE = 0.000 kcal/mol
+INFO    [ 40/55] seed=789  frac=0.60  n_train= 554  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO    GPR skipped (n_train=554 > 500)
+INFO      → 137 features  |  test MAE = 3.253  train MAE = 0.000 kcal/mol
+INFO    [ 41/55] seed=789  frac=0.70  n_train= 646  — feature selection ...
+/noether/s1/dxb5775/conda_envs/clean_env/lib/python3.10/site-packages/numpy/lib/nanfunctions.py:1217: RuntimeWarning: All-NaN slice encountered
+  return function_base._ureduce(a, func=_nanmedian, keepdims=keepdims,
+INFO    GPR skipped (n_train=646 > 500)
+INFO      → 98 features  |  test MAE = 3.568  train MAE = 0.000 kcal/mol
+INFO    [ 42/55] seed=789  frac=0.80  n_train= 739  — feature selection ...
+/noether/s1/dxb5775/conda_envs/clean_env/lib/python3.10/site-packages/numpy/lib/nanfunctions.py:1217: RuntimeWarning: All-NaN slice encountered
+  return function_base._ureduce(a, func=_nanmedian, keepdims=keepdims,
+INFO    GPR skipped (n_train=739 > 500)
+INFO      → 150 features  |  test MAE = 3.196  train MAE = 0.000 kcal/mol
+INFO    [ 43/55] seed=789  frac=0.90  n_train= 831  — feature selection ...
+/noether/s1/dxb5775/conda_envs/clean_env/lib/python3.10/site-packages/numpy/lib/nanfunctions.py:1217: RuntimeWarning: All-NaN slice encountered
+  return function_base._ureduce(a, func=_nanmedian, keepdims=keepdims,
+INFO    GPR skipped (n_train=831 > 500)
+INFO      → 249 features  |  test MAE = 3.474  train MAE = 0.000 kcal/mol
+INFO    [ 44/55] seed=789  frac=1.00  n_train= 924  — feature selection ...
+/noether/s1/dxb5775/conda_envs/clean_env/lib/python3.10/site-packages/numpy/lib/nanfunctions.py:1217: RuntimeWarning: All-NaN slice encountered
+  return function_base._ureduce(a, func=_nanmedian, keepdims=keepdims,
+INFO    GPR skipped (n_train=924 > 500)
+INFO      → 173 features  |  test MAE = 3.080  train MAE = 0.000 kcal/mol
+INFO    [ 45/55] seed=1024  frac=0.08  n_train=  73  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 72 features  |  test MAE = 4.631  train MAE = 0.000 kcal/mol
+INFO    [ 46/55] seed=1024  frac=0.16  n_train= 147  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 63 features  |  test MAE = 4.232  train MAE = 0.000 kcal/mol
+INFO    [ 47/55] seed=1024  frac=0.24  n_train= 221  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 87 features  |  test MAE = 3.841  train MAE = 0.000 kcal/mol
+INFO    [ 48/55] seed=1024  frac=0.32  n_train= 295  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 81 features  |  test MAE = 3.424  train MAE = 0.000 kcal/mol
+INFO    [ 49/55] seed=1024  frac=0.40  n_train= 369  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 176 features  |  test MAE = 3.478  train MAE = 0.000 kcal/mol
+INFO    [ 50/55] seed=1024  frac=0.50  n_train= 462  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 185 features  |  test MAE = 3.440  train MAE = 0.000 kcal/mol
+INFO    [ 51/55] seed=1024  frac=0.60  n_train= 554  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO    GPR skipped (n_train=554 > 500)
+INFO      → 183 features  |  test MAE = 3.532  train MAE = 0.000 kcal/mol
+INFO    [ 52/55] seed=1024  frac=0.70  n_train= 646  — feature selection ...
+/noether/s1/dxb5775/conda_envs/clean_env/lib/python3.10/site-packages/numpy/lib/nanfunctions.py:1217: RuntimeWarning: All-NaN slice encountered
+  return function_base._ureduce(a, func=_nanmedian, keepdims=keepdims,
+INFO    GPR skipped (n_train=646 > 500)
+INFO      → 126 features  |  test MAE = 3.637  train MAE = 0.000 kcal/mol
+INFO    [ 53/55] seed=1024  frac=0.80  n_train= 739  — feature selection ...
+/noether/s1/dxb5775/conda_envs/clean_env/lib/python3.10/site-packages/numpy/lib/nanfunctions.py:1217: RuntimeWarning: All-NaN slice encountered
+  return function_base._ureduce(a, func=_nanmedian, keepdims=keepdims,
+INFO    GPR skipped (n_train=739 > 500)
+INFO      → 99 features  |  test MAE = 3.257  train MAE = 0.000 kcal/mol
+INFO    [ 54/55] seed=1024  frac=0.90  n_train= 831  — feature selection ...
+/noether/s1/dxb5775/conda_envs/clean_env/lib/python3.10/site-packages/numpy/lib/nanfunctions.py:1217: RuntimeWarning: All-NaN slice encountered
+  return function_base._ureduce(a, func=_nanmedian, keepdims=keepdims,
+INFO    GPR skipped (n_train=831 > 500)
+INFO      → 254 features  |  test MAE = 3.232  train MAE = 0.000 kcal/mol
+INFO    [ 55/55] seed=1024  frac=1.00  n_train= 924  — feature selection ...
+/noether/s1/dxb5775/conda_envs/clean_env/lib/python3.10/site-packages/numpy/lib/nanfunctions.py:1217: RuntimeWarning: All-NaN slice encountered
+  return function_base._ureduce(a, func=_nanmedian, keepdims=keepdims,
+INFO    GPR skipped (n_train=924 > 500)
+INFO      → 262 features  |  test MAE = 3.167  train MAE = 0.000 kcal/mol
+INFO    Saved CSV  → /noether/s1/dxb5775/publication_rerun_20260814/results/learning_curve_nist_pm7/learning_curve_data.csv
+INFO    Saved JSON → /noether/s1/dxb5775/publication_rerun_20260814/results/learning_curve_nist_pm7/learning_curve_detail.json
+INFO    Saved /noether/s1/dxb5775/publication_rerun_20260814/figures/model_performance/learning_curve_nist_pm7.pdf
+INFO  ============================================================
+INFO    NIST — Molecular + PM7 + DFT features
+INFO  ============================================================
+INFO    Feature pool: 5314 features
+INFO    [  1/55] seed=42  frac=0.08  n_train=  73  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 50 features  |  test MAE = 5.123  train MAE = 0.000 kcal/mol
+INFO    [  2/55] seed=42  frac=0.16  n_train= 147  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 112 features  |  test MAE = 4.031  train MAE = 0.000 kcal/mol
+INFO    [  3/55] seed=42  frac=0.24  n_train= 221  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 82 features  |  test MAE = 4.515  train MAE = 0.000 kcal/mol
+INFO    [  4/55] seed=42  frac=0.32  n_train= 295  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 101 features  |  test MAE = 4.071  train MAE = 0.000 kcal/mol
+INFO    [  5/55] seed=42  frac=0.40  n_train= 369  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 97 features  |  test MAE = 3.603  train MAE = 0.000 kcal/mol
+INFO    [  6/55] seed=42  frac=0.50  n_train= 462  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 114 features  |  test MAE = 3.759  train MAE = 0.000 kcal/mol
+INFO    [  7/55] seed=42  frac=0.60  n_train= 554  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO    GPR skipped (n_train=554 > 500)
+INFO      → 221 features  |  test MAE = 3.346  train MAE = 0.000 kcal/mol
+INFO    [  8/55] seed=42  frac=0.70  n_train= 646  — feature selection ...
+/noether/s1/dxb5775/conda_envs/clean_env/lib/python3.10/site-packages/numpy/lib/nanfunctions.py:1217: RuntimeWarning: All-NaN slice encountered
+  return function_base._ureduce(a, func=_nanmedian, keepdims=keepdims,
+INFO    GPR skipped (n_train=646 > 500)
+INFO      → 157 features  |  test MAE = 3.479  train MAE = 0.000 kcal/mol
+INFO    [  9/55] seed=42  frac=0.80  n_train= 739  — feature selection ...
+/noether/s1/dxb5775/conda_envs/clean_env/lib/python3.10/site-packages/numpy/lib/nanfunctions.py:1217: RuntimeWarning: All-NaN slice encountered
+  return function_base._ureduce(a, func=_nanmedian, keepdims=keepdims,
+INFO    GPR skipped (n_train=739 > 500)
+INFO      → 193 features  |  test MAE = 3.185  train MAE = 0.000 kcal/mol
+INFO    [ 10/55] seed=42  frac=0.90  n_train= 831  — feature selection ...
+/noether/s1/dxb5775/conda_envs/clean_env/lib/python3.10/site-packages/numpy/lib/nanfunctions.py:1217: RuntimeWarning: All-NaN slice encountered
+  return function_base._ureduce(a, func=_nanmedian, keepdims=keepdims,
+INFO    GPR skipped (n_train=831 > 500)
+INFO      → 225 features  |  test MAE = 2.980  train MAE = 0.000 kcal/mol
+INFO    [ 11/55] seed=42  frac=1.00  n_train= 924  — feature selection ...
+/noether/s1/dxb5775/conda_envs/clean_env/lib/python3.10/site-packages/numpy/lib/nanfunctions.py:1217: RuntimeWarning: All-NaN slice encountered
+  return function_base._ureduce(a, func=_nanmedian, keepdims=keepdims,
+INFO    GPR skipped (n_train=924 > 500)
+INFO      → 161 features  |  test MAE = 2.885  train MAE = 0.000 kcal/mol
+INFO    [ 12/55] seed=123  frac=0.08  n_train=  73  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 63 features  |  test MAE = 4.732  train MAE = 0.000 kcal/mol
+INFO    [ 13/55] seed=123  frac=0.16  n_train= 147  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 79 features  |  test MAE = 3.420  train MAE = 0.000 kcal/mol
+INFO    [ 14/55] seed=123  frac=0.24  n_train= 221  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 71 features  |  test MAE = 3.480  train MAE = 0.000 kcal/mol
+INFO    [ 15/55] seed=123  frac=0.32  n_train= 295  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 96 features  |  test MAE = 3.393  train MAE = 0.000 kcal/mol
+INFO    [ 16/55] seed=123  frac=0.40  n_train= 369  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 70 features  |  test MAE = 3.154  train MAE = 0.000 kcal/mol
+INFO    [ 17/55] seed=123  frac=0.50  n_train= 462  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 141 features  |  test MAE = 3.070  train MAE = 0.000 kcal/mol
+INFO    [ 18/55] seed=123  frac=0.60  n_train= 554  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO    GPR skipped (n_train=554 > 500)
+INFO      → 140 features  |  test MAE = 2.852  train MAE = 0.000 kcal/mol
+INFO    [ 19/55] seed=123  frac=0.70  n_train= 646  — feature selection ...
+/noether/s1/dxb5775/conda_envs/clean_env/lib/python3.10/site-packages/numpy/lib/nanfunctions.py:1217: RuntimeWarning: All-NaN slice encountered
+  return function_base._ureduce(a, func=_nanmedian, keepdims=keepdims,
+INFO    GPR skipped (n_train=646 > 500)
+INFO      → 130 features  |  test MAE = 3.005  train MAE = 0.000 kcal/mol
+INFO    [ 20/55] seed=123  frac=0.80  n_train= 739  — feature selection ...
+/noether/s1/dxb5775/conda_envs/clean_env/lib/python3.10/site-packages/numpy/lib/nanfunctions.py:1217: RuntimeWarning: All-NaN slice encountered
+  return function_base._ureduce(a, func=_nanmedian, keepdims=keepdims,
+INFO    GPR skipped (n_train=739 > 500)
+INFO      → 113 features  |  test MAE = 2.761  train MAE = 0.000 kcal/mol
+INFO    [ 21/55] seed=123  frac=0.90  n_train= 831  — feature selection ...
+/noether/s1/dxb5775/conda_envs/clean_env/lib/python3.10/site-packages/numpy/lib/nanfunctions.py:1217: RuntimeWarning: All-NaN slice encountered
+  return function_base._ureduce(a, func=_nanmedian, keepdims=keepdims,
+INFO    GPR skipped (n_train=831 > 500)
+INFO      → 200 features  |  test MAE = 2.761  train MAE = 0.000 kcal/mol
+INFO    [ 22/55] seed=123  frac=1.00  n_train= 924  — feature selection ...
+/noether/s1/dxb5775/conda_envs/clean_env/lib/python3.10/site-packages/numpy/lib/nanfunctions.py:1217: RuntimeWarning: All-NaN slice encountered
+  return function_base._ureduce(a, func=_nanmedian, keepdims=keepdims,
+INFO    GPR skipped (n_train=924 > 500)
+INFO      → 253 features  |  test MAE = 2.571  train MAE = 0.000 kcal/mol
+INFO    [ 23/55] seed=456  frac=0.08  n_train=  73  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 64 features  |  test MAE = 4.505  train MAE = 0.000 kcal/mol
+INFO    [ 24/55] seed=456  frac=0.16  n_train= 147  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 82 features  |  test MAE = 4.095  train MAE = 0.000 kcal/mol
+INFO    [ 25/55] seed=456  frac=0.24  n_train= 221  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 104 features  |  test MAE = 3.687  train MAE = 0.000 kcal/mol
+INFO    [ 26/55] seed=456  frac=0.32  n_train= 295  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 109 features  |  test MAE = 4.212  train MAE = 0.000 kcal/mol
+INFO    [ 27/55] seed=456  frac=0.40  n_train= 369  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 190 features  |  test MAE = 3.514  train MAE = 0.000 kcal/mol
+INFO    [ 28/55] seed=456  frac=0.50  n_train= 462  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 94 features  |  test MAE = 3.296  train MAE = 0.000 kcal/mol
+INFO    [ 29/55] seed=456  frac=0.60  n_train= 554  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO    GPR skipped (n_train=554 > 500)
+INFO      → 93 features  |  test MAE = 3.537  train MAE = 0.000 kcal/mol
+INFO    [ 30/55] seed=456  frac=0.70  n_train= 646  — feature selection ...
+/noether/s1/dxb5775/conda_envs/clean_env/lib/python3.10/site-packages/numpy/lib/nanfunctions.py:1217: RuntimeWarning: All-NaN slice encountered
+  return function_base._ureduce(a, func=_nanmedian, keepdims=keepdims,
+INFO    GPR skipped (n_train=646 > 500)
+INFO      → 201 features  |  test MAE = 3.333  train MAE = 0.000 kcal/mol
+INFO    [ 31/55] seed=456  frac=0.80  n_train= 739  — feature selection ...
+/noether/s1/dxb5775/conda_envs/clean_env/lib/python3.10/site-packages/numpy/lib/nanfunctions.py:1217: RuntimeWarning: All-NaN slice encountered
+  return function_base._ureduce(a, func=_nanmedian, keepdims=keepdims,
+INFO    GPR skipped (n_train=739 > 500)
+INFO      → 182 features  |  test MAE = 2.986  train MAE = 0.000 kcal/mol
+INFO    [ 32/55] seed=456  frac=0.90  n_train= 831  — feature selection ...
+/noether/s1/dxb5775/conda_envs/clean_env/lib/python3.10/site-packages/numpy/lib/nanfunctions.py:1217: RuntimeWarning: All-NaN slice encountered
+  return function_base._ureduce(a, func=_nanmedian, keepdims=keepdims,
+INFO    GPR skipped (n_train=831 > 500)
+INFO      → 229 features  |  test MAE = 3.134  train MAE = 0.000 kcal/mol
+INFO    [ 33/55] seed=456  frac=1.00  n_train= 924  — feature selection ...
+/noether/s1/dxb5775/conda_envs/clean_env/lib/python3.10/site-packages/numpy/lib/nanfunctions.py:1217: RuntimeWarning: All-NaN slice encountered
+  return function_base._ureduce(a, func=_nanmedian, keepdims=keepdims,
+INFO    GPR skipped (n_train=924 > 500)
+INFO      → 224 features  |  test MAE = 2.902  train MAE = 0.000 kcal/mol
+INFO    [ 34/55] seed=789  frac=0.08  n_train=  73  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 40 features  |  test MAE = 5.561  train MAE = 0.000 kcal/mol
+INFO    [ 35/55] seed=789  frac=0.16  n_train= 147  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 107 features  |  test MAE = 4.911  train MAE = 0.000 kcal/mol
+INFO    [ 36/55] seed=789  frac=0.24  n_train= 221  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 82 features  |  test MAE = 4.418  train MAE = 0.000 kcal/mol
+INFO    [ 37/55] seed=789  frac=0.32  n_train= 295  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 127 features  |  test MAE = 4.053  train MAE = 0.000 kcal/mol
+INFO    [ 38/55] seed=789  frac=0.40  n_train= 369  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 109 features  |  test MAE = 3.595  train MAE = 0.000 kcal/mol
+INFO    [ 39/55] seed=789  frac=0.50  n_train= 462  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 97 features  |  test MAE = 3.631  train MAE = 0.000 kcal/mol
+INFO    [ 40/55] seed=789  frac=0.60  n_train= 554  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO    GPR skipped (n_train=554 > 500)
+INFO      → 136 features  |  test MAE = 3.274  train MAE = 0.000 kcal/mol
+INFO    [ 41/55] seed=789  frac=0.70  n_train= 646  — feature selection ...
+/noether/s1/dxb5775/conda_envs/clean_env/lib/python3.10/site-packages/numpy/lib/nanfunctions.py:1217: RuntimeWarning: All-NaN slice encountered
+  return function_base._ureduce(a, func=_nanmedian, keepdims=keepdims,
+INFO    GPR skipped (n_train=646 > 500)
+INFO      → 98 features  |  test MAE = 3.555  train MAE = 0.000 kcal/mol
+INFO    [ 42/55] seed=789  frac=0.80  n_train= 739  — feature selection ...
+/noether/s1/dxb5775/conda_envs/clean_env/lib/python3.10/site-packages/numpy/lib/nanfunctions.py:1217: RuntimeWarning: All-NaN slice encountered
+  return function_base._ureduce(a, func=_nanmedian, keepdims=keepdims,
+INFO    GPR skipped (n_train=739 > 500)
+INFO      → 143 features  |  test MAE = 3.288  train MAE = 0.000 kcal/mol
+INFO    [ 43/55] seed=789  frac=0.90  n_train= 831  — feature selection ...
+/noether/s1/dxb5775/conda_envs/clean_env/lib/python3.10/site-packages/numpy/lib/nanfunctions.py:1217: RuntimeWarning: All-NaN slice encountered
+  return function_base._ureduce(a, func=_nanmedian, keepdims=keepdims,
+INFO    GPR skipped (n_train=831 > 500)
+INFO      → 247 features  |  test MAE = 3.403  train MAE = 0.000 kcal/mol
+INFO    [ 44/55] seed=789  frac=1.00  n_train= 924  — feature selection ...
+/noether/s1/dxb5775/conda_envs/clean_env/lib/python3.10/site-packages/numpy/lib/nanfunctions.py:1217: RuntimeWarning: All-NaN slice encountered
+  return function_base._ureduce(a, func=_nanmedian, keepdims=keepdims,
+INFO    GPR skipped (n_train=924 > 500)
+INFO      → 177 features  |  test MAE = 3.128  train MAE = 0.000 kcal/mol
+INFO    [ 45/55] seed=1024  frac=0.08  n_train=  73  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 69 features  |  test MAE = 4.628  train MAE = 0.000 kcal/mol
+INFO    [ 46/55] seed=1024  frac=0.16  n_train= 147  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 63 features  |  test MAE = 4.225  train MAE = 0.000 kcal/mol
+INFO    [ 47/55] seed=1024  frac=0.24  n_train= 221  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 81 features  |  test MAE = 3.860  train MAE = 0.000 kcal/mol
+INFO    [ 48/55] seed=1024  frac=0.32  n_train= 295  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 82 features  |  test MAE = 3.543  train MAE = 0.000 kcal/mol
+INFO    [ 49/55] seed=1024  frac=0.40  n_train= 369  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 176 features  |  test MAE = 3.443  train MAE = 0.000 kcal/mol
+INFO    [ 50/55] seed=1024  frac=0.50  n_train= 462  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 141 features  |  test MAE = 3.580  train MAE = 0.000 kcal/mol
+INFO    [ 51/55] seed=1024  frac=0.60  n_train= 554  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO    GPR skipped (n_train=554 > 500)
+INFO      → 182 features  |  test MAE = 3.602  train MAE = 0.000 kcal/mol
+INFO    [ 52/55] seed=1024  frac=0.70  n_train= 646  — feature selection ...
+/noether/s1/dxb5775/conda_envs/clean_env/lib/python3.10/site-packages/numpy/lib/nanfunctions.py:1217: RuntimeWarning: All-NaN slice encountered
+  return function_base._ureduce(a, func=_nanmedian, keepdims=keepdims,
+INFO    GPR skipped (n_train=646 > 500)
+INFO      → 170 features  |  test MAE = 3.574  train MAE = 0.000 kcal/mol
+INFO    [ 53/55] seed=1024  frac=0.80  n_train= 739  — feature selection ...
+/noether/s1/dxb5775/conda_envs/clean_env/lib/python3.10/site-packages/numpy/lib/nanfunctions.py:1217: RuntimeWarning: All-NaN slice encountered
+  return function_base._ureduce(a, func=_nanmedian, keepdims=keepdims,
+INFO    GPR skipped (n_train=739 > 500)
+INFO      → 228 features  |  test MAE = 3.312  train MAE = 0.000 kcal/mol
+INFO    [ 54/55] seed=1024  frac=0.90  n_train= 831  — feature selection ...
+/noether/s1/dxb5775/conda_envs/clean_env/lib/python3.10/site-packages/numpy/lib/nanfunctions.py:1217: RuntimeWarning: All-NaN slice encountered
+  return function_base._ureduce(a, func=_nanmedian, keepdims=keepdims,
+INFO    GPR skipped (n_train=831 > 500)
+INFO      → 258 features  |  test MAE = 3.306  train MAE = 0.000 kcal/mol
+INFO    [ 55/55] seed=1024  frac=1.00  n_train= 924  — feature selection ...
+/noether/s1/dxb5775/conda_envs/clean_env/lib/python3.10/site-packages/numpy/lib/nanfunctions.py:1217: RuntimeWarning: All-NaN slice encountered
+  return function_base._ureduce(a, func=_nanmedian, keepdims=keepdims,
+INFO    GPR skipped (n_train=924 > 500)
+INFO      → 277 features  |  test MAE = 3.221  train MAE = 0.000 kcal/mol
+INFO    Saved CSV  → /noether/s1/dxb5775/publication_rerun_20260814/results/learning_curve_nist_dft/learning_curve_data.csv
+INFO    Saved JSON → /noether/s1/dxb5775/publication_rerun_20260814/results/learning_curve_nist_dft/learning_curve_detail.json
+INFO    Saved /noether/s1/dxb5775/publication_rerun_20260814/figures/model_performance/learning_curve_nist_dft.pdf
+INFO  Building k-means datasets ...
+INFO    k-means PM7: 821 sites, 5295 features
+INFO  DFT features loaded: 2689 rows, 1406 unique molecules
+INFO    DFT join (exact): 821/821 rows matched
+INFO    k-means DFT: 821 sites, 5312 features
+INFO    Best model: RandomForest  (5-fold CV MAE = 7.436 kcal/mol)
+INFO    Best model: CatBoost  (5-fold CV MAE = 5.614 kcal/mol)
+INFO  ============================================================
+INFO    k-means — Molecular + PM7 features
+INFO  ============================================================
+INFO    Feature pool: 5295 features
+INFO    [  1/55] seed=42  frac=0.08  n_train=  51  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 20 features  |  test MAE = 8.518  train MAE = 2.517 kcal/mol
+INFO    [  2/55] seed=42  frac=0.16  n_train= 108  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 6 features  |  test MAE = 9.934  train MAE = 2.940 kcal/mol
+INFO    [  3/55] seed=42  frac=0.24  n_train= 160  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 26 features  |  test MAE = 8.072  train MAE = 3.019 kcal/mol
+INFO    [  4/55] seed=42  frac=0.32  n_train= 206  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 10 features  |  test MAE = 7.821  train MAE = 2.849 kcal/mol
+INFO    [  5/55] seed=42  frac=0.40  n_train= 278  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 56 features  |  test MAE = 7.748  train MAE = 2.895 kcal/mol
+INFO    [  6/55] seed=42  frac=0.50  n_train= 335  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 58 features  |  test MAE = 7.585  train MAE = 2.728 kcal/mol
+INFO    [  7/55] seed=42  frac=0.60  n_train= 386  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 72 features  |  test MAE = 7.132  train MAE = 2.563 kcal/mol
+INFO    [  8/55] seed=42  frac=0.70  n_train= 468  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 27 features  |  test MAE = 8.015  train MAE = 2.930 kcal/mol
+INFO    [  9/55] seed=42  frac=0.80  n_train= 530  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO    GPR skipped (n_train=530 > 500)
+INFO      → 71 features  |  test MAE = 7.595  train MAE = 2.817 kcal/mol
+INFO    [ 10/55] seed=42  frac=0.90  n_train= 598  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO    GPR skipped (n_train=598 > 500)
+INFO      → 88 features  |  test MAE = 7.515  train MAE = 2.714 kcal/mol
+INFO    [ 11/55] seed=42  frac=1.00  n_train= 661  — feature selection ...
+/noether/s1/dxb5775/conda_envs/clean_env/lib/python3.10/site-packages/numpy/lib/nanfunctions.py:1217: RuntimeWarning: All-NaN slice encountered
+  return function_base._ureduce(a, func=_nanmedian, keepdims=keepdims,
+INFO    GPR skipped (n_train=661 > 500)
+INFO      → 88 features  |  test MAE = 7.294  train MAE = 2.717 kcal/mol
+INFO    [ 12/55] seed=123  frac=0.08  n_train=  56  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 12 features  |  test MAE = 9.174  train MAE = 2.417 kcal/mol
+INFO    [ 13/55] seed=123  frac=0.16  n_train= 108  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 32 features  |  test MAE = 9.349  train MAE = 2.646 kcal/mol
+INFO    [ 14/55] seed=123  frac=0.24  n_train= 158  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 1 features  |  test MAE = 8.388  train MAE = 8.483 kcal/mol
+INFO    [ 15/55] seed=123  frac=0.32  n_train= 198  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 49 features  |  test MAE = 8.082  train MAE = 3.002 kcal/mol
+INFO    [ 16/55] seed=123  frac=0.40  n_train= 267  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 48 features  |  test MAE = 7.958  train MAE = 2.986 kcal/mol
+INFO    [ 17/55] seed=123  frac=0.50  n_train= 345  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 64 features  |  test MAE = 7.764  train MAE = 2.915 kcal/mol
+INFO    [ 18/55] seed=123  frac=0.60  n_train= 392  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 74 features  |  test MAE = 7.303  train MAE = 2.658 kcal/mol
+INFO    [ 19/55] seed=123  frac=0.70  n_train= 479  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 97 features  |  test MAE = 7.444  train MAE = 2.772 kcal/mol
+INFO    [ 20/55] seed=123  frac=0.80  n_train= 525  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO    GPR skipped (n_train=525 > 500)
+INFO      → 53 features  |  test MAE = 7.583  train MAE = 2.820 kcal/mol
+INFO    [ 21/55] seed=123  frac=0.90  n_train= 589  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO    GPR skipped (n_train=589 > 500)
+INFO      → 88 features  |  test MAE = 7.610  train MAE = 2.790 kcal/mol
+INFO    [ 22/55] seed=123  frac=1.00  n_train= 663  — feature selection ...
+/noether/s1/dxb5775/conda_envs/clean_env/lib/python3.10/site-packages/numpy/lib/nanfunctions.py:1217: RuntimeWarning: All-NaN slice encountered
+  return function_base._ureduce(a, func=_nanmedian, keepdims=keepdims,
+INFO    GPR skipped (n_train=663 > 500)
+INFO      → 96 features  |  test MAE = 7.677  train MAE = 2.788 kcal/mol
+INFO    [ 23/55] seed=456  frac=0.08  n_train=  51  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 23 features  |  test MAE = 10.108  train MAE = 3.689 kcal/mol
+INFO    [ 24/55] seed=456  frac=0.16  n_train= 104  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 32 features  |  test MAE = 8.985  train MAE = 3.025 kcal/mol
+INFO    [ 25/55] seed=456  frac=0.24  n_train= 160  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 29 features  |  test MAE = 9.340  train MAE = 2.999 kcal/mol
+INFO    [ 26/55] seed=456  frac=0.32  n_train= 211  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 35 features  |  test MAE = 8.746  train MAE = 2.958 kcal/mol
+INFO    [ 27/55] seed=456  frac=0.40  n_train= 272  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 69 features  |  test MAE = 8.330  train MAE = 2.738 kcal/mol
+INFO    [ 28/55] seed=456  frac=0.50  n_train= 339  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 52 features  |  test MAE = 8.438  train MAE = 2.882 kcal/mol
+INFO    [ 29/55] seed=456  frac=0.60  n_train= 402  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 95 features  |  test MAE = 8.631  train MAE = 2.616 kcal/mol
+INFO    [ 30/55] seed=456  frac=0.70  n_train= 456  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 90 features  |  test MAE = 8.443  train MAE = 2.618 kcal/mol
+INFO    [ 31/55] seed=456  frac=0.80  n_train= 525  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO    GPR skipped (n_train=525 > 500)
+INFO      → 112 features  |  test MAE = 8.330  train MAE = 2.787 kcal/mol
+INFO    [ 32/55] seed=456  frac=0.90  n_train= 597  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO    GPR skipped (n_train=597 > 500)
+INFO      → 76 features  |  test MAE = 8.123  train MAE = 2.696 kcal/mol
+INFO    [ 33/55] seed=456  frac=1.00  n_train= 660  — feature selection ...
+/noether/s1/dxb5775/conda_envs/clean_env/lib/python3.10/site-packages/numpy/lib/nanfunctions.py:1217: RuntimeWarning: All-NaN slice encountered
+  return function_base._ureduce(a, func=_nanmedian, keepdims=keepdims,
+INFO    GPR skipped (n_train=660 > 500)
+INFO      → 99 features  |  test MAE = 8.270  train MAE = 2.697 kcal/mol
+INFO    [ 34/55] seed=789  frac=0.08  n_train=  49  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 9 features  |  test MAE = 9.007  train MAE = 2.414 kcal/mol
+INFO    [ 35/55] seed=789  frac=0.16  n_train= 102  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 2 features  |  test MAE = 9.178  train MAE = 6.501 kcal/mol
+INFO    [ 36/55] seed=789  frac=0.24  n_train= 159  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 27 features  |  test MAE = 8.681  train MAE = 3.394 kcal/mol
+INFO    [ 37/55] seed=789  frac=0.32  n_train= 197  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 43 features  |  test MAE = 7.990  train MAE = 2.648 kcal/mol
+INFO    [ 38/55] seed=789  frac=0.40  n_train= 256  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 63 features  |  test MAE = 8.160  train MAE = 2.610 kcal/mol
+INFO    [ 39/55] seed=789  frac=0.50  n_train= 314  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 46 features  |  test MAE = 7.754  train MAE = 2.967 kcal/mol
+INFO    [ 40/55] seed=789  frac=0.60  n_train= 399  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 70 features  |  test MAE = 7.995  train MAE = 2.865 kcal/mol
+INFO    [ 41/55] seed=789  frac=0.70  n_train= 446  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 35 features  |  test MAE = 7.994  train MAE = 2.664 kcal/mol
+INFO    [ 42/55] seed=789  frac=0.80  n_train= 524  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO    GPR skipped (n_train=524 > 500)
+INFO      → 56 features  |  test MAE = 7.751  train MAE = 2.781 kcal/mol
+INFO    [ 43/55] seed=789  frac=0.90  n_train= 583  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO    GPR skipped (n_train=583 > 500)
+INFO      → 102 features  |  test MAE = 7.636  train MAE = 2.709 kcal/mol
+INFO    [ 44/55] seed=789  frac=1.00  n_train= 649  — feature selection ...
+/noether/s1/dxb5775/conda_envs/clean_env/lib/python3.10/site-packages/numpy/lib/nanfunctions.py:1217: RuntimeWarning: All-NaN slice encountered
+  return function_base._ureduce(a, func=_nanmedian, keepdims=keepdims,
+INFO    GPR skipped (n_train=649 > 500)
+INFO      → 118 features  |  test MAE = 7.692  train MAE = 2.742 kcal/mol
+INFO    [ 45/55] seed=1024  frac=0.08  n_train=  59  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 22 features  |  test MAE = 8.196  train MAE = 2.510 kcal/mol
+INFO    [ 46/55] seed=1024  frac=0.16  n_train= 104  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 36 features  |  test MAE = 7.223  train MAE = 2.684 kcal/mol
+INFO    [ 47/55] seed=1024  frac=0.24  n_train= 163  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 30 features  |  test MAE = 9.150  train MAE = 2.941 kcal/mol
+INFO    [ 48/55] seed=1024  frac=0.32  n_train= 207  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 44 features  |  test MAE = 7.611  train MAE = 3.114 kcal/mol
+INFO    [ 49/55] seed=1024  frac=0.40  n_train= 247  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 39 features  |  test MAE = 7.129  train MAE = 2.889 kcal/mol
+INFO    [ 50/55] seed=1024  frac=0.50  n_train= 340  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 60 features  |  test MAE = 7.517  train MAE = 2.948 kcal/mol
+INFO    [ 51/55] seed=1024  frac=0.60  n_train= 395  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 80 features  |  test MAE = 7.345  train MAE = 2.948 kcal/mol
+INFO    [ 52/55] seed=1024  frac=0.70  n_train= 471  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 62 features  |  test MAE = 7.177  train MAE = 2.904 kcal/mol
+INFO    [ 53/55] seed=1024  frac=0.80  n_train= 528  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO    GPR skipped (n_train=528 > 500)
+INFO      → 97 features  |  test MAE = 7.438  train MAE = 2.878 kcal/mol
+INFO    [ 54/55] seed=1024  frac=0.90  n_train= 600  — feature selection ...
+/noether/s1/dxb5775/conda_envs/clean_env/lib/python3.10/site-packages/numpy/lib/nanfunctions.py:1217: RuntimeWarning: All-NaN slice encountered
+  return function_base._ureduce(a, func=_nanmedian, keepdims=keepdims,
+INFO    GPR skipped (n_train=600 > 500)
+INFO      → 71 features  |  test MAE = 7.252  train MAE = 2.749 kcal/mol
+INFO    [ 55/55] seed=1024  frac=1.00  n_train= 663  — feature selection ...
+/noether/s1/dxb5775/conda_envs/clean_env/lib/python3.10/site-packages/numpy/lib/nanfunctions.py:1217: RuntimeWarning: All-NaN slice encountered
+  return function_base._ureduce(a, func=_nanmedian, keepdims=keepdims,
+INFO    GPR skipped (n_train=663 > 500)
+INFO      → 84 features  |  test MAE = 7.782  train MAE = 2.805 kcal/mol
+INFO    Saved CSV  → /noether/s1/dxb5775/publication_rerun_20260814/results/learning_curve_kmeans_pm7/learning_curve_data.csv
+INFO    Saved JSON → /noether/s1/dxb5775/publication_rerun_20260814/results/learning_curve_kmeans_pm7/learning_curve_detail.json
+INFO    Saved /noether/s1/dxb5775/publication_rerun_20260814/figures/model_performance/learning_curve_kmeans_pm7.pdf
+INFO  ============================================================
+INFO    k-means — Molecular + PM7 + DFT features
+INFO  ============================================================
+INFO    Feature pool: 5312 features
+INFO    [  1/55] seed=42  frac=0.08  n_train=  51  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 25 features  |  test MAE = 7.896  train MAE = 0.084 kcal/mol
+INFO    [  2/55] seed=42  frac=0.16  n_train= 108  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 31 features  |  test MAE = 7.460  train MAE = 0.177 kcal/mol
+INFO    [  3/55] seed=42  frac=0.24  n_train= 160  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 32 features  |  test MAE = 5.850  train MAE = 0.434 kcal/mol
+INFO    [  4/55] seed=42  frac=0.32  n_train= 206  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 78 features  |  test MAE = 6.346  train MAE = 0.429 kcal/mol
+INFO    [  5/55] seed=42  frac=0.40  n_train= 278  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 58 features  |  test MAE = 5.445  train MAE = 0.689 kcal/mol
+INFO    [  6/55] seed=42  frac=0.50  n_train= 335  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 41 features  |  test MAE = 5.710  train MAE = 1.113 kcal/mol
+INFO    [  7/55] seed=42  frac=0.60  n_train= 386  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 85 features  |  test MAE = 5.276  train MAE = 0.784 kcal/mol
+INFO    [  8/55] seed=42  frac=0.70  n_train= 468  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 102 features  |  test MAE = 5.718  train MAE = 1.043 kcal/mol
+INFO    [  9/55] seed=42  frac=0.80  n_train= 530  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO    GPR skipped (n_train=530 > 500)
+INFO      → 93 features  |  test MAE = 5.523  train MAE = 1.272 kcal/mol
+INFO    [ 10/55] seed=42  frac=0.90  n_train= 598  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO    GPR skipped (n_train=598 > 500)
+INFO      → 104 features  |  test MAE = 5.495  train MAE = 1.222 kcal/mol
+INFO    [ 11/55] seed=42  frac=1.00  n_train= 661  — feature selection ...
+/noether/s1/dxb5775/conda_envs/clean_env/lib/python3.10/site-packages/numpy/lib/nanfunctions.py:1217: RuntimeWarning: All-NaN slice encountered
+  return function_base._ureduce(a, func=_nanmedian, keepdims=keepdims,
+INFO    GPR skipped (n_train=661 > 500)
+INFO      → 104 features  |  test MAE = 5.237  train MAE = 1.323 kcal/mol
+INFO    [ 12/55] seed=123  frac=0.08  n_train=  56  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 22 features  |  test MAE = 7.972  train MAE = 0.087 kcal/mol
+INFO    [ 13/55] seed=123  frac=0.16  n_train= 108  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 35 features  |  test MAE = 7.268  train MAE = 0.235 kcal/mol
+INFO    [ 14/55] seed=123  frac=0.24  n_train= 158  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 39 features  |  test MAE = 6.705  train MAE = 0.598 kcal/mol
+INFO    [ 15/55] seed=123  frac=0.32  n_train= 198  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 70 features  |  test MAE = 6.724  train MAE = 0.613 kcal/mol
+INFO    [ 16/55] seed=123  frac=0.40  n_train= 267  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 50 features  |  test MAE = 5.831  train MAE = 0.794 kcal/mol
+INFO    [ 17/55] seed=123  frac=0.50  n_train= 345  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 75 features  |  test MAE = 6.289  train MAE = 0.871 kcal/mol
+INFO    [ 18/55] seed=123  frac=0.60  n_train= 392  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 94 features  |  test MAE = 6.053  train MAE = 0.874 kcal/mol
+INFO    [ 19/55] seed=123  frac=0.70  n_train= 479  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 78 features  |  test MAE = 5.619  train MAE = 1.088 kcal/mol
+INFO    [ 20/55] seed=123  frac=0.80  n_train= 525  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO    GPR skipped (n_train=525 > 500)
+INFO      → 62 features  |  test MAE = 6.235  train MAE = 1.433 kcal/mol
+INFO    [ 21/55] seed=123  frac=0.90  n_train= 589  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO    GPR skipped (n_train=589 > 500)
+INFO      → 74 features  |  test MAE = 5.675  train MAE = 1.398 kcal/mol
+INFO    [ 22/55] seed=123  frac=1.00  n_train= 663  — feature selection ...
+/noether/s1/dxb5775/conda_envs/clean_env/lib/python3.10/site-packages/numpy/lib/nanfunctions.py:1217: RuntimeWarning: All-NaN slice encountered
+  return function_base._ureduce(a, func=_nanmedian, keepdims=keepdims,
+INFO    GPR skipped (n_train=663 > 500)
+INFO      → 92 features  |  test MAE = 5.867  train MAE = 1.234 kcal/mol
+INFO    [ 23/55] seed=456  frac=0.08  n_train=  51  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 25 features  |  test MAE = 7.892  train MAE = 0.115 kcal/mol
+INFO    [ 24/55] seed=456  frac=0.16  n_train= 104  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 43 features  |  test MAE = 7.729  train MAE = 0.209 kcal/mol
+INFO    [ 25/55] seed=456  frac=0.24  n_train= 160  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 41 features  |  test MAE = 7.705  train MAE = 0.449 kcal/mol
+INFO    [ 26/55] seed=456  frac=0.32  n_train= 211  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 76 features  |  test MAE = 6.918  train MAE = 0.435 kcal/mol
+INFO    [ 27/55] seed=456  frac=0.40  n_train= 272  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 62 features  |  test MAE = 7.168  train MAE = 0.541 kcal/mol
+INFO    [ 28/55] seed=456  frac=0.50  n_train= 339  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 111 features  |  test MAE = 6.744  train MAE = 0.465 kcal/mol
+INFO    [ 29/55] seed=456  frac=0.60  n_train= 402  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 113 features  |  test MAE = 6.702  train MAE = 0.833 kcal/mol
+INFO    [ 30/55] seed=456  frac=0.70  n_train= 456  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 113 features  |  test MAE = 6.687  train MAE = 0.826 kcal/mol
+INFO    [ 31/55] seed=456  frac=0.80  n_train= 525  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO    GPR skipped (n_train=525 > 500)
+INFO      → 95 features  |  test MAE = 6.473  train MAE = 1.251 kcal/mol
+INFO    [ 32/55] seed=456  frac=0.90  n_train= 597  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO    GPR skipped (n_train=597 > 500)
+INFO      → 98 features  |  test MAE = 6.444  train MAE = 1.295 kcal/mol
+INFO    [ 33/55] seed=456  frac=1.00  n_train= 660  — feature selection ...
+/noether/s1/dxb5775/conda_envs/clean_env/lib/python3.10/site-packages/numpy/lib/nanfunctions.py:1217: RuntimeWarning: All-NaN slice encountered
+  return function_base._ureduce(a, func=_nanmedian, keepdims=keepdims,
+INFO    GPR skipped (n_train=660 > 500)
+INFO      → 130 features  |  test MAE = 6.109  train MAE = 1.380 kcal/mol
+INFO    [ 34/55] seed=789  frac=0.08  n_train=  49  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 19 features  |  test MAE = 7.618  train MAE = 0.119 kcal/mol
+INFO    [ 35/55] seed=789  frac=0.16  n_train= 102  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 1 features  |  test MAE = 8.435  train MAE = 6.528 kcal/mol
+INFO    [ 36/55] seed=789  frac=0.24  n_train= 159  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 41 features  |  test MAE = 6.498  train MAE = 0.387 kcal/mol
+INFO    [ 37/55] seed=789  frac=0.32  n_train= 197  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 42 features  |  test MAE = 6.013  train MAE = 0.487 kcal/mol
+INFO    [ 38/55] seed=789  frac=0.40  n_train= 256  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 48 features  |  test MAE = 6.636  train MAE = 0.684 kcal/mol
+INFO    [ 39/55] seed=789  frac=0.50  n_train= 314  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 47 features  |  test MAE = 6.240  train MAE = 1.109 kcal/mol
+INFO    [ 40/55] seed=789  frac=0.60  n_train= 399  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 73 features  |  test MAE = 5.934  train MAE = 0.868 kcal/mol
+INFO    [ 41/55] seed=789  frac=0.70  n_train= 446  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 95 features  |  test MAE = 6.298  train MAE = 0.852 kcal/mol
+INFO    [ 42/55] seed=789  frac=0.80  n_train= 524  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO    GPR skipped (n_train=524 > 500)
+INFO      → 74 features  |  test MAE = 5.659  train MAE = 1.222 kcal/mol
+INFO    [ 43/55] seed=789  frac=0.90  n_train= 583  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO    GPR skipped (n_train=583 > 500)
+INFO      → 83 features  |  test MAE = 5.777  train MAE = 1.254 kcal/mol
+INFO    [ 44/55] seed=789  frac=1.00  n_train= 649  — feature selection ...
+/noether/s1/dxb5775/conda_envs/clean_env/lib/python3.10/site-packages/numpy/lib/nanfunctions.py:1217: RuntimeWarning: All-NaN slice encountered
+  return function_base._ureduce(a, func=_nanmedian, keepdims=keepdims,
+INFO    GPR skipped (n_train=649 > 500)
+INFO      → 82 features  |  test MAE = 5.491  train MAE = 1.424 kcal/mol
+INFO    [ 45/55] seed=1024  frac=0.08  n_train=  59  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 19 features  |  test MAE = 6.024  train MAE = 0.091 kcal/mol
+INFO    [ 46/55] seed=1024  frac=0.16  n_train= 104  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 35 features  |  test MAE = 5.913  train MAE = 0.279 kcal/mol
+INFO    [ 47/55] seed=1024  frac=0.24  n_train= 163  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 51 features  |  test MAE = 6.249  train MAE = 0.662 kcal/mol
+INFO    [ 48/55] seed=1024  frac=0.32  n_train= 207  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 55 features  |  test MAE = 6.368  train MAE = 0.547 kcal/mol
+INFO    [ 49/55] seed=1024  frac=0.40  n_train= 247  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 79 features  |  test MAE = 5.913  train MAE = 0.429 kcal/mol
+INFO    [ 50/55] seed=1024  frac=0.50  n_train= 340  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 59 features  |  test MAE = 5.303  train MAE = 1.059 kcal/mol
+INFO    [ 51/55] seed=1024  frac=0.60  n_train= 395  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 78 features  |  test MAE = 5.273  train MAE = 1.126 kcal/mol
+INFO    [ 52/55] seed=1024  frac=0.70  n_train= 471  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO      → 62 features  |  test MAE = 4.878  train MAE = 1.480 kcal/mol
+INFO    [ 53/55] seed=1024  frac=0.80  n_train= 528  — feature selection ...
+/noether/s1/dxb5775/publication_rerun_20260814/scripts/calculations/learning_curve.py:361: RuntimeWarning: All-NaN slice encountered
+  col_med = np.nanmedian(_X, axis=0)
+INFO    GPR skipped (n_train=528 > 500)
+INFO      → 116 features  |  test MAE = 5.565  train MAE = 1.268 kcal/mol
+INFO    [ 54/55] seed=1024  frac=0.90  n_train= 600  — feature selection ...
+/noether/s1/dxb5775/conda_envs/clean_env/lib/python3.10/site-packages/numpy/lib/nanfunctions.py:1217: RuntimeWarning: All-NaN slice encountered
+  return function_base._ureduce(a, func=_nanmedian, keepdims=keepdims,
+INFO    GPR skipped (n_train=600 > 500)
+INFO      → 91 features  |  test MAE = 5.327  train MAE = 1.261 kcal/mol
+INFO    [ 55/55] seed=1024  frac=1.00  n_train= 663  — feature selection ...
+/noether/s1/dxb5775/conda_envs/clean_env/lib/python3.10/site-packages/numpy/lib/nanfunctions.py:1217: RuntimeWarning: All-NaN slice encountered
+  return function_base._ureduce(a, func=_nanmedian, keepdims=keepdims,
+INFO    GPR skipped (n_train=663 > 500)
+INFO      → 103 features  |  test MAE = 5.410  train MAE = 1.367 kcal/mol
+INFO    Saved CSV  → /noether/s1/dxb5775/publication_rerun_20260814/results/learning_curve_kmeans_dft/learning_curve_data.csv
+INFO    Saved JSON → /noether/s1/dxb5775/publication_rerun_20260814/results/learning_curve_kmeans_dft/learning_curve_detail.json
+INFO    Saved /noether/s1/dxb5775/publication_rerun_20260814/figures/model_performance/learning_curve_kmeans_dft.pdf
+INFO  Generating combined 2x2 subplot ...
+INFO    Saved /noether/s1/dxb5775/publication_rerun_20260814/figures/model_performance/learning_curve_combined.pdf
+
+  Done. Figures in /noether/s1/dxb5775/publication_rerun_20260814/figures/model_performance/
+  Results in /noether/s1/dxb5775/publication_rerun_20260814/results/learning_curve_*/

@@ -1,0 +1,17 @@
+cff-version: 1.2.0
+message: "If you use this software or its data, please cite the associated article and Zenodo record."
+title: "Multi-fidelity proton-affinity prediction and prospective screening"
+type: software
+version: "2.0.0"
+date-released: "2026-08-19"
+authors:
+  - family-names: "Bhattacharya"
+    given-names: "Debjyoti"
+  - family-names: "Liu"
+    given-names: "Yifan"
+  - family-names: "Cooper"
+    given-names: "Valentino R."
+  - family-names: "Reinhart"
+    given-names: "Wesley F."
+repository-code: "https://github.com/bhattadeb34/multi-fidelity-proton-affinity"
+url: "https://doi.org/10.5281/zenodo.19672952"

@@ -1,0 +1,47 @@
+# Manuscript note: Opus response validation and schema repair
+
+This note records provenance for the final iteration-1 LLM screening artifact.
+It is not consumed by the screening pipeline.
+
+## What was unchanged
+
+- Model: `claude-opus-4-6@default` through Vertex AI
+- Temperature: 0
+- Chemistry rubric, system prompt, few-shot examples, and initial per-molecule
+  user prompt
+- Deterministic same-ring aromatic N-H/N eligibility guard
+
+## Retry procedure
+
+The production pass queried 2,368 unique molecules. Forty-eight responses still
+failed JSON parsing or predefined logical-consistency validation after the
+initial three attempts. A first targeted rerun using the unchanged prompt
+resolved 21 cases.
+
+The remaining 27 cases were rerun after improving schema recovery. Every retry
+still began with the unchanged initial prompt. Two cases succeeded on that first
+attempt. For the other 25, Opus received its preceding invalid response and the
+specific validator error, then was instructed to return one corrected JSON
+object and preserve its chemical assessment unless a change was necessary to
+make `grotthuss_capable`, `structural_concern`, and `verdict` internally
+consistent. All 25 succeeded on the second attempt. The JSON parser also accepted
+the first valid object when an otherwise valid response contained fences or
+trailing commentary.
+
+The resulting canonical artifact contains one successful Opus response for each
+of 2,368 molecules and no unresolved LLM errors. The complete append-only retry
+history and the pre-retry checkpoints were retained separately for audit.
+
+Two schema-repaired responses appeared in the 30 Pareto-selected candidates:
+
+- Rank 19: `CNc1ncn[nH]1` (`flag`)
+- Rank 23: `Cn1cc(-c2n[nH]cc2C=O)cn1` (`accept`)
+
+## Suggested Methods language
+
+> Responses failing JSON parsing or predefined logical-consistency checks were
+> retried up to three times. On retry, the model received its preceding response
+> and the specific validation error and was instructed to return schema-compliant
+> JSON without changing the chemical assessment unless required for internal
+> consistency.
+

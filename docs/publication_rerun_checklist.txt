@@ -1,0 +1,121 @@
+# Publication rerun checklist
+
+This checklist covers analyses affected by the corrected NIST/k-means models
+and prospective screening workflow. Expensive electronic-structure calculations
+and the Opus screening stage are complete; the remaining work regenerates model
+ablations, learning curves, interpretation outputs, summaries, and figures from
+the saved authoritative inputs.
+
+## Frozen production references
+
+- NIST production CV: `results/nist1155/`
+  - best model: ExtraTrees
+  - MAE: 2.8731 +/- 0.2643 kcal/mol
+  - fold feature counts: 198, 223, 247, 177, 179
+  - >=3/5 consensus features: 150
+- k-means production CV: `results/kmeans251/`
+  - outer split: GroupKFold by `record_id`
+  - best model: RandomForest
+  - MAE: 7.4355 +/- 1.0013 kcal/mol
+  - fold feature counts: 77, 86, 60, 125, 79
+  - >=3/5 consensus features: 51
+- Corrected screening stage artifacts:
+  `data/screening/iter1/`
+- Corrected prospective DFT archive:
+  `data/screening/dft_validation/iter1_20260813/`
+
+## Audit findings fixed before rerun
+
+- [x] DFT-augmented k-means CV now groups all sites from a molecule in the
+  same outer fold.
+- [x] DFT-augmented and DFT-control scripts reuse the production minimum-error
+  LassoCV selector instead of a stale 1-SD implementation.
+- [x] Molecule-level NIST DFT descriptors now come from the protonation site
+  defining the maximum molecular DFT PA, rather than the first stored site.
+- [x] Site-level k-means DFT descriptors require an exact neutral/protonated
+  SMILES match; cross-site fallback is prohibited.
+- [x] Learning-curve k-means holdouts and training-size subsamples are selected
+  by molecule group, not by site row.
+- [x] Learning curves use the same selector as production and site-resolved DFT
+  descriptors.
+- [x] SHAP fails closed if the stored consensus feature set cannot be exactly
+  reconstructed and records final-refit provenance.
+- [x] The ESI DFT-effect plot no longer forces the NIST effect to zero.
+- [x] Molecular aggregation analysis uses maximum site-specific DFT PA as the
+  molecular reference instead of assuming every site's target is identical.
+- [x] Screening plots use current saved artifacts, dynamic configuration, and
+  the term `ensemble dispersion` rather than calibrated uncertainty.
+- [x] SI candidate exclusions are loaded from the stability review rather than
+  hard-coded historical ranks.
+- [x] Computational-cost inputs include SLURM job 54763379 and a benchmark of
+  the deployed 200-tree, 51-feature RandomForest.
+
+## Controlled rerun order
+
+Run from a clean checkout in the recorded environment with:
+
+```bash
+PY=python
+```
+
+1. DFT descriptor ablations
+
+   ```bash
+   $PY scripts/calculations/train_models_dft.py --dataset all
+   $PY scripts/calculations/train_models_dft_control.py --control dft-only
+   ```
+
+2. Validate each generated CV bundle
+
+   ```bash
+   $PY scripts/analysis/validate_result_bundle.py results/nist1155_dft --write-report
+   $PY scripts/analysis/validate_result_bundle.py results/kmeans251_dft --group-col record_id --write-report
+   $PY scripts/analysis/validate_result_bundle.py results/nist1155_dft_only --write-report
+   ```
+
+3. Learning curves, after the DFT bundles pass validation
+
+   ```bash
+   $PY scripts/calculations/learning_curve.py --datasets all
+   ```
+
+4. Interpretation and derived analyses
+
+   ```bash
+   $PY scripts/calculations/compute_shap.py --dataset all
+   $PY scripts/analysis/aggregation_analysis.py --results-dir results/kmeans251
+   $PY scripts/analysis/tanimoto_bias_analysis.py
+   $PY scripts/analysis/compute_cost_analysis.py
+   $PY screening/scripts/analysis/summarize_pipeline.py \
+     --input-dir data/screening/iter1 \
+     --build-report data/screening/iter1/build_report.json \
+     --output-dir data/screening/iter1
+   ```
+
+5. Regenerate all quantitative figures only after steps 1-4 pass
+
+   ```bash
+   $PY make_figures.py --only main --stop-on-error -v
+   $PY make_figures.py --only screening --stop-on-error -v
+   $PY scripts/plotting/plot_diff_esi.py
+   ```
+
+## Acceptance criteria
+
+- [x] Every CV bundle contains mutually consistent `cv_results.json`,
+  `predictions.csv`, `mae_summary.csv`, and `validation_report.json`.
+- [x] k-means bundles contain no molecule shared between outer train and test.
+- [x] All five learning-curve seeds have molecule-disjoint k-means holdouts.
+- [x] DFT augmentation retains exactly 1,155 NIST rows and 821 k-means sites;
+  all 821 site descriptor joins are exact.
+- [x] SHAP uses 150 NIST and 51 k-means consensus features and the current best
+  tree model for each dataset.
+- [x] Screening summary reconciles 2,456 retrieved candidates, 2,368 PM7/ML
+  molecules plus 88 recorded PM7 failures, 5,948 sites, 1,760 predicted-window
+  molecules, 615 LLM-eligible
+  in-window molecules, 30 Pareto candidates, 30 completed DFT calculations,
+  and five priority leads.
+- [x] No current plotting script reads the stale April prospective summary.
+- [x] All generated files have provenance, checksums, and a recorded command.
+- [x] A final clean checkout reproduces the summaries and figures using only
+  the public repository and archived data.
